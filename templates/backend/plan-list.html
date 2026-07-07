@@ -1,0 +1,79 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | Health Checkup</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>Health Checkup Plans</h4>
+      <a href="{% url 'health-plan-create' %}" class="btn btn-primary">Create Plan</a>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Total Tests</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plan in plans %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ plan.title }}</td>
+                <td>₹ {{ plan.price }}</td>
+                <td>{{ plan.total_test_include }}</td>
+                <td>
+                  {% if plan.status %}
+                    <span class="badge bg-success">Active</span>
+                  {% else %}
+                    <span class="badge bg-danger">Inactive</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'health-plan-edit' plan.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <button class="btn btn-sm btn-danger delete-btn" data-url="{% url 'health-plan-delete' plan.id %}">Delete</button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No plans found</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const url = this.dataset.url
+    
+        Swal.fire({
+          title: 'Delete plan?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

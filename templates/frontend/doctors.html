@@ -1,0 +1,89 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Doctors Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Expert Medical Specialists
+            </span>
+
+            <h1>Doctors</h1>
+
+            <p>
+                Meet our experienced and dedicated doctors committed
+                to providing exceptional healthcare services.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>Doctors</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<div class="doctor-area carousel-shadow default-padding">
+    <div class="container">
+       
+
+        <div class="row doctor-items text-center">
+            {% for doctor in doctors %}
+
+            <!-- ✅ ONLY ADD THIS WRAPPER -->
+            <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                <div class="item">
+                    <div class="thumb">
+                        {% if doctor.photo %}
+                        <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                        {% else %}
+                        <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                        {% endif %}
+
+                        <div class="overlay">
+                            <a href="{% url 'doctor_detail' doctor.slug %}"></a>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <h4>{{ doctor.name }}</h4>
+                        <h5>{{ doctor.designation }}</h5>
+
+                        <div class="appoinment-btn">
+                            <a href="{% url 'doctor_detail' doctor.slug %}"> Make Appointment </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

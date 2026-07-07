@@ -1,0 +1,133 @@
+{% extends "frontend/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- Careers Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/dailasic_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Build Your Career With Us
+            </span>
+
+            <h1>Careers</h1>
+
+            <p>
+                Join our passionate healthcare team and grow your career
+                in a supportive and innovative environment.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>Careers</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- Careers Area -->
+<div class="about-area default-padding">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <h2>Careers at Lakeside Hospital</h2>
+
+                <p>
+                    Join our team of passionate healthcare professionals dedicated to delivering exceptional patient care and medical excellence. at Lakeside Hospital, we believe in creating a positive work environment that encourages learning, innovation, teamwork, and professional growth.
+                </p>
+
+                <h4 class="mt-4">Why JoinLakeside Hospital?</h4>
+
+                <ul>
+                    <li>Supportive and professional work environment</li>
+                    <li>Modern healthcare infrastructure and technology</li>
+                    <li>Career development and learning opportunities</li>
+                    <li>Work alongside experienced medical specialists</li>
+                    <li>Patient-focused and ethical healthcare culture</li>
+                </ul>
+
+                <h4 class="mt-4">Current Openings</h4>
+
+                <div class="career-section">
+
+                    {% for job in careers %}
+
+                    <div class="career-card">
+
+                        <!-- Left -->
+                        <div class="career-left">
+
+                            <h4 class="career-title">
+                                {{ job.job_title }}
+                            </h4>
+
+                            <div class="career-meta">
+
+                                <span>
+                                    <i class="fa fa-building"></i>
+                                    {{ job.department }}
+                                </span>
+
+                                <span>
+                                    <i class="fa fa-user"></i>
+                                    {{ job.experience }} Years Experience
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Right -->
+                        <div class="career-right">
+
+                            <a
+                                href="{% url 'career_detail' job.slug %}"
+                                class="career-btn"
+                            >
+                                View Position
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

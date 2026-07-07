@@ -1,0 +1,663 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 — Access Denied</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{% static 'backend/assets/images/favicon.png' %}" />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      :root {
+        --bg: #080b14;
+        --surface: rgba(255, 255, 255, 0.04);
+        --border: rgba(255, 255, 255, 0.1);
+        --border-hi: rgba(255, 255, 255, 0.18);
+        --red: #e0454a;
+        --red-dim: rgba(224, 69, 74, 0.18);
+        --red-glow: rgba(224, 69, 74, 0.35);
+        --violet: #7c3aed;
+        --violet-dim: rgba(124, 58, 237, 0.2);
+        --cyan: #22d3ee;
+        --white: #f0eef8;
+        --muted: rgba(240, 238, 248, 0.4);
+        --hint: rgba(240, 238, 248, 0.22);
+        --mono: 'DM Mono', monospace;
+        --display: 'Poppins', sans-serif;
+      }
+      
+      html,
+      body {
+        height: 100%;
+        background: var(--bg);
+        color: var(--white);
+        font-family: var(--display);
+        overflow: hidden;
+      }
+      
+      /* ── Canvas ── */
+      .scene {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        overflow: hidden;
+      }
+      
+      /* ── Grid ── */
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+        background-size: 52px 52px;
+        mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      }
+      
+      /* ── Noise overlay ── */
+      .noise {
+        position: absolute;
+        inset: 0;
+        opacity: 0.025;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+        pointer-events: none;
+      }
+      
+      /* ── Orbs ── */
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        pointer-events: none;
+        will-change: transform;
+      }
+      .orb-v {
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, rgba(124, 58, 237, 0.28) 0%, transparent 70%);
+        top: -160px;
+        left: -140px;
+        animation: drift 14s ease-in-out infinite alternate;
+      }
+      .orb-r {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(224, 69, 74, 0.22) 0%, transparent 70%);
+        bottom: -120px;
+        right: -100px;
+        animation: drift 18s ease-in-out infinite alternate-reverse;
+      }
+      .orb-c {
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+        top: 55%;
+        left: 62%;
+        animation: drift 10s ease-in-out infinite alternate;
+      }
+      
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(30px, 20px) scale(1.06);
+        }
+      }
+      
+      /* ── Horizontal scan line ── */
+      .scanline {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.4), rgba(224, 69, 74, 0.3), transparent);
+        animation: scan 6s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+      @keyframes scan {
+        0% {
+          top: -2px;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+      
+      /* ── Floating particles ── */
+      .particles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .p {
+        position: absolute;
+        border-radius: 50%;
+        animation: float-up linear infinite;
+      }
+      @keyframes float-up {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-110vh) scale(0.5);
+          opacity: 0;
+        }
+      }
+      
+      /* ── Card ── */
+      .card {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 500px;
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 24px;
+        padding: 3rem 2.5rem 2.25rem;
+        text-align: center;
+        backdrop-filter: blur(28px) saturate(160%);
+        animation: card-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      @keyframes card-in {
+        from {
+          opacity: 0;
+          transform: translateY(32px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      
+      /* subtle top highlight */
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 20%;
+        right: 20%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+        border-radius: 50%;
+      }
+      
+      /* inner glow on hover */
+      .card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 24px;
+        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(124, 58, 237, 0.1), transparent 70%);
+        pointer-events: none;
+      }
+      
+      /* corner brackets */
+      .bracket {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+      }
+      .bracket-tl {
+        top: 16px;
+        left: 16px;
+        border-top: 1.5px solid var(--violet);
+        border-left: 1.5px solid var(--violet);
+        border-radius: 4px 0 0 0;
+        opacity: 0.7;
+      }
+      .bracket-tr {
+        top: 16px;
+        right: 16px;
+        border-top: 1.5px solid var(--red);
+        border-right: 1.5px solid var(--red);
+        border-radius: 0 4px 0 0;
+        opacity: 0.7;
+      }
+      .bracket-bl {
+        bottom: 16px;
+        left: 16px;
+        border-bottom: 1.5px solid var(--violet);
+        border-left: 1.5px solid var(--violet);
+        border-radius: 0 0 0 4px;
+        opacity: 0.5;
+      }
+      .bracket-br {
+        bottom: 16px;
+        right: 16px;
+        border-bottom: 1.5px solid var(--red);
+        border-right: 1.5px solid var(--red);
+        border-radius: 0 0 4px 0;
+        opacity: 0.5;
+      }
+      
+      /* ── Icon ── */
+      .icon-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 92px;
+        height: 92px;
+        margin-bottom: 1.75rem;
+        animation: float-icon 4s ease-in-out infinite, card-in 0.8s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      @keyframes float-icon {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-9px);
+        }
+      }
+      
+      .ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid var(--red);
+        animation: ring-pulse 2.6s ease-in-out infinite;
+      }
+      .ring-1 {
+        inset: -8px;
+        opacity: 0.35;
+        animation-delay: 0s;
+      }
+      .ring-2 {
+        inset: -18px;
+        opacity: 0.18;
+        animation-delay: 0.5s;
+      }
+      .ring-3 {
+        inset: -30px;
+        opacity: 0.08;
+        animation-delay: 1s;
+      }
+      
+      @keyframes ring-pulse {
+        0%,
+        100% {
+          transform: scale(0.9);
+          opacity: inherit;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0;
+        }
+      }
+      
+      .icon-disk {
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        background: conic-gradient(from 210deg, #1a0f2e, #2b0f0f, #1a0f2e);
+        border: 1px solid rgba(224, 69, 74, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .icon-disk::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.07), transparent 60%);
+      }
+      
+      /* ── Status badge ── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--red-dim);
+        border: 0.5px solid rgba(224, 69, 74, 0.38);
+        color: #fb8086;
+        font-family: var(--mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 5px 14px;
+        border-radius: 100px;
+        margin-bottom: 1.1rem;
+        animation: card-in 0.7s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      .blink-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--red);
+        animation: blink 1.1s ease-in-out infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.1;
+        }
+      }
+      
+      /* ── Headline ── */
+      .code {
+        font-size: 86px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -5px;
+        margin-bottom: 0.1rem;
+        background: linear-gradient(135deg, #f87272 0%, #c084fc 55%, #60a5fa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: glitch 7s ease-in-out infinite, card-in 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      @keyframes glitch {
+        0%,
+        88%,
+        100% {
+          filter: none;
+          transform: none;
+        }
+        90% {
+          filter: hue-rotate(20deg);
+          transform: skew(-1.2deg) translateX(3px);
+        }
+        93% {
+          filter: hue-rotate(-10deg);
+          transform: skew(0.8deg) translateX(-2px);
+        }
+        96% {
+          filter: none;
+          transform: skew(0.4deg);
+        }
+      }
+      
+      .headline {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--white);
+        letter-spacing: -0.3px;
+        margin-bottom: 0.55rem;
+        animation: card-in 0.7s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      .desc {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 340px;
+        margin: 0 auto 2rem;
+        animation: card-in 0.7s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      /* ── Buttons ── */
+      .actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: card-in 0.7s 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--display);
+        font-size: 13.5px;
+        font-weight: 600;
+        padding: 11px 22px;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.18s, opacity 0.18s, box-shadow 0.18s;
+        border: none;
+        letter-spacing: 0.01em;
+      }
+      .btn:active {
+        transform: scale(0.97) !important;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        color: #fff;
+        box-shadow: 0 4px 24px rgba(124, 58, 237, 0.35);
+        border: 0.5px solid rgba(255, 255, 255, 0.12);
+      }
+      .btn-primary:hover {
+        box-shadow: 0 6px 32px rgba(124, 58, 237, 0.55);
+      }
+      
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        border: 0.5px solid var(--border);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+      }
+      
+      /* ── Divider ── */
+      .divider {
+        height: 0.5px;
+        background: var(--border);
+        margin: 1.75rem 0 1.4rem;
+      }
+      
+      /* ── Meta row ── */
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        animation: card-in 0.7s 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      
+      .meta-item {
+        text-align: left;
+      }
+      .meta-item:last-child {
+        text-align: right;
+      }
+      .meta-item:nth-child(2) {
+        text-align: center;
+      }
+      
+      .meta-label {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--hint);
+        margin-bottom: 3px;
+      }
+      
+      .meta-val {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: rgba(240, 238, 248, 0.55);
+      }
+      
+      .meta-val.red {
+        color: #fb8086;
+      }
+      
+      /* ── Help link ── */
+      .help {
+        margin-top: 1.4rem;
+        font-size: 12.5px;
+        color: var(--hint);
+        animation: card-in 0.7s 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .help a {
+        color: #a78bfa;
+        text-decoration: none;
+        border-bottom: 0.5px solid rgba(167, 139, 250, 0.3);
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .help a:hover {
+        color: #c4b5fd;
+        border-color: rgba(196, 181, 253, 0.5);
+      }
+      
+      /* ── Bottom tag ── */
+      .tag {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--hint);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        z-index: 5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <!-- Background layers -->
+      <div class="grid"></div>
+      <div class="noise"></div>
+      <div class="orb orb-v"></div>
+      <div class="orb orb-r"></div>
+      <div class="orb orb-c"></div>
+      <div class="scanline"></div>
+      <div class="particles" id="particles"></div>
+
+      <!-- Card -->
+      <div class="card">
+        <div class="bracket bracket-tl"></div>
+        <div class="bracket bracket-tr"></div>
+        <div class="bracket bracket-bl"></div>
+        <div class="bracket bracket-br"></div>
+
+        <!-- Icon -->
+        <div class="icon-wrap">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+          <div class="icon-disk">
+            <svg width="40" height="42" viewBox="0 0 40 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="20" width="28" height="19" rx="4" fill="rgba(224,69,74,0.15)" stroke="rgba(224,69,74,0.65)" stroke-width="1.4" />
+              <path d="M13 20V14.5C13 10.358 16.134 7 20 7C23.866 7 27 10.358 27 14.5V20" stroke="rgba(224,69,74,0.65)" stroke-width="1.6" stroke-linecap="round" fill="none" />
+              <circle cx="20" cy="29" r="3" fill="#e0454a" />
+              <line x1="20" y1="32" x2="20" y2="35.5" stroke="#e0454a" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="code">403</div>
+        <div class="headline">Forbidden territory</div>
+        <p class="desc">You don't have permission to view this resource. If you believe this is a mistake, reach out to your system administrator.</p>
+
+        <!-- Actions -->
+        <div class="actions">
+          <a href="{% url 'dashboard' %}" class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2L2 8l6 6" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 8h12" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round" />
+            </svg>Go home
+          </a>
+          <a href="{% url 'dashboard' %}" class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M10 3l-5 5 5 5" stroke="rgba(240,238,248,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>Go back
+          </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Meta -->
+        <div class="meta">
+          <div class="meta-item">
+            <div class="meta-label">HTTP Status</div>
+            <div class="meta-val red">403 Forbidden</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Protocol</div>
+            <div class="meta-val" id="proto">—</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Timestamp</div>
+            <div class="meta-val" id="ts">—</div>
+          </div>
+        </div>
+
+        <div class="help">
+          Need help? <a href="#">Contact support</a> or <a href="#">view documentation</a>.
+        </div>
+      </div>
+
+      <div class="tag">sys · 403 · access_denied</div>
+    </div>
+
+    <script>
+      /* ── Timestamp & protocol ── */
+      const ts = document.getElementById('ts')
+      const proto = document.getElementById('proto')
+      function tick() {
+        const n = new Date()
+        ts.textContent = n.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      }
+      tick()
+      setInterval(tick, 1000)
+      proto.textContent = location.protocol.replace(':', '').toUpperCase() + '/1.1'
+      
+      /* ── Particles ── */
+      const container = document.getElementById('particles')
+      const colors = ['rgba(167,139,250,VAL)', 'rgba(224,69,74,VAL)', 'rgba(34,211,238,VAL)']
+      for (let i = 0; i < 24; i++) {
+        const el = document.createElement('div')
+        el.className = 'p'
+        const size = Math.random() * 2.5 + 1
+        const col = colors[Math.floor(Math.random() * colors.length)].replace('VAL', (Math.random() * 0.5 + 0.2).toFixed(2))
+        el.style.cssText = `
+                                                left: ${Math.random() * 100}%;
+                                                top: ${100 + Math.random() * 20}%;
+                                                width: ${size}px;
+                                                height: ${size}px;
+                                                background: ${col};
+                                                animation-duration: ${Math.random() * 14 + 8}s;
+                                                animation-delay: ${Math.random() * 10}s;
+                                              `
+        container.appendChild(el)
+      }
+    </script>
+  </body>
+</html>

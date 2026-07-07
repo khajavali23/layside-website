@@ -1,0 +1,198 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | NRI</title>
+{% endblock %}
+
+{% block content %}
+  <div class="app-page-head d-flex align-items-center justify-content-between">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'dashboard' %}"><i class="fi fi-rr-home"></i> Home</a>
+        </li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ================= STATS ================= -->
+  <div class="row">
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Blogs</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_blogs }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Patients</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_patients }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Appointments</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_appointments }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Today Appointments</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ today_appointments }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>This Month Appointments</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ month_appointments }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Doctors</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_doctors }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Departments</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_departments }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Messages</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_messages }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Total Notifications</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_notifications }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Health Checkup Bookings</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_checkups }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Career Openings</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_careers }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-header border-0 pb-0">
+          <h6>Career Applications</h6>
+        </div>
+        <div class="card-body py-0">
+          <h2>{{ total_applications }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TODAY APPOINTMENTS TABLE ================= -->
+  <div class="row mt-4">
+    <div class="col-xxl-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="mb-0">Today's Appointments</h6>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Doctor</th>
+                  <th>Department</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for appt in today_completed_qs %}
+                  <tr>
+                    <td>{{ appt.patient.name }}</td>
+                    <td>{{ appt.selected_doctor.name }}</td>
+                    <td>{{ appt.department.title }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>
+                      <a href="{% url 'view_appointment' appt.id %}" class="btn btn-sm btn-primary">View Details</a>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="5" class="text-center">No appointments today</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

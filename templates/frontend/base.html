@@ -1,0 +1,435 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% block title %}Lakeside Hospital{% endblock %}</title>
+
+    <meta
+        name="description"
+        content="{% block meta_description %}Lakeside Hospital - Advanced Multi-Specialty Healthcare Services with Experienced Doctors and Modern Medical Facilities.{% endblock %}"/>
+
+    <meta
+        name="keywords"
+        content="{% block meta_keywords %}hospital, healthcare, regenerative medicine, stem cell therapy, wellness{% endblock %}"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'frontend/assets/img/favicon.png' %}" />
+
+    <!-- CSS -->
+    <link href="{% static 'frontend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/font-awesome.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/themify-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/flaticon-set.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/owl.carousel.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/owl.theme.default.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/magnific-popup.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/animate.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/validnavs.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/helper.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'frontend/assets/css/responsive.css' %}" rel="stylesheet" />
+</head>
+
+    <body>
+
+        <div id="preloader">
+            <div class="loader-content">
+                <img src="{% static 'frontend/assets/img/logo.png' %}" alt="Hospital Logo" class="loader-logo" />
+                <div class="loader-ring"></div>
+            </div>
+        </div>
+
+<!-- HEADER -->
+        <header>
+            <nav class="navbar mobile-sidenav nav-border navbar-sticky navbar-default validnavs on menu-center no-full">
+                <div class="container d-flex justify-content-between align-items-center">
+                    <!-- Logo -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <a class="navbar-brand" href="/">
+                            <img src="{% static 'frontend/assets/img/logo.png' %}" class="logo" alt="Logo" />
+                        </a>
+                    </div>
+
+                    <!-- Navbar -->
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <div class="collapse-header">
+                            <img src="{% static 'frontend/assets/img/logo.png' %}" alt="Logo" />
+
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                                <i class="fa fa-times fa-bars"></i>
+                            </button>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
+                            <li class="dropdown">
+                                <a href="/" class="{% if request.path == '/' %}active-link{% endif %}"> Home </a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="/about" class="{% if 'about' in request.path %}active-link{% endif %}"> About </a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="/doctors" class="{% if 'doctors' in request.path %}active-link{% endif %}">
+                                    Doctors
+                                </a>
+                            </li>
+
+                            <!-- Departments -->
+                            <li class="dropdown profisha-parent">
+                                <a
+                                    href="/departments/"
+                                    class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Departments
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu profisha-mega">
+                                    {% for department in departments %}
+
+                                    <li class="profisha-item">
+                                        <a class="dropdown-item" href="/departments/{{ department.slug }}/">
+                                            {{ department.title }}
+                                        </a>
+                                    </li>
+
+                                    {% endfor %}
+
+                                    <!-- View All Bottom -->
+
+                                    <li class="profisha-item profisha-view-all">
+                                        <a class="dropdown-item view-all-btn" href="{% url 'services' %}">
+                                            <i class="fas fa-hospital-alt"></i>
+                                            View All Departments
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                           
+
+                            <!-- Contact -->
+                            <li>
+                                <a href="/contact" class="{% if 'contact' in request.path %}active-link{% endif %}">
+                                    Contact
+                                </a>
+                            </li>
+
+                            <!-- More -->
+                            <li class="dropdown">
+                                <a
+                                    href="#"
+                                    class="dropdown-toggle {% if 'gallery' in request.path or 'blogs' in request.path or 'health-checkups' in request.path or 'insurance' in request.path or 'careers' in request.path %}active-link{% endif %}"
+                                    data-toggle="dropdown"
+                                >
+                                    More
+                                </a>
+
+                                <ul class="dropdown-menu animated fadeOutUp">
+                                    <li><a href="/gallery">Gallery</a></li>
+                                    <li><a href="/blogs">Blogs</a></li>
+                                    <li><a href="/health-checkups">Health Checkup</a></li>
+                                    <li><a href="/insurance-schemes">Insurance & Schemes</a></li>
+                                    <li><a href="/careers">Careers</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Appointment Button -->
+                   <div class="button">
+                        <a href="{% url 'frontend_doctors' %}"
+                        class="btn btn-md btn-theme appointment-btn main_bookappointment-btn">
+
+                            <img
+                                src="{% static 'frontend/assets/img/departments/mediacl.png' %}"
+                                alt="Appointment"
+                                class="appointment-icon"
+                            >
+
+                            <span class="appointment-text">
+                                BOOK APPOINTMENT
+                            </span>
+
+                        </a>
+                    </div>
+
+
+            
+                </div>
+
+                
+            </nav>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        {% block content %}{% endblock %}
+
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light">
+
+            <div class="f-items default-padding">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <!-- About -->
+                        <div class="col-lg-3 col-md-6 equal-height item">
+
+                            <div class="f-item">
+
+                                <h4>About</h4>
+
+                                <p>
+                                   Lakeside Hospital is a trusted multi-specialty healthcare institution offering advanced treatments, experienced specialists, and compassionate patient care.
+                                </p>
+
+                                <div class="opening-info">
+
+                                    <h5>OPENING HOURS</h5>
+
+                                    <ul>
+
+                                        <li>
+                                            <span>Mon – Sat :</span>
+                                            <div class="pull-right">6.00 am – 10.00 pm</div>
+                                        </li>
+
+                                        <li>
+                                            <span>Emergency :</span>
+                                            <div class="pull-right">24/7 Available</div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="col-lg-3 col-md-6 equal-height item pl-50 pl-md-10 pl-xs-10">
+
+                            <div class="f-item link">
+
+                                <h4>Quick Links</h4>
+
+                                <ul>
+                                    <li><a href="/about">About Us</a></li>
+                                    <li><a href="/doctors">Doctors</a></li>
+                                    <li><a href="/departments">Departments</a></li>
+                                    <li><a href="/contact">Contact Us</a></li>
+                                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                                    <li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Updates -->
+                        <div class="col-lg-3 col-md-6 equal-height item">
+
+                            <div class="f-item">
+
+                                <h4>Why Choose Us</h4>
+
+                                <div class="twitter-item">
+
+                                    <div class="twitter-content">
+                                        <p>
+                                            Comprehensive healthcare services available with experienced doctors and advanced medical facilities.
+                                        </p>
+                                    </div>
+
+                                    <div class="twitter-context">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span class="twitter-date"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="twitter-item">
+
+                                    <div class="social-links">
+
+                                        <h5>FOLLOW US</h5>
+
+                                        <a href="#">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+
+                                        <a href="#">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+
+                                        <a href="#">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+
+                                        <a href="mailto:info@lakesidehospital.com">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="col-lg-3 col-md-6 equal-height item">
+
+                            <div class="f-item contact">
+
+                                <h4>Contact</h4>
+
+                                <ul>
+
+                                    <li>
+                                        <i class="fas fa-phone"></i>
+                                        <p>
+                                            PHONE
+                                            <span>+91 90000 00000</span>
+                                        </p>
+                                    </li>
+
+                                    <li>
+                                        <i class="fas fa-envelope"></i>
+
+                                        <p>
+                                            EMAIL
+
+                                            <span>
+                                                <a href="mailto:info@lakesidehospital.com">
+                                                    info@lakesidehospital.com
+                                                </a>
+                                            </span>
+                                        </p>
+                                    </li>
+
+                                    <li>
+                                        <i class="fas fa-map"></i>
+
+                                        <p>
+                                            ADDRESS
+
+                                            <span>
+                                               Lakeside Hospital Campus,<br class="mobile-hide" />
+                                                Bangalore, Karnataka
+                                            </span>
+                                        </p>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom bg-dark text-light">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <p>
+                                <span class="copyright-icon">&copy;</span>
+                               {% now "Y" %} Lakeside Hospital. All Rights Reserved.
+                            </p>
+                        </div>
+
+                        <div class="col-lg-6 text-end link">
+                            <p>
+                                Designed &amp; Developed by
+                                <a href="https://www.thinkb.agency/" target="_blank">
+                                    ThinkB
+                                </a>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                {% for message in messages %}
+                    Swal.fire({
+                        icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
+                        title: "{{ message|escapejs }}",
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                {% endfor %}
+            });
+        </script>
+        {% endif %}
+        <script>
+            window.addEventListener("load", function() {
+                setTimeout(function() {
+                    const preloader = document.getElementById("preloader");
+
+                    preloader.style.opacity = "0";
+                    preloader.style.transition = "all 0.8s ease";
+
+                    setTimeout(function() {
+                        preloader.style.display = "none";
+                    }, 800);
+                }, 1500);
+            });
+            </script>
+
+        <!-- JS -->
+        <script src="{% static 'frontend/assets/js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/jquery.appear.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/magnific-popup.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/wow.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/progress-bar.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/imagesloaded.pkgd.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/count-to.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/YTPlayer.min.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/circle-progress.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/validnavs.js' %}"></script>
+        <script src="{% static 'frontend/assets/js/main.js' %}"></script>
+
+        {% block script %}{% endblock %}
+
+    </body>
+</html>

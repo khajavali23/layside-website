@@ -1,0 +1,46 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | Messages</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h4 class="mb-3">Messages</h4>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Received</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for msg in contact_messages %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ msg.name }}</td>
+                <td>{{ msg.email }}</td>
+                <td>{{ msg.phone_number }}</td>
+                <td>{{ msg.created_at }}</td>
+                <td>
+                  <a href="{% url 'message-detail' msg.slug %}" class="btn btn-sm btn-primary">View</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No messages found</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

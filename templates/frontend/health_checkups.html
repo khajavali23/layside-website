@@ -1,0 +1,177 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="inner-banner"
+    style="background-image: url('{% static "frontend/assets/img/banner/check_up_banners.jpg" %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Preventive Healthcare Packages
+            </span>
+
+            <h1>
+                Health Checkups
+            </h1>
+
+            <p>
+                Comprehensive health checkup packages designed for early
+                detection, better prevention, and a healthier lifestyle.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    Health Checkups
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="health-checkup-section">
+    <div class="health-container">
+        <div class="health-grid">
+            {% for plan in plans %}
+            <div class="health-card">
+                
+                {% if plan.image %}
+                <img src="{{ plan.image.url }}" alt="{{ plan.title }}" class="health-img" />
+                {% endif %}
+
+                <h4 class="health-title">{{ plan.title }}</h4>
+
+                <p class="health-count">
+                    {{ plan.total_test_include }} Tests Included
+                </p>
+
+                <ul class="health-list">
+                    {% for test in plan.tests %}
+                    <li>{{ test }}</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="health-footer">
+                    <span class="health-price">₹ {{ plan.price }}</span>
+
+                    <a href="javascript:void(0)"
+                       class="health-btn openAppointment health_checkup_btn"
+                       data-plan="{{ plan.id }}">
+                        Book Now
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div id="healthBookingModal" class="health-modal">
+    
+    <!-- BACKDROP -->
+    <div class="health-modal-overlay"></div>
+
+    <div class="health-modal-box">
+        
+        <span class="health-modal-close" id="closeHealthModal">×</span>
+
+        <!-- HEADING -->
+        <div class="health-modal-header">
+            <h4>Health Checkup Booking</h4>
+        </div>
+
+        <form method="POST" action="{% url 'create_health_booking' %}">
+            {% csrf_token %}
+
+            <!-- Selected Plan ID -->
+            <input type="hidden" name="plan_id" id="selectedPlanId" />
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="health-form-group">
+                        <input type="text" name="first_name" class="health-input" placeholder="First Name" required />
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="health-form-group">
+                        <input type="text" name="last_name" class="health-input" placeholder="Last Name" />
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="health-form-group">
+                        <input type="text" name="phone_number" class="health-input" placeholder="Phone Number" required />
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="health-form-group">
+                        <input type="date" name="date" class="health-input" min="{{ today|date:'Y-m-d' }}" required />
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="health-form-group">
+                        <textarea name="message" class="health-textarea" placeholder="Write Your Message" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <button type="submit" class="health-submit-btn">
+                        Book Health Checkup
+                        <i class="fa fa-paper-plane"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".openAppointment");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const planId = this.getAttribute("data-plan");
+
+            document.getElementById("selectedPlanId").value = planId;
+
+            document.getElementById("healthBookingModal").style.display = "flex";
+        });
+    });
+});
+</script>
+
+<script>
+document.getElementById("closeHealthModal").onclick = function() {
+    document.getElementById("healthBookingModal").style.display = "none";
+};
+</script>
+
+{% endblock content %}

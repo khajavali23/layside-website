@@ -1,0 +1,122 @@
+{% extends "frontend/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="inner-banner"
+    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Your Privacy Matters
+            </span>
+
+            <h1>
+                Privacy Policy
+            </h1>
+
+            <p>
+                Learn how we collect, protect, and manage your personal
+                information with complete transparency and security.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    Privacy Policy
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+        <div class="about-area default-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <h2>Privacy Policy</h2>
+                        <p>
+                            at Lakeside hospital, Vijayapura, we are committed to protecting your privacy and ensuring the
+                            security of your personal information. This Privacy Policy outlines how we collect, use, and
+                            safeguard your data.
+                        </p>
+
+                        <h4>1. Information We Collect</h4>
+                        <p>
+                            We may collect personal details such as your name, phone number, email address, and medical
+                            information when you fill out forms, book appointments, or contact us.
+                        </p>
+
+                        <h4>2. How We Use Your Information</h4>
+                        <p>
+                            Your information is used to provide medical services, schedule appointments, improve patient
+                            care, and communicate important updates related to your health and treatment.
+                        </p>
+
+                        <h4>3. Data Protection</h4>
+                        <p>
+                            We implement appropriate security measures to protect your personal data from unauthorized
+                            access, misuse, or disclosure.
+                        </p>
+
+                        <h4>4. Sharing of Information</h4>
+                        <p>
+                            We do not sell or share your personal information with third parties except when required
+                            for medical treatment, legal compliance, or healthcare services.
+                        </p>
+
+                        <h4>5. Cookies and Website Usage</h4>
+                        <p>
+                            Our website may use cookies to enhance user experience and analyze website traffic. You can
+                            choose to disable cookies through your browser settings.
+                        </p>
+
+                        <h4>6. Your Rights</h4>
+                        <p>
+                            You have the right to access, update, or request deletion of your personal data. For any
+                            requests, please contact us directly.
+                        </p>
+
+                        <h4>7. Contact Us</h4>
+                        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+
+                        <ul>
+                            <li><strong>Phone:</strong> 91 90000 00000</li>
+                            <li><strong>Email:</strong> info@lakesidehospitals.com</li>
+                            <li>
+                            <strong>Address:</strong>
+                            <a 
+                                href="https://maps.app.goo.gl/Bb6SVwDKN7NZEe38A"
+                                target="_blank"
+                                style="text-decoration: none; color: inherit;"
+                            >
+                                Near S-Hyper Mart, NH50, Vijayapura - 586 103
+                            </a>
+                            </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock content %}

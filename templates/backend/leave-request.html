@@ -1,0 +1,91 @@
+{% extends 'backend/base.html' %} {% load static %} {% block title %}
+  <title>Doctors |Lakeside Hospital</title>
+{% endblock %} {% block content %}
+  <style>
+    .d_flex_month {
+      display: flex;
+      gap: 15px;
+      margin-top: -10px;
+      flex-wrap: wrap;
+    }
+    .d_flex_month .timing_block {
+      padding: 6px 15px;
+      font-size: 13px;
+      border: 1px solid #1e2b5c;
+    }
+  </style>
+  <div class="app-page-head d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
+    <div class="clearfix">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="{% url 'dashboard' %}"><i class="fi fi-rr-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Departments</li>
+        </ol>
+      </nav>
+    </div>
+    <a href="{% url 'create_department' %}" class="btn-link"><i class="fi fi-rr-plus me-1"></i> New Department</a>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3 form-heading">
+                <h4>Leave Taken Date By <span style="color: #1e2b5c">{{ doctor.name }}</span></h4>
+              </div>
+
+              <div class="d_flex_month">
+                {% for leave in leaves %}
+                  <div class="timing_block">
+                    {{ leave.date|date:'F j, Y' }}
+                    <a href="#" onclick="deleteLeave('{{ leave.id }}')"><i class="fa-solid fa-xmark ms-2"></i></a>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mt-5">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>Add New Leave for <span style="color: #1e2b5c">{{ doctor.name }}</span></h4>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-block local-forms">
+                  <label class="mb-2">Start Date (YYYY-MM-DD) <span class="login-danger">*</span></label>
+                  <input type="date" name="start_date" class="form-control mb-2" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-block local-forms">
+                  <label class="mb-2">End Date (YYYY-MM-DD) <span class="login-danger">*</span></label>
+                  <input type="date" name="end_date" class="form-control mb-2" required />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-block local-forms">
+                  <label class="mb-2">Reason <span class="login-danger">*</span></label>
+                  <textarea name="reason" class="form-control mb-2" required></textarea>
+                </div>
+              </div>
+              <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'doctors' %}" class="btn btn-secondary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

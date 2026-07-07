@@ -1,0 +1,96 @@
+{% extends 'backend/base.html' %} {% block title %}
+  <title>Dashboard | Create Faq</title>
+{% endblock %} {% block content %}
+  <style>
+    .form-wrapper {
+      max-width: 1100px;
+      margin: auto;
+    }
+    
+    .card {
+      border-radius: 12px;
+      border: none;
+    }
+    
+    .card-body {
+      padding: 30px;
+    }
+    
+    .page-title {
+      font-weight: 600;
+      font-size: 22px;
+      color: #333;
+    }
+    
+    .form-control,
+    .file__input,
+    select,
+    textarea {
+      border-radius: 8px !important;
+      padding: 10px 12px;
+      width: 100%;
+      border: 1px solid #dcdcdc;
+      transition: 0.2s ease-in-out;
+    }
+    
+    .form-control:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #0d6efd;
+      box-shadow: none;
+    }
+    
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+    }
+    
+    .btn-primary {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    .django-ckeditor-widget {
+      width: 100%;
+    }
+  </style>
+
+  <div class="container mt-4 form-wrapper">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <!-- Dynamic Title -->
+        <h4 class="page-title mb-4">Create Faq</h4>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{ form.media }}
+
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Question</label>
+              {{ form.category }}
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Answer</label>
+              {{ form.author }}
+            </div>
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Priority</label>
+              {{ form.author }}
+            </div>
+
+          </div>
+
+          <!-- Dynamic Button -->
+          <button type="submit" class="btn btn-primary mt-2">Create Faq</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

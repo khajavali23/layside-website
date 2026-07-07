@@ -1,0 +1,218 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="inner-banner"
+    style="background-image: url('{% if blog.banner %}{{ blog.banner.url }}{% else %}{% static "frontend/assets/img/banner/blog_banner.jpg" %}{% endif %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Healthcare Articles & Insights
+            </span>
+
+            <h1>
+                {{ blog.title }}
+            </h1>
+
+            <p>
+                Explore expert healthcare knowledge, wellness guidance,
+                medical updates, and informative articles for better living.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    <a href="{% url 'frontned_blogs' %}">
+                        Blogs
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    {{ blog.title }}
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="blog-area single full-blog right-sidebar default-padding">
+    <div class="container">
+        <div class="blog-items">
+            <div class="row">
+                <!-- BLOG CONTENT -->
+                <div class="blog-content">
+                    <div class="item">
+                        <!-- Post Image -->
+                        <div class="thumb">
+                            {% if blog.image %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" />
+                            {% endif %}
+                        </div>
+
+                        <!-- Blog Info -->
+                        <div class="info">
+                            <!-- Meta -->
+                            <div class="meta">
+                                <ul>
+                                    <li><a href="#">{{ blog.author }}</a></li>
+                                    <li>{{ blog.createdAt|date:"d F, Y" }}</li>
+                                </ul>
+                            </div>
+
+                            <!-- Heading -->
+                            <h3>{{ blog.heading }}</h3>
+
+                            <!-- Content -->
+                           <div class="blog-rich-text">
+    {{ blog.content|safe }}
+</div>
+
+                            <!-- Tags -->
+                            <div class="post-tags share mt-5">
+                                <div class="tags">
+                                    <span>Tags:</span>
+                                    {% for tag in tags %}
+                                    <a href="#">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 💬 COMMENT SECTION (MIDDLE PLACED) -->
+                <div class="col-12">
+                    <div class="comment-box mt-5">
+                        <h3>Leave a Comment</h3>
+
+                        <!-- FORM -->
+                        <form method="POST" class="comment-form">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        class="form-control"
+                                        placeholder="Your Name"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Your Email"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="col-md-12 mt-3">
+                                    <select name="rating" class="form-control">
+                                        <option value="">Rating</option>
+                                        <option value="5">⭐⭐⭐⭐⭐</option>
+                                        <option value="4">⭐⭐⭐⭐</option>
+                                        <option value="3">⭐⭐⭐</option>
+                                        <option value="2">⭐⭐</option>
+                                        <option value="1">⭐</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mt-3">
+                                    <textarea
+                                        name="message"
+                                        class="form-control"
+                                        rows="4"
+                                        placeholder="Write your comment..."
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-3 btn_blog_details">Post Comment</button>
+                        </form>
+
+                        <!-- COMMENTS LIST -->
+
+                        <div class="comments-wrapper mt-5">
+                            <h4 class="comments-title">{{ comments.count }} Comments</h4>
+
+                            <div class="comments-track">
+                                {% for comment in comments %}
+                                <div class="comment-box">
+                                    <div class="top">
+                                        <div class="avatar">{{ comment.name|slice:":1" }}</div>
+                                        <div>
+                                            <strong>{{ comment.name }}</strong>
+                                            <div class="rating">★ {{ comment.rating }}/5</div>
+                                        </div>
+                                    </div>
+
+                                    <p>{{ comment.message }}</p>
+
+                                    <small>{{ comment.created_at|date:"d M Y" }}</small>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const track = document.querySelector(".comments-track");
+
+        let scrollPos = 0;
+
+        setInterval(() => {
+            if (!track) return;
+
+            const maxScroll = track.scrollWidth - track.clientWidth;
+
+            if (scrollPos >= maxScroll) {
+                scrollPos = 0;
+            } else {
+                scrollPos += 300;
+            }
+
+            track.scrollTo({
+                left: scrollPos,
+                behavior: "smooth",
+            });
+        }, 2500);
+    });
+</script>
+
+
+
+{% endblock content %}

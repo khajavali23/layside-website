@@ -1,0 +1,58 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | {{ page_title }}</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4 form-wrapper">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="page-title mb-4">{{ page_title }}</h4>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            {{ form.title }}
+          </div>
+
+          <!-- ✅ NEW FIELD -->
+          <div class="mb-3">
+            <label class="form-label">Tests Included</label>
+            {{ form.tests }}
+            <small class="text-muted">Enter tests separated by commas</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Total Tests Included</label>
+            {{ form.total_test_include }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Price</label>
+            {{ form.price }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Priority</label>
+            {{ form.priority }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Image</label>
+            {{ form.image }}
+          </div>
+
+          <div class="mb-3 form-check">
+            {{ form.status }}
+            <label class="form-check-label">Active</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary">{{ page_title }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

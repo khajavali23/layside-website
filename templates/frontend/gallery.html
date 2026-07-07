@@ -1,0 +1,101 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- Gallery Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/gallery_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Moments Of Care
+            </span>
+
+            <h1>Gallery</h1>
+
+            <p>
+                Discover our hospital environment, medical facilities,
+                events, and patient care moments through our gallery.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>Gallery</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+
+<div class="gallery-area default-padding">
+    <div class="container">
+        <div class="gallery-items-area text-center">
+            <div class="row">
+                <div class="col-lg-12 gallery-content">
+
+
+                    <div class="magnific-mix-gallery text-center infrastructure">
+                        <div id="portfolio-grid" class="gallery-items colums-3">
+
+                            {% for item in gallery_items %}
+
+                            <div class="pf-item">
+
+                                <div class="effect-box">
+
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                                    {% elif item.youtube_url %}
+                                        <img src="https://img.youtube.com/vi/{{ item.get_youtube_id }}/hqdefault.jpg" alt="{{ item.title }}">
+                                    {% endif %}
+
+                                    <div class="info">
+                                        <h4><a href="#">{{ item.title }}</a></h4>
+
+                                        {% if item.image %}
+                                            <a href="{{ item.image.url }}" class="item popup-link">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        {% elif item.youtube_url %}
+                                            <a href="{{ item.get_youtube_embed }}" class="item popup-link">
+                                                <i class="fa fa-play"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

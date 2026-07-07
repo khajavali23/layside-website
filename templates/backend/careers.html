@@ -1,0 +1,82 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Careers | Dashboard</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>Careers</h4>
+      <a href="{% url 'career-create' %}" class="btn btn-primary">Create Job</a>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Job Title</th>
+              <th>Department</th>
+              <th>Experience</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in careers %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ c.job_title }}</td>
+                <td>{{ c.department }}</td>
+                <td>{{ c.experience }} yrs</td>
+                <td>
+                  {% if c.status %}
+                    <span class="badge bg-success">Active</span>
+                  {% else %}
+                    <span class="badge bg-danger">Inactive</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'career-edit' c.id %}" class="btn btn-sm btn-warning">Edit</a>
+
+                  <a href="{% url 'career-applications' c.id %}" class="btn btn-sm btn-info">Applications</a>
+
+                  <button class="btn btn-sm btn-danger delete-btn" data-url="{% url 'career-delete' c.id %}">Delete</button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No jobs found</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const url = this.dataset.url
+    
+        Swal.fire({
+          title: 'Delete job?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

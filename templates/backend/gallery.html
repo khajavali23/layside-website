@@ -1,0 +1,97 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Gallery | Dashboard</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>Gallery</h4>
+      <a href="{% url 'gallery-create' %}" class="btn btn-primary">Add Media</a>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Preview</th>
+              <th>Title</th>
+              <th>Format</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for g in galleries %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+
+                <!-- 🔥 IMAGE / VIDEO PREVIEW -->
+                <td>
+                  {% if g.image %}
+                    <img src="{{ g.image.url }}" width="100" class="rounded" />
+                  {% elif g.youtube_url %}
+                    <a href="{{ g.youtube_url }}" target="_blank"><img src="https://img.youtube.com/vi/{{ g.get_youtube_id }}/0.jpg" width="120" class="rounded" /></a>
+                  {% else %}
+                    <span class="text-muted">No media</span>
+                  {% endif %}
+                </td>
+
+                <td>{{ g.title }}</td>
+                <td>
+                  {% if g.image %}
+                    Image
+                  {% elif g.youtube_url %}
+                    Youtube Video
+                  {% else %}
+                    <span class="text-muted">No media</span>
+                  {% endif %}
+                </td>
+                <td>{{ g.created_at }}</td>
+
+                <td>
+                  <a href="{% url 'gallery-edit' g.id %}" class="btn btn-sm btn-warning">Edit</a>
+
+                  <button class="btn btn-sm btn-danger delete-btn" data-url="{% url 'gallery-delete' g.id %}">Delete</button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-center">No media found</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const url = this.dataset.url
+    
+        Swal.fire({
+          title: 'Delete item?',
+          text: 'This cannot be undone',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

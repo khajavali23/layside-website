@@ -1,0 +1,67 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | {{ page_title }}</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4 form-wrapper">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="mb-4">{{ page_title }}</h4>
+
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.media }}
+
+          <div class="mb-3">
+            <label>Job Title</label>
+            {{ form.job_title }}
+          </div>
+
+          <div class="mb-3">
+            <label>Department</label>
+            {{ form.department }}
+          </div>
+
+          <div class="mb-3">
+            <label>Experience (Years)</label>
+            {{ form.experience }}
+          </div>
+
+          <div class="mb-3">
+            <label>Salary</label>
+            {{ form.salary }}
+          </div>
+
+          <div class="mb-3">
+            <label>Job Summary</label><br />
+            {{ form.job_summary }}
+          </div>
+
+          <div class="mb-3">
+            <label>Responsibilities</label><br />
+            {{ form.responsibilities }}
+          </div>
+
+          <div class="mb-3">
+            <label>Skills</label><br />
+            {{ form.skills }}
+          </div>
+
+          <div class="mb-3">
+            <label>Qualifications</label><br />
+            {{ form.qualifications }}
+          </div>
+
+          <div class="mb-3 form-check">
+            {{ form.status }}
+            <label class="form-check-label">Active</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary">{{ page_title }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

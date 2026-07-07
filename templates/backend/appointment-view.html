@@ -1,0 +1,60 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Appointment Details</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h4 class="mb-3">Appointment Details</h4>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="mb-3">Patient Info</h5>
+        <p>
+          <strong>Name:</strong> {{ detailed_appointment.appointment.patient.name }}
+        </p>
+        <p>
+          <strong>Phone:</strong> {{ detailed_appointment.appointment.patient.phone_number }}
+        </p>
+        <p>
+          <strong>Email:</strong> {{ detailed_appointment.appointment.patient.email }}
+        </p>
+        <p>
+          <strong>Gender:</strong> {{ detailed_appointment.appointment.patient.gender }}
+        </p>
+
+        <hr />
+
+        <h5 class="mb-3">Appointment Info</h5>
+        <p>
+          <strong>Date:</strong> {{ detailed_appointment.formatted_date }}
+        </p>
+        <p>
+          <strong>Timing:</strong> {{ detailed_appointment.timing_details }}
+        </p>
+        <p>
+          <strong>Doctor:</strong> {{ detailed_appointment.appointment.selected_doctor }}
+        </p>
+        <p>
+          <strong>Department:</strong> {{ detailed_appointment.appointment.department }}
+        </p>
+        <p>
+          <strong>Status:</strong>
+          {% if detailed_appointment.appointment.status == 'COMPLETED' %}
+            Confirmed
+          {% else %}
+            Not Confirmed
+          {% endif %}
+        </p>
+
+        <hr />
+
+        <div class="mt-4">
+          <a href="{{ whatsapp_link }}" target="_blank" class="btn btn-success">WhatsApp Patient</a>
+          <a href="{% url 'appointments' %}" class="btn btn-secondary">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

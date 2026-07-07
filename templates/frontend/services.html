@@ -1,0 +1,96 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Departments Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/service_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Advanced Medical Departments
+            </span>
+
+            <h1>Departments</h1>
+
+            <p>
+                Explore our specialized departments designed to provide
+                comprehensive and personalized medical care.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>Departments</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+        <div class="services-area inc-icon default-padding">
+            <div class="container">
+                <div class="row text-center">
+
+                    {% for dep in departments %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="item">
+                            <div class="info">
+
+                                <!-- Title -->
+                                <h4>
+                                    <a href="{% url 'department_detail' dep.slug %}">
+                                        {{ dep.title }}
+                                    </a>
+                                </h4>
+
+                                <!-- Icon -->
+                                <div class="overlay">
+                                    {% if dep.icon %}
+                                        <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon">
+                                    {% else %}
+                                        <i class="flaticon-anatomy"></i>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Description -->
+                                <p>
+                                    {{ dep.description|striptags|truncatewords:18 }}
+                                </p>
+
+                                <!-- Button -->
+                                <a class="btn btn-border theme circle btn-md"
+                                href="{% url 'department_detail' dep.slug %}">
+                                    Read More
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,354 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="inner-banner"
+    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Experienced Healthcare Specialist
+            </span>
+
+            <h1>
+                {{ doctor.name }}
+            </h1>
+
+            <p>
+                Dedicated to providing compassionate medical care,
+                expert consultation, and advanced treatment for every patient.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    <a href="{% url 'frontend_doctors' %}">
+                        Doctors
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    {{ doctor.name }}
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+  <div class="doctor-details-area default-padding">
+    <div class="container">
+      <!-- TOP ROW -->
+      <div class="row">
+        <!-- LEFT IMAGE -->
+        <div class="col-lg-6">
+          <div class="thumb">
+            {% if doctor.photo %}
+              <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor_details_img" />
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="col-lg-6">
+          <div class="book_box_doctor">
+            <div class="heading">
+              <h2>Make an Appointment</h2>
+            </div>
+
+            <form id="appointmentForm">
+              {% csrf_token %}
+
+              <!-- ✅ Hidden fields -->
+              <input type="hidden" id="doctor" value="{{ doctor.id }}" />
+              <input type="hidden" id="department" value="{{ doctor.department.id }}" />
+
+              <div class="row">
+                <!-- First Name -->
+                <div class="col-lg-6">
+                  <input class="form-control" id="first_name" placeholder="First Name" />
+                </div>
+
+                <!-- Last Name -->
+                <div class="col-lg-6">
+                  <input class="form-control" id="last_name" placeholder="Last Name" />
+                </div>
+
+                <!-- Phone -->
+                <div class="col-lg-6">
+                  <input class="form-control" id="phone" placeholder="Phone" />
+                </div>
+
+                <!-- Email -->
+                <div class="col-lg-6">
+                  <input class="form-control" id="email" placeholder="Email" />
+                </div>
+
+                <!-- Gender -->
+                <div class="col-lg-6">
+                  <select id="gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <!-- Date -->
+                <div class="col-lg-6">
+                  <input class="form-control" id="date" type="date" min="{{ today|date:'Y-m-d' }}" />
+                </div>
+
+                <!-- Time -->
+                <div class="col-lg-12">
+                  <select id="time" class="form-control">
+                    <option value="">Select Time Slot</option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="col-lg-12">
+                  <textarea id="message" class="form-control" placeholder="Tell Us About Problem"></textarea>
+                </div>
+
+                <!-- Submit -->
+                <div class="col-lg-12">
+                  <button type="submit" class="doctor_details_submit_btn">Book Appointment</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- BELOW CONTENT FULL WIDTH -->
+      <div class="row mt-5 services-details-area">
+        <div class="col-lg-12">
+          <div class="info">
+            <h2>{{ doctor.name }}</h2>
+            <h5>{{ doctor.education }}</h5>
+
+            <!-- ✅ ADDED FIELDS (NO DESIGN CHANGE) -->
+            <div class="row mt-3">
+              <div class="col-lg-6">
+                <ul>
+                  <li>
+                    <strong>Designation:</strong> {{ doctor.designation }}
+                  </li>
+                  <li>
+                    <strong>Department:</strong> {{ doctor.department.title }}
+                  </li>
+                  <li>
+                    <strong>Experience:</strong> {{ doctor.experience_years }} Years
+                  </li>
+                  <li>
+                    <strong>Consultation Fee:</strong> ₹{{ doctor.fee }}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul>
+                  <li>
+                    <strong>City:</strong> {{ doctor.city }}
+                  </li>
+                  <li>
+                    <strong>Phone:</strong> {{ doctor.number }}
+                  </li>
+                  <li>
+                    <strong>Email:</strong> {{ doctor.email }}
+                  </li>
+                  <li>
+                    <strong>Gender:</strong> {{ doctor.get_gender_display }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="services-details-area mt-5">
+              <div class="content">
+                <div class="info">
+                  <h3>Overview</h3>
+
+                  {{ doctor.description|safe }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabs -->
+            <nav>
+              <div class="nav nav-tabs nav-pills">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_1">Working Hours</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_2">Experience</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_3">Qualifications</button>
+              </div>
+            </nav>
+
+            <div class="tab-content mt-3">
+              <div class="tab-pane fade show active" id="tab_1">
+                <p>Doctor available from Monday to Saturday with flexible timings.</p>
+              </div>
+
+              <div class="tab-pane fade" id="tab_2">
+                <p>{{ doctor.experience_years }}+ years of experience in {{ doctor.department.title }}.</p>
+              </div>
+
+              <div class="tab-pane fade" id="tab_3">
+                <p>{{ doctor.education }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+{% block script %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const doctor = document.getElementById("doctor").value;
+    const department = document.getElementById("department").value;
+    const date = document.getElementById("date");
+    const time = document.getElementById("time");
+
+    const gender = document.getElementById("gender");
+
+    // ✅ CSRF
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    // ✅ Toast
+    function showToast(msg) {
+        alert(msg);
+    }
+
+    // ✅ Time format
+    function formatTime(timeStr) {
+        const [h, m] = timeStr.split(":");
+        let hour = parseInt(h);
+        const ampm = hour >= 12 ? "PM" : "AM";
+        hour = hour % 12 || 12;
+        return `${hour}:${m} ${ampm}`;
+    }
+
+    // 🔥 LOAD TIMINGS
+    async function loadTimings() {
+
+        if (!date.value) return;
+
+        try {
+            const res = await fetch(`/api/timings/${doctor}/${date.value}/`);
+            const data = await res.json();
+
+            time.innerHTML = `<option value="">Select Time Slot</option>`;
+
+            if (!data.length) {
+                showToast("No slots available");
+                return;
+            }
+
+            data.forEach(t => {
+                time.innerHTML += `
+                    <option value="${t.id}">
+                        ${formatTime(t.start_time)} - ${formatTime(t.end_time)}
+                    </option>
+                `;
+            });
+
+        } catch (err) {
+            console.error(err);
+            showToast("Error loading timings");
+        }
+    }
+
+    date.addEventListener("change", loadTimings);
+
+    // 🔥 FORM SUBMIT
+    document.getElementById("appointmentForm").addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+        const firstName = document.getElementById("first_name").value.trim();
+        const lastName = document.getElementById("last_name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        const payload = {
+            name: `${firstName} ${lastName}`.trim(),
+            phone_number: phone,
+            email: email,
+            gender: gender.value,
+            department: department,
+            doctor: doctor,
+            date: date.value,
+            time: time.value,
+            message: document.getElementById("message").value
+        };
+
+        // ✅ validation
+        if (!firstName || !phone || !email || !gender.value || !date.value || !time.value) {
+            showToast("All fields are required");
+            return;
+        }
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+            showToast("Invalid phone number");
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/book-appointment/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            if (res.status === 201) {
+                window.location.href = `/appointment/success/${data.appointment_id}/`;
+            } else {
+                showToast(data.error || "Something went wrong");
+            }
+
+        } catch (err) {
+            console.error(err);
+            showToast("Server error");
+        }
+
+    });
+
+});
+</script>
+{% endblock script %}
+    

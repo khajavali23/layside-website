@@ -1,0 +1,174 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<section class="inner-banner"
+    style="background-image: url('{% if department.breadcamp %}{{ department.breadcamp.url }}{% else %}{% static "frontend/assets/img/banner/7.jpg" %}{% endif %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Specialized Healthcare Services
+            </span>
+
+            <h1>
+                {{ department.title }}
+            </h1>
+
+            <p>
+                Providing advanced medical treatments, expert consultation,
+                and compassionate patient care for better health outcomes.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    <a href="{% url 'services' %}">
+                        Services
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    {{ department.title }}
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="services-details-area default-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Services Content -->
+            <div class="content pr-md-15 pr-xs-15">
+                <div class="thumb">
+                    {% if department.banner %}
+
+                    <div class="row">
+                        <!-- IMAGE -->
+                        <div class="col-lg-8 col-md-6">
+                            <img
+                                src="{{ department.banner.url }}"
+                                alt="{{ department.title }}"
+                                class="img-fluid rounded"
+                            />
+                        </div>
+
+                        <!-- STATIC CONTENT BESIDE IMAGE -->
+                        <div class="col-lg-4 col-md-6">
+                            <div class="department-static-info">
+                                <!-- TITLE DYNAMIC -->
+                                <h2>{{ department.title }}</h2>
+
+                                <p>
+                                    Welcome to the {{ department.title }} Department atNRIHospital. Our department is
+                                    committed to providing exceptional healthcare services with a focus on
+                                    patient-centered care and advanced medical practices. We strive to offer a
+                                    comprehensive range of services designed to meet the diverse needs of our patients.
+                                </p>
+
+                                <hr />
+
+                                <h4>Our Location</h4>
+                                <p>
+                                    #2,NRIHospital Road,<br />
+                                    Ashok Nagar, Bengaluru,<br />
+                                    Karnataka - 560001
+                                </p>
+
+                                <h4>Quick Contact</h4>
+                                <p>
+                                    E-mail: info@lakesidehospital.com <br />
+                                    Toll-Free: 18003091001 <br />
+                                    Emergency: +91 8022277979
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                </div>
+                <div class="info">
+                  
+
+                    <p>{{ department.description|safe }}</p>
+                </div>
+            </div>
+            <!-- End Services Content -->
+
+            <!-- DOCTORS (UNCHANGED STATIC) -->
+            <div class="doctor-area bg-gray default-padding bottom-less mt-5">
+                <div class="container">
+                    <div class="doctor-items text-center">
+                        <div class="row">
+                            <div class="site-heading text-center">
+                                <h2>Meet Our <span>Experts</span></h2>
+                                <p>
+                                    Our experienced doctors are committed to delivering high-quality care with advanced
+                                    medical expertise.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {% for doctor in doctors %}
+                            <div class="col-lg-4 col-md-6 mb-30">
+                                <div class="item">
+                                    <div class="thumb">
+                                        {% if doctor.photo %}
+                                        <img
+                                            src="{{ doctor.photo.url }}"
+                                            alt="{{ doctor.name }}"
+                                            class="services_details_doctor"
+                                        />
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="info">
+                                        <h4>{{ doctor.name }}</h4>
+                                        <h5>{{ doctor.designation }}</h5>
+
+                                        <div class="appoinment-btn">
+                                            <a href="{% url 'doctor_detail' doctor.slug %}"> Make Appointment </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>No doctors available for this department.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

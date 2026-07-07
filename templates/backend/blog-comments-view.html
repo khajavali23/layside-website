@@ -1,0 +1,83 @@
+{% extends 'backend/base.html' %} {% load static %} {% block title %}
+  <title>Doctors | NRI</title>
+{% endblock %} {% block content %}
+  <div class="app-page-head d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
+    <div class="clearfix">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="{% url 'dashboard' %}"><i class="fi fi-rr-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+        </ol>
+      </nav>
+    </div>
+    <a href="{% url 'create_blog' %}" class="btn-link"><i class="fi fi-rr-plus me-1"></i> New Blog</a>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card overflow-hidden">
+        <div class="card-header d-flex flex-wrap gap-3 align-items-center justify-content-between border-0 pb-0">
+          <h6 class="card-title mb-0">Comments for {{ blog.heading }}</h6>
+          <div class="clearfix d-flex align-items-center gap-2">
+            <div class="dropdown"></div>
+            <div id="dt_CustomerList_Search"></div>
+          </div>
+        </div>
+        <div class="card-body px-1 pt-2 pb-2">
+          <table id="dt_CustomerList" class="table table-sm table-row-rounded data-row-checkbox">
+            <thead class="table-light">
+              <tr>
+                <th class="minw-200px">Name</th>
+                <th class="minw-200px">Email</th>
+                <th class="minw-150px">Rating</th>
+                <th class="minw-150px">Comment</th>
+                <th class="minw-150px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in comments %}
+                <tr>
+                  <td>{{ x.name }}</td>
+                  <td>{{ x.email }}</td>
+                  <td>{{ x.rating }}</td>
+                  <td>{{ x.message }}</td>
+
+                  <td>
+                    <button class="btn btn-sm btn-danger delete-btn" data-url="{% url 'delete-blog-comment' blog.slug x.slug %}">Delete</button>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const url = this.dataset.url
+    
+        Swal.fire({
+          title: 'Delete comment?',
+          text: 'This action cannot be undone',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Dashboard | Message Detail</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="mb-3">Message Detail</h4>
+
+        <p>
+          <strong>Name:</strong> {{ message.name }}
+        </p>
+        <p>
+          <strong>Email:</strong> {{ message.email }}
+        </p>
+        <p>
+          <strong>Phone:</strong> {{ message.phone_number }}
+        </p>
+        <p>
+          <strong>Received:</strong> {{ message.created_at }}
+        </p>
+
+        <hr />
+
+        <p>
+          <strong>Message:</strong>
+        </p>
+        <p>{{ message.content }}</p>
+
+        <a href="{% url 'message-list' %}" class="btn btn-secondary mt-3">Back to list</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

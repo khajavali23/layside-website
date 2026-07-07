@@ -1,0 +1,702 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}
+Lakeside Hospital Bangalore | Stem Cell & Regenerative Wellness
+{% endblock %}
+
+{% block meta_description %}
+Advanced healthcare, stem cell therapy, wellness and holistic healing under one roof.
+{% endblock %}
+
+{% block meta_keywords %}
+hospital, stem cell therapy, wellness, regenerative medicine
+{% endblock %}
+{% block content %}
+
+
+
+  <div id="toast" class="toast"></div>
+
+  <!-- Start Banner -->
+  <div class="banner-area banner-style-six animate-text">
+    <div id="bootcarousel" class="carousel slide carousel-fade animate_text" data-bs-ride="carousel">
+      <div class="carousel-inner text-light carousel-zoom">
+        {% for banner in banners %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="slider-thumb bg-cover" style="background-image: url({{ banner.image_for_desktop.url }});"></div>
+
+            <div class="box-table shadow dark">
+              <div class="box-cell">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="content">
+                        <h4>Best Service Good Health</h4>
+
+                        <h1 data-animation="animated slideInRight">{{ banner.heading }}</h1>
+
+                        <p>{{ banner.description }}</p>
+
+                        {% if banner.button_text %}
+                          <a class="btn btn-md btn-theme animation" href="{{ banner.button_url }}">{{ banner.button_text }}</a>
+                        {% endif %} 
+                        {% if banner.button_two_text %}
+                          <a class="btn btn-md btn-theme animation" href="{{ banner.button_two_url }}">{{ banner.button_two_text }}</a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-control-prev carousel-control left" type="button" data-bs-target="#bootcarousel" data-bs-slide="prev">
+        <i class="fa fa-angle-left"></i>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next carousel-control right" type="button" data-bs-target="#bootcarousel" data-bs-slide="next">
+        <i class="fa fa-angle-right"></i>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <!-- End Banner End-->
+
+  <!-- Start Appointment & Features -->
+  <div class="features-area default-padding bg-gray">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 appoinment">
+                <div class="appoinment-box">
+                    <div class="heading">
+                        <h4>Online Appointment</h4>
+                        <h2>Make an Appointment</h2>
+                    </div>
+                    <form id="appointmentForm">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <!-- First Name -->
+                            <div class="col-lg-6">
+                                <input class="form-control" id="first_name" placeholder="First Name" type="text" />
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="col-lg-6">
+                                <input class="form-control" id="last_name" placeholder="Last Name" type="text" />
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-lg-6">
+                                <input class="form-control" id="phone" placeholder="Phone" type="text" />
+                            </div>
+
+                            <div class="col-lg-6">
+                                <select id="gender" class="form-control">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-lg-12">
+                                <input class="form-control" id="email" placeholder="Email Address" type="email" />
+                            </div>
+
+                            <!-- Department -->
+                            <div class="col-lg-6">
+                                <select id="department" name="department" class="form-control">
+                                    <option value="">Department</option>
+                                    {% for dep in departments %}
+                                    <option value="{{ dep.id }}">{{ dep.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Doctor -->
+                            <div class="col-lg-6">
+                                <select id="doctor" class="form-control">
+                                    <option value="">Doctor</option>
+                                </select>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="col-lg-6">
+                                <input class="form-control" id="date" type="date" min="{{ today|date:'Y-m-d' }}" />
+                            </div>
+
+                            <!-- Time -->
+                            <div class="col-lg-6">
+                                <select id="time" class="form-control">
+                                    <option value="">Available Time</option>
+                                </select>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="col-lg-12">
+                                <textarea id="message" class="form-control" placeholder="Tell Us About Your Problem"></textarea>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="col-lg-12">
+                                <button type="submit">Book Appointment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-5 offset-lg-1 features-items">
+                <ul>
+                    <li>
+                        <div class="icon">
+                            <i class="flaticon-tooth"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Advanced Medical Technology</h4>
+                            <p>We combine modern infrastructure with cutting-edge medical technology to ensure accurate diagnosis and effective treatment outcomes.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon">
+                            <i class="flaticon-medicine"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Comprehensive Healthcare Solutions</h4>
+                            <p>From general medicine to specialized treatments, our multidisciplinary approach ensures complete and coordinated care under one roof.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon">
+                            <i class="flaticon-24-hours"></i>
+                        </div>
+                        <div class="info">
+                            <h4>24/7 Emergency &amp; Patient Support</h4>
+                            <p>Round-the-clock emergency services and dedicated support teams to assist you whenever you need care the most.</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="bottom">
+                    <div class="video">
+                        <a href="https://www.youtube.com/watch?v=5vY-D42NFP4" class="popup-youtube relative theme video-play-button item-center">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="content">
+                        <h4>InsideLakeside Hospital</h4>
+                        <p>Take a closer look at our facilities, specialists, and the care experience that makes us a trusted name in healthcare.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<!-- End Appointment & Features End-->
+
+<!-- Why Choose Us -->
+<div class="chose-us-area">
+    <div class="container">
+
+        <div class="row align-items-center">
+
+                <!-- Left Image -->
+                <div class="col-lg-6">
+
+                    <div class="thumb bg-cover about-image-area"
+                        style="background-image: url('{% static "frontend/assets/img/about/about_us.jpg" %}')">
+
+                        <!-- Floating Modern Card -->
+                        <div class="floating-care-box">
+
+                            <div class="care-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+
+                            <div class="care-content">
+
+                                <span>Why Choose Us</span>
+
+                                <h4>
+                                    Expert Care &
+                                    <br>
+                                    Trusted Treatment
+                                </h4>
+
+                                <a href="{% url "about" %}" class="btn btn-theme">
+                                    Explore More
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+                        <!-- End Card -->
+
+                    </div>
+
+                </div>
+                <!-- End Left -->
+
+
+                <!-- Right Content -->
+            <div class="col-lg-6 pl-80 pl-md-15 pl-xs-15 info about_us_section">
+
+                <div class="heading">
+
+                    <h4 class="sub-title">
+                        WHY CHOOSE US
+                    </h4>
+
+                    <h2 class="title">
+                        Innovative Care. Holistic Wellness. Regenerative Excellence.
+                    </h2>
+
+                    <p>
+                        At Lakeside Regenerative Center, we bring together advanced
+                        medical technologies, regenerative therapies, and personalized
+                        healthcare solutions to help you achieve lasting wellness.
+                    </p>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        <div class="info">
+                            <h4>Precision Health &amp; Regenerative Innovation</h4>
+
+                            <p>
+                                We utilize advanced diagnostic and regenerative
+                                technologies to support accurate assessments and
+                                personalized treatment plans.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="info">
+                            <h4>Comprehensive Wellness Under One Roof</h4>
+
+                            <p>
+                                From family medicine and stem cell therapies to
+                                aesthetics, dermatology, physiotherapy, and Ayurveda,
+                                we offer integrated healthcare solutions.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="info">
+                            <h4>Personalized Treatment Journey</h4>
+
+                            <p>
+                                Our experienced specialists create customized care
+                                plans and provide continuous support to help you
+                                achieve your health and wellness goals.
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- End Right -->
+
+        </div>
+
+    </div>
+</div>
+<!-- Why Choose Us End -->
+
+<!-- Services -->
+<div class="services-area inc-icon bg-gray carousel-shadow default-padding bottom-less">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="site-heading text-center">
+            <h2>Our <span>Specialties</span></h2>
+            <p>Comprehensive healthcare services with experienced doctors and advanced medical facilities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="services-items text-center services-carousel owl-carousel owl-theme">
+            {% for dep in departments %}
+              <div class="item">
+                <div class="info">
+                  <h4><a href="{% url 'department_detail' dep.slug %}">{{ dep.title }}</a></h4>
+
+                  <div class="icon-wrap">
+                    {% if dep.icon %}
+                      <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon" />
+                    {% else %}
+                      <i class="flaticon-anatomy"></i>
+                    {% endif %}
+                  </div>
+
+                  <p>{{ dep.description|striptags|truncatewords:15 }}</p>
+
+                  <a class="btn btn-border theme circle btn-md" href="{% url 'department_detail' dep.slug %}">Read More</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Services End -->
+
+<!-- Doctors -->
+<div class="doctor-area carousel-shadow default-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="site-heading text-center">
+                    <h2>Meet Our <span>Specialists</span></h2>
+                    <p>Experienced doctors providing advanced healthcare services.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="doctor-items doctor-carousel owl-carousel owl-theme text-center">
+                    {% for doctor in doctors %}
+                    <div class="item">
+                        <div class="thumb">
+                            {% if doctor.photo %}
+                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                            {% else %}
+                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                            {% endif %}
+
+                            <div class="overlay">
+                                <a href="{% url 'doctor_detail' doctor.slug %}"></a>
+                            </div>
+                        </div>
+
+                        <div class="info">
+                            <h4>{{ doctor.name }}</h4>
+                            <h5>{{ doctor.designation }}</h5>
+
+                            <div class="appoinment-btn">
+                                <a href="{% url 'doctor_detail' doctor.slug %}">Make Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Doctors End-->
+
+<!-- Fun Factor -->
+<div class="fun-fact-area default-padding shadow light text-center bg-fixed text-light" style="background:#F5F9FC;)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 item">
+                <div class="fun-fact">
+                    <i class="flaticon-recovered"></i>
+                    <div class="timer" data-to="30" data-speed="5000"></div>
+                    <span class="medium">Satisfied Patients</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 item">
+                <div class="fun-fact">
+                    <i class="flaticon-doctor"></i>
+                    <div class="timer" data-to="5" data-speed="5000"></div>
+                    <span class="medium">Regular Doctors</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 item">
+                <div class="fun-fact">
+                    <i class="flaticon-department"></i>
+                    <div class="timer" data-to="8" data-speed="5000"></div>
+                    <span class="medium">Departments</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 item">
+                <div class="fun-fact">
+                    <i class="flaticon-nurse"></i>
+                    <div class="timer" data-to="15" data-speed="5000"></div>
+                    <span class="medium">Staff Members</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fun Factor End -->
+
+<!-- Testimonials -->
+<div class="testimonials-area carousel-shadow  default-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="site-heading text-center">
+                    <h2>Patient <span>Testimonials</span></h2>
+                    <p>Hear from our patients about their experience, care, and recovery with our medical team.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="testimonial-items testimonial-carousel owl-carousel owl-theme">
+                    {% for t in testimonials %}
+                    
+                    <div class="item">
+                        {% if not t.youtube_url %}
+                        <div class="content">
+                            <p>{{ t.description }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if t.youtube_url %}
+                        <div class="content">
+                            <iframe width="100%" height="200" src="{{ t.get_youtube_embed }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        {% endif %}
+
+                        <div class="provider">
+                            <div class="thumb">
+                                <img src="{% static 'frontend/assets/img/team/user.png' %}" alt="User" />
+                            </div>
+                            <div class="info">
+                                <h4>{{ t.name }}</h4>
+                                <h5>
+                                    {{ t.designation }} 
+                                    {% if t.rating %}
+                                    <span class="rating-stars">
+                                        {% for i in "12345" %} 
+                                        {% if forloop.counter <= t.rating %}
+                                        <i class="fa fa-star" style="color: #ffc107"></i>
+                                        {% else %}
+                                        <i class="fa fa-star-o" style="color: #ccc"></i>
+                                        {% endif %} 
+                                        {% endfor %}
+                                    </span>
+                                    {% endif %}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonials End -->
+
+<!-- Blog -->
+<div class="blog-area default-padding bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="site-heading text-center">
+                    <h2>Recent <span>Blog</span></h2>
+                    <p>Stay informed, stay healthy. Explore expert insights, health tips, and the latest updates fromLakeside Hospital.</p>
+                </div>
+            </div>
+        </div>
+        <div class="blog-items">
+            <div class="row">
+                {% for blog in blogs %}
+                <div class="col-lg-4 col-md-6 single-item">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="{% url 'blog_detail' blog.slug %}">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" />
+                            </a>
+                        </div>
+
+                        <div class="info">
+                            <div class="meta">
+                                <ul>
+                                    <li><a href="#">{{ blog.author }}</a></li>
+                                    <li>{{ blog.createdAt|date:'d F, Y' }}</li>
+                                </ul>
+                            </div>
+                           <h4>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="blog-heading">
+                                    {{ blog.heading|truncatewords:8 }}
+                                </a>
+                            </h4>
+                            <p>{{ blog.content|striptags|truncatewords:15 }}</p>
+                            <a class="btn btn-theme circle border btn-sm" href="{% url 'blog_detail' blog.slug %}">
+                                Read More <i class="fas fa-long-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("Script Loaded ✅");
+
+    const department = document.getElementById("department");
+    const doctor = document.getElementById("doctor");
+    const date = document.getElementById("date");
+    const time = document.getElementById("time");
+    const gender = document.getElementById("gender");
+
+    if (!department || !doctor || !date || !time || !gender) {
+        console.error("Required elements missing ❌");
+        return;
+    }
+
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        if (!toast) {
+            alert(message);
+            return;
+        }
+        toast.innerText = message;
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 3000);
+    }
+
+    function formatTime(timeStr) {
+        const [hour, minute] = timeStr.split(":");
+        let h = parseInt(hour);
+        const ampm = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        return `${h}:${minute} ${ampm}`;
+    }
+
+    // Load Doctors
+    department.addEventListener("change", async () => {
+        if (!department.value) {
+            doctor.innerHTML = `<option value="">Doctor</option>`;
+            time.innerHTML = `<option value="">Available Time</option>`;
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/doctors/${department.value}/`);
+            const data = await res.json();
+
+            doctor.innerHTML = `<option value="">Select Doctor</option>`;
+            time.innerHTML = `<option value="">Available Time</option>`;
+
+            data.forEach(doc => {
+                doctor.innerHTML += `<option value="${doc.id}">${doc.name}</option>`;
+            });
+        } catch (err) {
+            console.error(err);
+            showToast("Failed to load doctors");
+        }
+    });
+
+    // Load Timings
+    async function loadTimings() {
+        if (!doctor.value || !date.value) return;
+
+        try {
+            const res = await fetch(`/api/timings/${doctor.value}/${date.value}/`);
+            const data = await res.json();
+
+            time.innerHTML = `<option value="">Available Time</option>`;
+
+            if (!data.length) {
+                showToast("No slots available");
+                return;
+            }
+
+            data.forEach(t => {
+                time.innerHTML += `
+                    <option value="${t.id}">
+                        ${formatTime(t.start_time)} - ${formatTime(t.end_time)}
+                    </option>`;
+            });
+        } catch (err) {
+            console.error(err);
+            showToast("Error loading time slots");
+        }
+    }
+
+    doctor.addEventListener("change", loadTimings);
+    date.addEventListener("change", loadTimings);
+
+    // Form Submit
+    document.getElementById("appointmentForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const firstName = document.getElementById("first_name").value.trim();
+        const lastName = document.getElementById("last_name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        const payload = {
+            name: `${firstName} ${lastName}`.trim(),
+            phone_number: phone,
+            email: email,
+            gender: gender.value,
+            department: department.value,
+            doctor: doctor.value,
+            date: date.value,
+            time: time.value,
+            message: document.getElementById("message").value
+        };
+
+        if (!firstName || !phone || !email || !gender.value || !department.value || !doctor.value || !date.value || !time.value) {
+            showToast("All fields are required");
+            return;
+        }
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+            showToast("Phone number must be exactly 10 digits");
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/book-appointment/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            if (res.status === 201) {
+                window.location.href = `/appointment/success/${data.appointment_id}/`;
+            } else {
+                showToast(data.error || "Something went wrong");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Server error");
+        }
+    });
+});
+</script>
+{% endblock %}

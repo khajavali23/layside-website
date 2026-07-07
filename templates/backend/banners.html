@@ -1,0 +1,73 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>Banners</h4>
+      <a href="{% url 'banner-create' %}" class="btn btn-primary">Create Banner</a>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Heading</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for banner in banners %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ banner.heading }}</td>
+                <td>
+                  {% if banner.status %}
+                    <span class="badge bg-success">Active</span>
+                  {% else %}
+                    <span class="badge bg-danger">Inactive</span>
+                  {% endif %}
+                </td>
+                <td>{{ banner.created_at }}</td>
+                <td>
+                  <a href="{% url 'banner-edit' banner.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <button class="btn btn-sm btn-danger delete-btn" data-url="{% url 'banner-delete' banner.id %}">Delete</button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-center">No banners found</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const url = this.dataset.url
+    
+        Swal.fire({
+          title: 'Delete banner?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

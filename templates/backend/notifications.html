@@ -1,0 +1,65 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}
+  <title>Notifications</title>
+{% endblock %}
+
+{% block content %}
+  <div class="app-page-head d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Notifications</h5>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-xxl-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Message</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th width="160">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for notification in notifications %}
+                  <tr class="{% if not notification.read_status %} {% endif %}">
+                    <td>{{ notification.message }}</td>
+                    <td>{{ notification.type|title }}</td>
+                    <td>{{ notification.created_at|date:'d M Y H:i' }}</td>
+
+                    <td>
+                      {% if notification.read_status %}
+                        <span class="badge bg-success">Read</span>
+                      {% else %}
+                        <span class="badge bg-danger">Unread</span>
+                      {% endif %}
+                    </td>
+
+                    <td class="d-flex gap-2">
+                      {% if notification.redirection_url %}
+                        <a href="{{ notification.redirection_url }}" class="d-flex justify-content-center align-items-center btn btn-sm btn-outline-primary">View</a>
+                      {% endif %}
+
+                      {% if not notification.read_status %}
+                        <a href="{% url 'mark_notification_read' notification.id %}" class="btn btn-sm btn-success">Mark Read</a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="5" class="text-center py-4">No notifications found</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

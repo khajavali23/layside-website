@@ -1,0 +1,114 @@
+{% extends 'backend/base.html' %} {% load static %} {% block title %}
+  <title>Doctors | NRI</title>
+{% endblock %} {% block content %}
+  <div class="app-page-head d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
+    <div class="clearfix">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="{% url 'dashboard' %}"><i class="fi fi-rr-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Doctors</li>
+        </ol>
+      </nav>
+    </div>
+    <a href="{% url 'create_doctor' %}" class="btn-link"><i class="fi fi-rr-plus me-1"></i> New Doctor</a>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card overflow-hidden">
+        <div class="card-header d-flex flex-wrap gap-3 align-items-center justify-content-between border-0 pb-0">
+          <h6 class="card-title mb-0">Doctors List</h6>
+          <div class="clearfix d-flex align-items-center gap-2">
+            <div class="dropdown"></div>
+            <div id="dt_CustomerList_Search"></div>
+          </div>
+        </div>
+        <div class="card-body px-1 pt-2 pb-2">
+          <table id="dt_CustomerList" class="table table-sm table-row-rounded data-row-checkbox">
+            <thead class="table-light">
+              <tr>
+                <th class="minw-200px">Name & Profile</th>
+                <th class="minw-150px">Phone</th>
+                <th class="minw-150px">Email</th>
+                <th class="minw-150px">City</th>
+                <th class="minw-150px">Department</th>
+                <th class="minw-150px">Status</th>
+                <th class="minw-100px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in doctors %}
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="avatar avatar-xxs me-2 rounded-circle">
+                        <img src="{{ x.photo.url }}" alt="" />
+                      </div>
+                      {{ x.name }}
+                    </div>
+                  </td>
+                  <td>{{ x.number }}</td>
+                  <td>{{ x.email }}</td>
+                  <td>{{ x.city }}</td>
+                  <td>{{ x.department.title }}</td>
+                  {% if x.status %}
+                    <td>
+                      <span class="badge badge-lg bg-success-subtle text-success">Active</span>
+                    </td>
+                  {% else %}
+                    <td>
+                      <span class="badge badge-lg bg-danger-subtle text-danger">Inactive</span>
+                    </td>
+                  {% endif %}
+
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-subtle-primary btn-sm btn-shadow btn-icon waves-effect dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fi fi-rr-menu-dots"></i></button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <a class="dropdown-item" href="{% url 'create_leave' x.slug %}">Create Leave</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="{% url 'create_timing' x.slug %}">Update Timing</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="{% url 'update_doctor' x.slug %}">Edit</a>
+                        </li>
+                        <li>
+                          <a href="javascript:void(0)" class="dropdown-item text-danger" onclick="confirmDelete('{% url 'delete_doctor' x.slug %}', '{{ x.name|escapejs }}')">Delete</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    function confirmDelete(url, title) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete "' + title + '"',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url
+        }
+      })
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,385 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/about_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Know More About Us
+            </span>
+
+            <h1>About Us</h1>
+
+            <p>
+               Providing integrated healthcare solutions that focus on prevention, recovery, vitality, and long-term wellbeing.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>About</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- Start About -->
+<div class="about-area default-padding">
+    <div class="container">
+        <div class="about-items about-style-two-info">
+            <div class="row align-items-center">
+                <div class="col-lg-6 about-style-two">
+                    <div class="thumb">
+                        <img
+                            src="{% static 'frontend/assets/img/about/about.jpg' %}"
+                            alt="Thumb"
+                            class="img_border_radis"
+                        />
+                        <img
+                            src="{% static 'frontend/assets/img/about/about_sami_img.jpeg' %}"
+                            alt="Thumb"
+                            class="img_border_radis"
+                        />
+                    </div>
+                </div>
+
+                <div class="col-lg-6 info">
+                    <div class="top">
+                        <h4>Trusted Healthcare Excellence</h4>
+                        <h2 class="title">Trusted Healthcare Excellence.</h2>
+                    </div>
+
+                    <p> Lakeside Regenerative Center is a multidisciplinary healthcare destination that combines regenerative medicine, wellness therapies, family medicine, dermatology, physiotherapy, aesthetics, and Ayurveda under one roof. Our focus is on delivering personalized, patient-centered care that promotes prevention, recovery, and long-term wellbeing.
+                     </p>
+
+                    <p>
+                       By integrating advanced medical technologies with holistic healthcare approaches, we help individuals achieve better health outcomes, enhanced vitality, and an improved quality of life. </p>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us -->
+<div class="chose-us-area bg-gray">
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <!-- Left Image -->
+            <div class="col-lg-6">
+
+                <div class="thumb bg-cover about-image-area"
+                     style="background-image: url('{% static "frontend/assets/img/about/about_us.jpg" %}')">
+
+                    <!-- Floating Modern Card -->
+                    <div class="floating-care-box">
+
+                        <div class="care-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+
+                        <div class="care-content">
+
+                            <span>Why Choose Us</span>
+
+                            <h4>
+                                Expert Care &
+                                <br>
+                                Trusted Treatment
+                            </h4>
+
+                            <a href="#" class="btn btn-theme">
+                                Explore More
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+                    <!-- End Card -->
+
+                </div>
+
+            </div>
+            <!-- End Left -->
+
+
+            <!-- Right Content -->
+            <div class="col-lg-6 pl-80 pl-md-15 pl-xs-15 info about_us_section">
+
+                <div class="heading">
+
+                    <h4 class="sub-title">
+                        WHY CHOOSE US
+                    </h4>
+
+                    <h2 class="title">
+                       Personalized Care. Advanced Wellness. Regenerative Excellence.
+
+                    </h2>
+
+                    <p>
+                       At Lakeside Regenerative Center, we combine advanced healthcare solutions with personalized care to support your journey toward better health and wellbeing.
+
+                    </p>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        <div class="info">
+                            <h4>Advanced Regenerative Technologies</h4>
+
+                            <p>
+                                Innovative therapies and modern technologies designed to support wellness and recovery.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="info">
+                            <h4>Comprehensive Healthcare Solutions</h4>
+
+                            <p>
+                               
+Multiple specialties working together to provide integrated healthcare under one roof.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="info">
+                            <h4>Personalized Patient Care</h4>
+
+                            <p>
+                                Individualized treatment plans tailored to your unique health and wellness goals.
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- End Right -->
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Leadership Section -->
+<div class="about-area default-padding">
+    <div class="container">
+        <div class="about-items about-style-two-info">
+            <div class="row align-items-center">
+
+                <div class="col-lg-6 info">
+                    <div class="top">
+                        <h4>Leadership Team</h4>
+                        <h2 class="title_about_founder">Guiding Healthcare Excellence</h2>
+                    </div>
+
+                    <p>
+                        At Lakeside Regenerative Center, our leadership team is driven by a shared commitment to innovation, integrity, and patient-centered care. Through strategic vision and a dedication to excellence, they play a vital role in shaping a healthcare environment that prioritizes wellness, advanced treatment solutions, and exceptional patient experiences.
+                    </p>
+
+                    <p>
+                        With a focus on continuous improvement and ethical healthcare practices, our leadership ensures that every patient receives high-quality medical services supported by advanced technology, experienced professionals, and a compassionate approach.
+                    </p>
+
+                    <div class="bottom">
+                        <div class="content">
+                            <h4>Committed to Quality Care</h4>
+                            <p>
+                                Dedicated to delivering compassionate care, clinical excellence, and personalized healthcare experiences that support long-term health and wellbeing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 about-style-two">
+                    <div class="thumb leadership-image-area">
+                        <img src="/static/frontend/assets/img/about/founder.jpg" alt="Leadership Team" class="img_border_radis">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mission Vision -->
+<div class="doctor-tips-area default-padding bg-gray">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="site-heading text-light text-center">
+                    <h2 class="mission_vision">Our <span>Mission & Vision</span></h2>
+                    <p class="mission_vision">Transforming Lives Through Better Health</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="health-tips-items tips-carousel owl-carousel owl-theme">
+
+            <!-- Mission -->
+            <div class="single-item">
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <div class="thumb">
+                            <img src="{% static 'frontend/assets/img/about/mission.jpg' %}" alt="Mission Image" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="info">
+
+                            <div class="doctor">
+                                <h4>MISSION</h4>
+                                <h5>Patient-Centered Healthcare</h5>
+                            </div>
+
+                            <h3>Advancing Wellness Through Innovation &amp; Care</h3>
+
+                            <p>
+                                Our mission is to provide personalized healthcare solutions that combine regenerative medicine, advanced therapies, and holistic wellness approaches. We are committed to helping individuals achieve better health outcomes, improved quality of life, and long-term wellbeing through compassionate, evidence-based care.
+                            </p>
+
+                            <ul>
+                                <li>Personalized Treatment Plans</li>
+                                <li>Innovative Regenerative Solutions</li>
+                                <li>Comprehensive Wellness Support</li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Vision -->
+            <div class="single-item">
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <div class="thumb">
+                            <img src="{% static 'frontend/assets/img/about/Vision.jpg' %}" alt="Vision Image" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="info">
+
+                            <div class="doctor">
+                                <h4>VISION</h4>
+                                <h5>Future-Focused Healthcare</h5>
+                            </div>
+
+                            <h3>Redefining Healthcare &amp; Wellness Excellence</h3>
+
+                            <p>
+                                Our vision is to become a trusted leader in regenerative healthcare by integrating medical innovation, wellness therapies, and patient-centered care. We strive to empower individuals to live healthier, more fulfilling lives through accessible and transformative healthcare solutions.
+                            </p>
+
+                            <ul>
+                                <li>Excellence in Patient Care</li>
+                                <li>Leadership in Regenerative Medicine</li>
+                                <li>Lifelong Health &amp; Wellness</li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Doctors -->
+<div class="doctor-area carousel-shadow default-padding">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="site-heading text-center">
+                    <h2>Meet Our <span>Specialists</span></h2>
+                    <p>Experienced doctors providing advanced healthcare services.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="doctor-items doctor-carousel owl-carousel owl-theme text-center">
+
+                    {% for doctor in doctors %}
+
+                    <div class="item">
+
+                        <div class="thumb">
+
+                            {% if doctor.photo %}
+                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                            {% else %}
+                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                            {% endif %}
+
+                            <div class="overlay">
+                                <a href="{% url 'doctor_detail' doctor.slug %}"></a>
+                            </div>
+
+                        </div>
+
+                        <div class="info">
+                            <h4>{{ doctor.name }}</h4>
+                            <h5>{{ doctor.designation }}</h5>
+
+                            <div class="appoinment-btn">
+                                <a href="{% url 'doctor_detail' doctor.slug %}">
+                                    Make Appointment
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

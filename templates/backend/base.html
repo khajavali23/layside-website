@@ -1,0 +1,689 @@
+{% load role_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- begin::NexLink Meta Basic -->
+    <meta charset="utf-8" />
+    <meta name="theme-color" content="#1e2b5c" />
+    <meta name="keywords" content="Bootstrap Admin Template, CRM Dashboard, Admin Panel, Bootstrap 5 Dashboard, Project Management, Analytics Template, Responsive Admin" />
+    <meta name="description" content="NexLink is a modern Bootstrap 5 CRM Admin Dashboard Template designed for managing sales, analytics, projects, and team performance with clean UI, responsive layout, and prebuilt pages." />
+
+    <!-- begin::NexLink Website Page Title -->
+
+    {% block title %}
+
+    {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- end::NexLink Website Page Title -->
+
+    <!-- begin::NexLink Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- end::NexLink Mobile Specific -->
+
+    <!-- begin::NexLink Favicon Tags -->
+    <link rel="shortcut icon" href="{% static 'frontend/assets/img/favicon.png' %}" />
+
+    <!-- begin::NexLink Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet" />
+    <!-- end::NexLink Google Fonts -->
+
+    <!-- begin::NexLink Required Stylesheet -->
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/flaticon/css/all/all.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/lucide/lucide.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/fontawesome/css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/simplebar/simplebar.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/node-waves/waves.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/bootstrap-select/css/bootstrap-select.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/flatpickr/flatpickr.min.css' %}" />
+    <!-- end::NexLink Required Stylesheet -->
+
+    <!-- begin::NexLink CSS Stylesheet -->
+    <link rel="stylesheet" href="{% static 'backend/assets/libs/datatables/datatables.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'backend/assets/css/styles.css' %}" />
+    <!-- end::NexLink CSS Stylesheet -->
+  </head>
+
+  <body>
+    <div class="page-layout">
+      <!-- begin::NexLink Page Header -->
+      <header class="app-header">
+        <div class="app-header-inner">
+          <button class="app-toggler" type="button" aria-label="app toggler">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.66699 12.6668L3.66699 8.00016L7.66699 3.3335" stroke="#1C274C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+              <path opacity="0.5" d="M12.667 12.6668L8.66699 8.00016L12.667 3.3335" stroke="#1C274C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="app-header-start d-none d-md-flex">
+            <form class="d-flex align-items-center h-100 w-lg-250px w-xxl-300px position-relative" action="#">
+              <button type="button" class="btn btn-sm border-0 position-absolute start-0 ms-3 p-0"><i class="fi fi-rr-search"></i></button>
+              <input type="text" class="form-control form-control-fill ps-5" placeholder="Search anything's" data-bs-toggle="modal" data-bs-target="#searchResultsModal" />
+            </form>
+          </div>
+          <div class="app-header-end">
+            <div class="vr my-3"></div>
+            <div class="d-flex align-items-center gap-sm-2 gap-0 px-lg-4 px-sm-2 px-1">
+              <div class="dropdown text-end">
+                <button type="button" class="btn_____sen btn btn-icon btn-action-gray rounded-circle waves-effect waves-light" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.7491 10.2096V9.50497C18.7491 5.63623 15.7274 2.5 12 2.5C8.27256 2.5 5.25087 5.63623 5.25087 9.50497V10.2096C5.25087 11.0552 5.00972 11.8818 4.5578 12.5854L3.45036 14.3095C2.43882 15.8843 3.21105 18.0249 4.97036 18.5229C9.57274 19.8257 14.4273 19.8257 19.0296 18.5229C20.789 18.0249 21.5612 15.8843 20.5496 14.3095L19.4422 12.5854C18.9903 11.8818 18.7491 11.0552 18.7491 10.2096Z" stroke="var(--bs-heading-color)" stroke-width="2" />
+                    <path opacity="0.5" d="M7.5 19.5C8.15503 21.2478 9.92246 22.5 12 22.5C14.0775 22.5 15.845 21.2478 16.5 19.5" stroke="var(--bs-heading-color)" stroke-width="2" stroke-linecap="round" />
+                    <path opacity="0.5" d="M12 6.5V10.5" stroke="var(--bs-heading-color)" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg-end p-0 w-300px mt-2">
+                  <div class="px-3 py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Notifications</h6>
+                    <i class="bi bi-x-lg cursor-pointer"></i>
+                  </div>
+
+                  <div class="p-2" style="height: 300px" data-simplebar>
+                    <ul class="list-group list-group-hover list-group-smooth list-group-unlined" id="notifDropdownList">
+                      <li class="list-group-item text-center text-muted">Loading...</li>
+                    </ul>
+                  </div>
+
+                  <div class="p-2">
+                    <a href="#" id="markAllNotifications" class="btn w-100 btn-primary">Mark all notification as read</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vr my-3"></div>
+            <div class="dropdown text-end ms-sm-3 ms-2 ms-lg-4">
+              <a href="#" class="d-flex align-items-center py-2" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                <div class="text-end me-2 d-none d-lg-inline-block">
+                  <div class="fw-bold text-dark" style="text-transform: capitalize;">{{ request.user.username }}</div>
+                  <small class="text-body d-block lh-sm"><i class="fi fi-rr-angle-down text-3xs me-1"></i> Admin</small>
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end w-225px mt-1">
+                <li class="d-flex align-items-center p-2">
+                  <div class="ms-2">
+                    <div class="fw-bold text-dark">{{ request.user.username }}</div>
+                    <small class="text-body d-block lh-sm">Admin</small>
+                  </div>
+                </li>
+                <li>
+                  <div class="dropdown-divider my-1"></div>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'appointments' %}"><i class="fi fi-rr-user scale-1x"></i> View Appointments</a>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'message-list' %}"><i class="fi fi-rr-note scale-1x"></i> Messages</a>
+                </li>
+                <li>
+                  <div class="dropdown-divider my-1"></div>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2 text-danger" href="{% url 'logout_user' %}">Log Out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- end::NexLink Page Header -->
+
+      <div class="modal fade" id="searchResultsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header py-1 px-3">
+              <form class="d-flex align-items-center position-relative w-100" action="#">
+                <button type="button" class="btn btn-sm border-0 position-absolute start-0 p-0 text-sm"><i class="fi fi-rr-search"></i></button>
+                <input type="text" class="form-control form-control-lg ps-4 border-0 shadow-none" id="searchInput" placeholder="Search anything's" />
+              </form>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2" style="height: 300px" data-simplebar>
+              <div id="recentlyResults">
+                <span class="text-uppercase text-2xs fw-semibold text-muted d-block mb-2">Recently Searched:</span>
+
+                <ul class="list-inline search-list">
+                  <!-- Dashboard (ALL) -->
+                  <li>
+                    <a class="search-item" href="{% url 'dashboard' %}"><i class="fi fi-rr-apps"></i> Dashboard</a>
+                  </li>
+
+                  <!-- Appointments (ALL) -->
+                  <li>
+                    <a class="search-item" href="{% url 'appointments' %}"><i class="fa-regular fa-calendar"></i> Appointments</a>
+                  </li>
+
+
+
+                  <!-- Doctors (ADMIN + SUPER ADMIN + DOCTOR) -->
+                  {% if request.user|has_role:'admin,super-admin,doctor' %}
+                    <li>
+                      <a class="search-item" href="{% url 'doctors' %}"><i class="fi fi-rr-employee-man"></i> Doctors</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- Health Checkups (ADMIN + SUPER ADMIN) -->
+                  {% if request.user|has_role:'admin,super-admin' %}
+                    <li>
+                      <a class="search-item" href="{% url 'health-plan-list' %}"><i class="fa-solid fa-kit-medical"></i> Health Checkups</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- Checkup Bookings (EXCEPT DOCTOR) -->
+                  {% if not request.user|has_role:'doctor' %}
+                    <li>
+                      <a class="search-item" href="{% url 'health-checkup-booking-list' %}"><i class="fa-regular fa-calendar-check"></i> Health Checkup Bookings</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- Banners (ONLY SUPER ADMIN) -->
+                  {% if request.user|has_role:'super-admin' %}
+                    <li>
+                      <a class="search-item" href="{% url 'banner-list' %}"><i class="fa-regular fa-file-image"></i> Banners</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- Blogs (EXCEPT RECEPTIONIST) -->
+                  {% if not request.user|has_role:'receptionist' %}
+                    <li>
+                      <a class="search-item" href="{% url 'blogs' %}"><i class="fa-solid fa-blog"></i> Blogs</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- FAQ (ONLY SUPER ADMIN) -->
+                  {% if request.user|has_role:'super-admin' %}
+                    <li>
+                      <a class="search-item" href="{% url 'faq-list' %}"><i class="fa-solid fa-question"></i> FAQ</a>
+                    </li>
+                  {% endif %}
+
+                  <!-- Messages (ALL) -->
+                  <li>
+                    <a class="search-item" href="{% url 'message-list' %}"><i class="fi fi-rr-envelope"></i> Messages</a>
+                  </li>
+
+                  <!-- Testimonials (EXCEPT RECEPTIONIST) -->
+                  {% if not request.user|has_role:'receptionist' %}
+                    <li>
+                      <a class="search-item" href="{% url 'testimonial-list' %}"><i class="fa-regular fa-message"></i> Testimonials</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+              <div id="searchContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- begin::NexLink Sidebar Menu -->
+      <aside class="app-menubar-tabs" id="appMenubar">
+        <div class="app-navbar-brand">
+          <a class="navbar-brand-logo" href="{% url 'dashboard' %}"><img src="{% static 'frontend/assets/img/logo.png' %}" style="width: 50px;" alt="NexLink Admin Dashboard Logo" /></a>
+        </div>
+        <div class="app-navbar-tabs" data-simplebar>
+          <ul class="nav" id="appMenubarTabs" role="tablist" aria-orientation="vertical">
+            <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Dashboard">
+              <a class="menu-link active" href="#dashboardTab" role="tab" aria-controls="dashboardTab" aria-selected="true" data-bs-toggle="tab">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path opacity="0.5" d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z" stroke="var(--bs-heading-color)" stroke-width="2" />
+                  <path d="M12 15V18" stroke="var(--bs-heading-color)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="app-tab-content">
+          <div class="app-side-brands">
+            <a class="navbar-brand-text" href="{% url 'dashboard' %}">Lakeside hospital</a>
+          </div>
+          <div class="app-content-inner">
+            <div class="tab-content" id="appMenubarTabsContent">
+              <div class="tab-pane fade show active" id="dashboardTab" role="tabpanel" tabindex="0">
+                <nav class="app-navbar" data-simplebar>
+                  <ul class="side-menubar">
+                    <!-- Dashboard -->
+                    <li class="menu-item">
+                      <a class="menu-link" href="{% url 'dashboard' %}">
+                        <i class="fi fi-rr-house-blank"></i>
+                        <span class="menu-label">Dashboard</span>
+                      </a>
+                    </li>
+
+                    <!-- Users (ONLY SUPER ADMIN) -->
+                    {% if request.user|has_role:'super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fi fi-rr-employee-man"></i>
+                          <span class="menu-label">Users</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'user-list' %}">View Users</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'user-create' %}">Create User</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Appointments (ALL) -->
+                    <li class="menu-item">
+                      <a class="menu-link" href="{% url 'appointments' %}">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span class="menu-label">Appointments</span>
+                      </a>
+                    </li>
+
+                    <!-- Departments (ADMIN + SUPER ADMIN) -->
+                    {% if request.user|has_role:'admin,super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-regular fa-chart-bar"></i>
+                          <span class="menu-label">Departments</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'departments' %}">View Departments</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'create_department' %}">Create Department</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Doctors (EXCEPT RECEPTIONIST) -->
+                    {% if not request.user|has_role:'receptionist' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fi fi-rr-employee-man"></i>
+                          <span class="menu-label">Doctors</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'doctors' %}">View Doctors</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'create_doctor' %}">Create Doctor</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Health Checkups (ADMIN + SUPER ADMIN) -->
+                    {% if request.user|has_role:'admin,super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-solid fa-kit-medical"></i>
+                          <span class="menu-label">Health Checkups</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'health-plan-list' %}">View Health Checkups</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'health-plan-create' %}">Create Health Checkup</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Checkup Bookings (EXCEPT DOCTOR) -->
+                    {% if not request.user|has_role:'doctor' %}
+                      <li class="menu-item">
+                        <a class="menu-link" href="{% url 'health-checkup-booking-list' %}">
+                          <i class="fa-regular fa-calendar-check"></i>
+                          <span class="menu-label">Checkup Bookings</span>
+                        </a>
+                      </li>
+                    {% endif %}
+
+                    <!-- Banners (ONLY SUPER ADMIN) -->
+                    {% if request.user|has_role:'super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-regular fa-file-image"></i>
+                          <span class="menu-label">Banners</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'banner-list' %}">View Banners</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'banner-create' %}">Create Banner</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Blogs (EXCEPT DOCTOR) -->
+                    {% if not request.user|has_role:'receptionist' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-solid fa-blog"></i>
+                          <span class="menu-label">Blogs</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'blogs' %}">View Blogs</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'create_blog' %}">Create Blog</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- FAQ (ONLY SUPER ADMIN) -->
+                    {% if request.user|has_role:'super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-solid fa-question"></i>
+                          <span class="menu-label">Faqs</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'faq-list' %}">View Faqs</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'faq-create' %}">Create Faq</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Gallery (ONLY SUPER ADMIN) -->
+                    {% if request.user|has_role:'super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-solid fa-image"></i>
+                          <span class="menu-label">Gallery</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'gallery-list' %}">View Gallery</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'gallery-create' %}">Create Gallery</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Careers (ADMIN + SUPER ADMIN) -->
+                    {% if request.user|has_role:'admin,super-admin' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-solid fa-briefcase"></i>
+                          <span class="menu-label">Careers</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'career-list' %}">View Careers</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'career-create' %}">Create Career</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Testimonials (EXCEPT RECEPTIONIST) -->
+                    {% if not request.user|has_role:'receptionist' %}
+                      <li class="menu-item has-submenu">
+                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
+                          <i class="fa-regular fa-star"></i>
+                          <span class="menu-label">Testimonials</span>
+                        </a>
+                        <ul class="submenu">
+                          <li>
+                            <a href="{% url 'testimonial-list' %}">View Testimonials</a>
+                          </li>
+                          <li>
+                            <a href="{% url 'testimonial-create' %}">Create Testimonials</a>
+                          </li>
+                        </ul>
+                      </li>
+                    {% endif %}
+
+                    <!-- Messages -->
+                    <li class="menu-item">
+                      <a class="menu-link" href="{% url 'message-list' %}">
+                        <i class="fa-regular fa-message"></i>
+                        <span class="menu-label">Messages</span>
+                      </a>
+                    </li>
+
+                    <!-- Notifications -->
+                    <li class="menu-item">
+                      <a class="menu-link" href="{% url 'notifications_list' %}">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="menu-label">Notifications</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- end::NexLink Sidebar Menu -->
+
+      <main class="app-wrapper">
+        <div class="container-fluid">
+          {% block content %}
+
+          {% endblock %}
+        </div>
+      </main>
+
+      <!-- begin::NexLink Footer -->
+      <footer class="footer-wrapper bg-body">
+        <div class="container-fluid">
+          <div class="row g-2">
+            <div class="col-lg-6 col-md-7 text-center text-md-start">
+              <p class="mb-0">
+                © <span class="currentYear">2026</span>NRIHospital. Proudly powered by
+                <a href="https://thinkb.agency" target="_blank">thinkB</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- end::NexLink Footer -->
+    </div>
+
+    <!-- begin::NexLink Page Scripts -->
+    <script src="{% static 'backend/assets/libs/global/global.min.js' %}"></script>
+    <script src="{% static 'backend/assets/libs/sortable/Sortable.min.js' %}"></script>
+    <script src="{% static 'backend/assets/libs/chartjs/chart.js' %}"></script>
+    <script src="{% static 'backend/assets/libs/flatpickr/flatpickr.min.js' %}"></script>
+    <script src="{% static 'backend/assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+    {% comment %}
+    <script src="{% static 'backend/assets/libs/datatables/datatables.min.js' %}"></script>
+    {% endcomment %}
+    <script src="{% static 'backend/assets/js/dashboard/dashboard.js' %}"></script>
+    <script src="{% static 'backend/assets/js/plugins/todolist.js' %}"></script>
+    <script src="{% static 'backend/assets/js/appSettings.js' %}"></script>
+    <script src="{% static 'backend/assets/js/main.js' %}"></script>
+    <!-- end::NexLink Page Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function toggleSubmenu(el) {
+        const parent = el.parentElement
+      
+        // close other open submenus (optional)
+        document.querySelectorAll('.has-submenu.active').forEach((item) => {
+          if (item !== parent) {
+            item.classList.remove('active')
+          }
+        })
+      
+        parent.classList.toggle('active')
+      }
+    </script>
+
+    {% if messages %}
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+          {% for message in messages %}
+
+            Swal.fire({
+              icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}",
+              title: "{{ message|escapejs }}",
+              showConfirmButton: true,
+              timer: 3000
+            });
+
+          {% endfor %}
+
+        });
+      </script>
+    {% endif %}
+
+    {% block script %}
+
+    {% endblock %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+
+        const notifList = document.getElementById("notifDropdownList");
+        const markAllBtn = document.getElementById("markAllNotifications");
+
+        // 🔔 Bell button (the one you already have)
+        const bellButton = document.querySelector(".btn_____sen") || 
+                          document.querySelector('[data-bs-toggle="dropdown"]');
+
+        function getCSRFToken() {
+          return document.cookie
+            .split("; ")
+            .find(row => row.startsWith("csrftoken"))
+            ?.split("=")[1];
+        }
+
+        // ================= LOAD NOTIFICATIONS =================
+        async function loadNotifications() {
+          try {
+            const res = await fetch("/api/notifications/", {
+              credentials: "include"
+            });
+
+            const data = await res.json();
+            notifList.innerHTML = "";
+
+            let unreadCount = 0;
+
+            if (!data.length) {
+              notifList.innerHTML =
+                '<li class="list-group-item text-center text-muted">No notifications</li>';
+              bellButton.classList.remove("btn_____sen");
+              return;
+            }
+
+            data.slice(0, 10).forEach(n => {
+              if (!n.read_status) unreadCount++;
+
+              const li = document.createElement("li");
+              li.className = "list-group-item d-flex align-items-center cursor-pointer";
+
+              li.innerHTML = `
+                <div class="avatar avatar-xs bg-primary rounded-circle text-white">
+                  ${n.type ? n.type.charAt(0).toUpperCase() : "N"}
+                </div>
+
+                <div class="ms-2 me-auto">
+                  <h6 class="mb-0">${n.type || "Notification"}</h6>
+                  <small class="text-body d-block">${n.message}</small>
+                  <small class="text-muted">
+                    ${new Date(n.created_at).toLocaleString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true
+                    })}
+                  </small>
+                </div>
+              `;
+
+              li.addEventListener("click", () => openNotification(n));
+              notifList.appendChild(li);
+            });
+
+            // ⭐ Add class if unread exists
+            if (unreadCount > 0) {
+              bellButton.classList.add("btn_____sen");
+            } else {
+              bellButton.classList.remove("btn_____sen");
+            }
+
+          } catch (err) {
+            notifList.innerHTML =
+              '<li class="list-group-item text-danger text-center">Failed to load</li>';
+          }
+        }
+
+        // ================= OPEN NOTIFICATION =================
+        async function openNotification(notification) {
+          try {
+            await fetch(`/api/notifications/read/${notification.id}/`, {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCSRFToken(),
+                "Content-Type": "application/json"
+              },
+              credentials: "include"
+            });
+          } catch (err) {
+            console.error("Error marking notification read", err);
+          }
+
+          if (notification.redirection_url) {
+            window.location.href = notification.redirection_url;
+          }
+        }
+
+        // ================= MARK ALL AS READ =================
+        async function markAllRead() {
+          try {
+            await fetch("/api/notifications/read-all/", {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCSRFToken(),
+                "Content-Type": "application/json"
+              },
+              credentials: "include"
+            });
+
+            loadNotifications(); // refresh list
+
+          } catch (err) {
+            console.error("Error marking all read", err);
+          }
+        }
+
+        // click bottom button
+        if (markAllBtn) {
+          markAllBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            markAllRead();
+          });
+        }
+
+        // load when dropdown opens
+        document.addEventListener("shown.bs.dropdown", function (event) {
+          if (event.target.closest(".dropdown")) {
+            loadNotifications();
+          }
+        });
+
+      });
+    </script>
+  </body>
+</html>

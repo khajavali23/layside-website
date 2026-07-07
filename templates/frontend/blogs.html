@@ -1,0 +1,96 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<!-- Blogs Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/blog_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Healthcare Insights & Tips
+            </span>
+
+            <h1>Blogs</h1>
+
+            <p>
+                Stay updated with expert medical advice, healthcare tips,
+                wellness guides, and latest hospital news.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>Blogs</li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+<div class="blog-area default-padding">
+    <div class="container">
+
+        <div class="blog-items">
+            <div class="row">
+
+                {% for blog in blogs %}
+                <div class="col-lg-4 col-md-6 single-item">
+                    <div class="item">
+
+                        <div class="thumb">
+                            <a href="{% url 'blog_detail' blog.slug %}">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.heading }}">
+                            </a>
+                        </div>
+
+                        <div class="info">
+                            <div class="meta">
+                                <ul>
+                                    <li><a href="#">{{ blog.author }}</a></li>
+                                    <li>{{ blog.createdAt|date:"d F, Y" }}</li>
+                                </ul>
+                            </div>
+
+                            <h4>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="blog_heading"> 
+                                    {{ blog.heading|truncatewords:8 }}
+                                </a>
+                            </h4>
+
+                            <p>
+                                {{ blog.content|striptags|truncatewords:15 }}
+                            </p>
+
+                            <a class="btn btn-theme circle border btn-sm"
+                               href="{% url 'blog_detail' blog.slug %}">
+                                Read More <i class="fas fa-long-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
