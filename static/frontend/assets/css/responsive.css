@@ -429,6 +429,7 @@ body, .banner-area, .banner-area div{
   .features-area .bottom {
     display: block;
     text-align: center;
+    
   }
 
   .features-area .bottom .content {
@@ -988,6 +989,12 @@ body, .banner-area, .banner-area div{
 .video-bg-area h1 {
   font-size: 36px;
 }
+.about-area .info h2 {
+  font-weight: 500;
+  margin-bottom: 25px;
+  font-size: 30px;
+}
+
 
   /* Doctor Details */
   .doctor-details-area .info {
@@ -1054,7 +1061,21 @@ body, .banner-area, .banner-area div{
   .features-area .bottom {
     display: block;
     text-align: center;
+    padding: 20px 30px;
+    margin-top: 30px;
   }
+  .chose-us-area .info h2 {
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+}
+.doctor-items .info {
+    padding: 20px 20px 20px;
+    border-top: 2px solid var(--color-primary);
+    background: var(--white);
+}
 
   .features-area .bottom .content {
     padding-left: 0;
