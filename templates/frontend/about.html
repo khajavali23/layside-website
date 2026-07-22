@@ -47,22 +47,15 @@
     <div class="container">
         <div class="about-items about-style-two-info">
             <div class="row align-items-center">
-                <div class="col-lg-6 about-style-two">
-                    <div class="thumb">
-                        <img
-                            src="{% static 'frontend/assets/img/about/about.jpg' %}"
-                            alt="Thumb"
-                            class="img_border_radis"
-                        />
-                        <img
-                            src="{% static 'frontend/assets/img/about/about_sami_img.jpeg' %}"
-                            alt="Thumb"
-                            class="img_border_radis"
-                        />
-                    </div>
+                <div class="col-lg-8 about-style-two">
+                    <div class="about-video-wrapper">
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'frontend/assets/img/about/about-vedio.mp4' %}" type="video/mp4">
+    </video>
+</div>
                 </div>
 
-                <div class="col-lg-6 info">
+                <div class="col-lg-4 info">
                     <div class="top">
                         <h4>Trusted Healthcare Excellence</h4>
                         <h2 class="title">Trusted Healthcare Excellence.</h2>

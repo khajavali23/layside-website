@@ -15,7 +15,7 @@
 	--dark-secondary: #12315C;
 
 	/* Brand Colors */
-	--color-primary: #006D77;
+	--color-primary: #019eaa;
 	--color-secondary: #83C5BE;
 
 	/* Text */
@@ -23,7 +23,7 @@
 	--color-paragraph: #5F6B7A;
 
 	/* Backgrounds */
-	--bg-gray: #F5F9FC;
+	--bg-gray: #f59b1c0f;
 	--bg-gray-secondary: #E8F3F1;
 
 	/* Gradients */
@@ -117,7 +117,7 @@ a:focus {
 a:hover {
 	outline: none;
 	text-decoration: none;
-	color: var(--color-primary);
+	color: #f5991a;
 	opacity: 1;
 }
 
@@ -307,7 +307,7 @@ p {
 }
 
 .bg-gray {
-  background-color: var(--bg-gray);
+  background-color: #019ea81c;
 }
 
 .bg-dark {
@@ -379,11 +379,11 @@ p {
 }
 
 .shadow.light::after {
-    background: #006e77;
+    background:#e9f4f5;
     content: "";
     height: 100%;
     left: 0;
-    opacity: 0.3;
+   
     position: absolute;
     top: 0;
     width: 100%;
@@ -1391,7 +1391,7 @@ p {
 }
 
 .sub-title {
-  color: var(--color-primary);
+  color: #f4911c;
   text-transform: uppercase;
   font-weight: 500;
   font-size: 20px;
@@ -2363,7 +2363,7 @@ body,
 }
 
 .banner-area.banner-style-six .content h1 {
-  font-size: 90px;
+  font-size: 70px;
   line-height: 1;
 }
 
@@ -2985,7 +2985,7 @@ body,
 
 .about-style-two-info .top h4 {
   font-weight: 500;
-  color: var(--color-primary);
+  color: #f4911c;
 }
 
 @media (min-width: 1024px) {
@@ -3207,7 +3207,7 @@ body,
 
 /* Services With Icon ONly */
 .services-area.inc-icon .item {
- background: #111f2a1c;
+ background: #019eaa30;
     position: relative;
     padding: 50px 30px 50px;
    
@@ -3765,7 +3765,7 @@ body,
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--color-primary);
+  color: #f4991b;
   font-weight: 600;
   content: "\f5ae";
   font-family: "Font Awesome 5 Pro";
@@ -7333,7 +7333,7 @@ footer .footer-bottom .social li a:hover {
     width: 100px;
     padding: 15px;
     border-radius: 10%;
-    background: var(--color-primary);
+    background: #019ea9;
     object-fit: contain;
     position: relative;
     z-index: 1;
@@ -7348,7 +7348,7 @@ footer .footer-bottom .social li a:hover {
 /* Hover behavior */
 .services-area.inc-icon .item:hover .dep-icon {
     background: var(--white);
-    border: 1px solid #e5e5e5;
+   
 }
 
 .services-area.inc-icon .item:hover .icon-wrap::after {
@@ -8415,7 +8415,7 @@ background:  #026d77;
     font-style: italic;
 }
 .active-link {
-    color: #026d77 !important; /* change to your brand color */
+    color: #f5991a !important; /* change to your brand color */
     font-weight: 600;
 }
 .icon-scroll {
@@ -9177,11 +9177,11 @@ footer .f-item h4 {
 }
 
 .testimonials-area .testimonial-items .item .content{
-    background: #7c8b8c33;
+    background: #019eaa;
     border-radius: 10px;
     padding: 50px;
     position: relative;
-    border: 1px solid #d4e4e62e;
+    border: 1px solid #f497231a;
     transition: 0.4s ease;
     overflow: hidden;
 }
@@ -9193,7 +9193,7 @@ footer .f-item h4 {
 .testimonials-area .testimonial-items .item .content p{
     font-size: 16px;
     line-height: 1.9;
-    color: #555;
+    color: white;
     margin: 0;
     position: relative;
     z-index: 2;
@@ -9996,7 +9996,7 @@ footer .f-item h4::after{
 
 .view-all-btn{
     font-weight: 600 !important;
-    color: #026c76 !important;
+    color:#f49b1c !important;
 
     display: flex;
     align-items: center;
@@ -10328,3 +10328,51 @@ footer .f-item h4::after{
 .blog-heading:hover {
     color: #0c1427c7 !important;
 }
+.about-video-wrapper{
+    width:100%;
+    height:620px;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+}
+
+.about-video-wrapper video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+
+/* Large Laptop */
+@media (max-width: 1199px){
+    .about-video-wrapper{
+        height:560px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 991px){
+    .about-video-wrapper{
+        height:480px;
+        margin-bottom:30px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px){
+    .about-video-wrapper{
+        height:350px;
+        border-radius:20px;
+        margin-bottom:25px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 575px){
+    .about-video-wrapper{
+        height:280px;
+        border-radius:16px;
+    }
+}
+
