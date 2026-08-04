@@ -1,3 +1,4 @@
+
 from django.db import models
 from ckeditor.fields import RichTextField
 import uuid
@@ -7,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+import re
 
 # Create your models here.
 
@@ -31,27 +33,37 @@ class Summary(models.Model):
     
 
 
-  
-
-
 class Department(models.Model):
-
     title = models.CharField(max_length=200)
     banner = models.FileField(upload_to='departments', null=True, blank=True)
     breadcamp = models.FileField(upload_to='dep-banner', default='static/images/default.png')
     priority = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
 
-    icon = models.FileField(upload_to='dep-icons', default='static/images/default.png')  # Default icon path
+    icon = models.FileField(upload_to='dep-icons', default='static/images/default.png')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
     description = RichTextField()
-    show_on_homepage = models.BooleanField(default=False)  # Control homepage display
+    show_on_homepage = models.BooleanField(default=False)
 
     meta_title = models.TextField(null=True, blank=True)
     meta_keyword = models.TextField(null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)
+
+    # 👇 Replace your current save() with this
+    def save(self, *args, **kwargs):
+        print("Department save() called")
+
+        if self.description:
+            self.description = re.sub(
+                r'<h[1-6]>\s*&nbsp;\s*</h[1-6]>',
+                '',
+                self.description,
+                flags=re.IGNORECASE
+            )
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

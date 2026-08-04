@@ -1,12 +1,23 @@
 {% extends "frontend/base.html" %}
 {% load static %}
+{% block title %}
+Our Doctors | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Meet the experienced doctors and specialists at Lakeside Hospital Bangalore. Explore our expert medical team across multiple specialties and book an appointment online.
+{% endblock %}
+
+{% block meta_keywords %}
+Lakeside Hospital, doctors Bangalore, specialist doctors, medical specialists, healthcare experts, hospital doctors, book doctor appointment, Bangalore hospital
+{% endblock %}
 
 
 {% block content %}
 
 <!-- Doctors Page -->
 <section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');">
+    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -59,9 +70,9 @@
                 <div class="item">
                     <div class="thumb">
                         {% if doctor.photo %}
-                        <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                        <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" loading="lazy" decoding="async"/>
                         {% else %}
-                        <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                        <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" loading="lazy" decoding="async"/>
                         {% endif %}
 
                         <div class="overlay">

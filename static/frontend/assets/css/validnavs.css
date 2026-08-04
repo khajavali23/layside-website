@@ -181,7 +181,7 @@ Version: 1.0
 
 .navbar-brand>img {
 	display: block;
-	height: 50px;
+	height: 45px;
 }
 
 .navbar-toggle {
@@ -2893,12 +2893,12 @@ nav.navbar.validnavs .navbar-collapse.collapse button i {
 @media only screen and (max-width: 1023px) {
 	nav.navbar.validnavs .navbar-collapse.collapse.show img {
 		display: inline-block;
-		height: 50px;
+		height: 45px;
 	}
 
 	nav.navbar.validnavs .navbar-collapse.collapse img {
 		display: inline-block;
-		height: 50px;
+		height: 45px;
 	}
 
 	.navbar .attr-right .attr-nav li.tracing a {
@@ -3407,4 +3407,12 @@ nav.validnavs .dropdown.megamenu-fw li {
         padding: 15px !important;
         opacity: 1 !important;
     }
+}
+@media (max-width: 1000px) {
+    .navbar-brand > img {
+        display: none;
+    }
+	.service-heading{
+		margin-top: 25px;
+	}
 }

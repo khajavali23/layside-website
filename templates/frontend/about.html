@@ -1,10 +1,22 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 
+{% block title %}
+About Lakeside Hospital | Advanced Healthcare in Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Learn about Lakeside Hospital Bangalore, offering advanced healthcare, regenerative medicine, stem cell therapy, wellness, family medicine and personalized care from experienced specialists.
+{% endblock %}
+
+{% block meta_keywords %}
+Lakeside Hospital, about Lakeside Hospital, Bangalore hospital, regenerative medicine, stem cell therapy, advanced healthcare, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors
+{% endblock %}
+
 {% block content %}
 
 <section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/about_banner.jpg' %}');">
+    style="background-image: url('{% static 'frontend/assets/img/banner/about_banner.jpg' %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -50,7 +62,7 @@
                 <div class="col-lg-8 about-style-two">
                     <div class="about-video-wrapper">
     <video autoplay muted loop playsinline>
-        <source src="{% static 'frontend/assets/img/about/about-vedio.mp4' %}" type="video/mp4">
+        <source src="{% static 'frontend/assets/img/about/about-vedio.mp4' %}" type="video/mp4" loading="lazy" decoding="async"/>
     </video>
 </div>
                 </div>
@@ -216,7 +228,7 @@ Multiple specialties working together to provide integrated healthcare under one
 
                 <div class="col-lg-6 about-style-two">
                     <div class="thumb leadership-image-area">
-                        <img src="/static/frontend/assets/img/about/founder.jpg" alt="Leadership Team" class="img_border_radis">
+                        <img src="/static/frontend/assets/img/about/founder.jpg" alt="Leadership Team" class="img_border_radis" loading="lazy" decoding="async"/>
                     </div>
                 </div>
 
@@ -243,11 +255,11 @@ Multiple specialties working together to provide integrated healthcare under one
 
             <!-- Mission -->
             <div class="single-item">
-                <div class="row">
+               <div class="row align-items-center">
 
                     <div class="col-lg-5">
                         <div class="thumb">
-                            <img src="{% static 'frontend/assets/img/about/mission.jpg' %}" alt="Mission Image" />
+                            <img src="{% static 'frontend/assets/img/about/mission.jpg' %}" alt="Mission Image" loading="lazy" decoding="async"/>
                         </div>
                     </div>
 
@@ -283,7 +295,7 @@ Multiple specialties working together to provide integrated healthcare under one
 
                     <div class="col-lg-5">
                         <div class="thumb">
-                            <img src="{% static 'frontend/assets/img/about/Vision.jpg' %}" alt="Vision Image" />
+                            <img src="{% static 'frontend/assets/img/about/Vision.jpg' %}" alt="Vision Image" loading="lazy" decoding="async" loading="lazy" decoding="async"/>
                         </div>
                     </div>
 
@@ -341,9 +353,9 @@ Multiple specialties working together to provide integrated healthcare under one
                         <div class="thumb">
 
                             {% if doctor.photo %}
-                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" loading="lazy" decoding="async" loading="lazy" decoding="async"/>
                             {% else %}
-                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" loading="lazy" decoding="async"/>
                             {% endif %}
 
                             <div class="overlay">

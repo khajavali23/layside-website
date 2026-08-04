@@ -1,101 +1,113 @@
-{% extends "frontend/base.html" %}
-{% load static %}
+    {% extends "frontend/base.html" %}
+    {% load static %}
 
-{% block content %}
+    {% block title %}
+    Gallery | Lakeside Hospital Bangalore
+    {% endblock %}
+
+    {% block meta_description %}
+    Explore the Lakeside Hospital Bangalore gallery featuring our advanced medical facilities, modern infrastructure, experienced specialists and patient care environment.
+    {% endblock %}
+
+    {% block meta_keywords %}
+    Lakeside Hospital, hospital gallery, Lakeside Hospital Bangalore, medical facilities, hospital infrastructure, healthcare Bangalore, advanced medical technology, patient care, hospital photos
+    {% endblock %}
+
+    {% block content %}
 
 
 
-<!-- Gallery Page -->
-<section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/gallery_banner.jpg' %}');">
+    <!-- Gallery Page -->
+    <section class="inner-banner"
+        style="background-image: url('{% static 'frontend/assets/img/banner/gallery_banner.jpg' %}');" loading="lazy" decoding="async">
 
-    <div class="banner-overlay"></div>
+        <div class="banner-overlay"></div>
 
-    <div class="container">
-        <div class="inner-banner-content text-center">
+        <div class="container">
+            <div class="inner-banner-content text-center">
 
-            <span class="banner-tag">
-                Moments Of Care
-            </span>
+                <span class="banner-tag">
+                    Moments Of Care
+                </span>
 
-            <h1>Gallery</h1>
+                <h1>Gallery</h1>
 
-            <p>
-                Discover our hospital environment, medical facilities,
-                events, and patient care moments through our gallery.
-            </p>
+                <p>
+                    Discover our hospital environment, medical facilities,
+                    events, and patient care moments through our gallery.
+                </p>
 
-            <ul class="breadcrumb justify-content-center">
+                <ul class="breadcrumb justify-content-center">
 
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
 
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
 
-                <li>Gallery</li>
+                    <li>Gallery</li>
 
-            </ul>
+                </ul>
 
+            </div>
         </div>
-    </div>
 
-</section>
-
-
-<div class="gallery-area default-padding">
-    <div class="container">
-        <div class="gallery-items-area text-center">
-            <div class="row">
-                <div class="col-lg-12 gallery-content">
+    </section>
 
 
-                    <div class="magnific-mix-gallery text-center infrastructure">
-                        <div id="portfolio-grid" class="gallery-items colums-3">
+    <div class="gallery-area default-padding">
+        <div class="container">
+            <div class="gallery-items-area text-center">
+                <div class="row">
+                    <div class="col-lg-12 gallery-content">
 
-                            {% for item in gallery_items %}
 
-                            <div class="pf-item">
+                        <div class="magnific-mix-gallery text-center infrastructure">
+                            <div id="portfolio-grid" class="gallery-items colums-3">
 
-                                <div class="effect-box">
+                                {% for item in gallery_items %}
 
-                                    {% if item.image %}
-                                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                                    {% elif item.youtube_url %}
-                                        <img src="https://img.youtube.com/vi/{{ item.get_youtube_id }}/hqdefault.jpg" alt="{{ item.title }}">
-                                    {% endif %}
+                                <div class="pf-item">
 
-                                    <div class="info">
-                                        <h4><a href="#">{{ item.title }}</a></h4>
+                                    <div class="effect-box">
 
                                         {% if item.image %}
-                                            <a href="{{ item.image.url }}" class="item popup-link">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
+                                            <img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy" decoding="async"/>
                                         {% elif item.youtube_url %}
-                                            <a href="{{ item.get_youtube_embed }}" class="item popup-link">
-                                                <i class="fa fa-play"></i>
-                                            </a>
+                                            <img src="https://img.youtube.com/vi/{{ item.get_youtube_id }}/hqdefault.jpg" alt="{{ item.title }}" loading="lazy" decoding="async">
                                         {% endif %}
+
+                                        <div class="info">
+                                            <h4><a href="#">{{ item.title }}</a></h4>
+
+                                            {% if item.image %}
+                                                <a href="{{ item.image.url }}" class="item popup-link">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            {% elif item.youtube_url %}
+                                                <a href="{{ item.get_youtube_embed }}" class="item popup-link">
+                                                    <i class="fa fa-play"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+
                                     </div>
 
                                 </div>
 
+                                {% endfor %}
+
                             </div>
-
-                            {% endfor %}
-
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-{% endblock content %}
+    {% endblock content %}

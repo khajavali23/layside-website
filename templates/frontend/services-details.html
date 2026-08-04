@@ -1,10 +1,22 @@
 {% extends "frontend/base.html" %}
 {% load static %}
 
+{% block title %}
+{{ department.title }} | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Learn about {{ department.title }} at Lakeside Hospital Bangalore. Our experienced specialists provide advanced diagnosis, personalized treatment and comprehensive healthcare. Book an appointment today.
+{% endblock %}
+
+{% block meta_keywords %}
+{{ department.title }}, Lakeside Hospital, Bangalore hospital, {{ department.title }} Bangalore, specialist doctors, healthcare services, regenerative medicine, wellness
+{% endblock %}
+
 {% block content %}
    
 <section class="inner-banner"
-    style="background-image: url('{% if department.breadcamp %}{{ department.breadcamp.url }}{% else %}{% static "frontend/assets/img/banner/7.jpg" %}{% endif %}');">
+    style="background-image: url('{% if department.breadcamp %}{{ department.breadcamp.url }}{% else %}{% static "frontend/assets/img/banner/7.jpg" %}{% endif %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -68,21 +80,22 @@
                 <div class="thumb">
                     {% if department.banner %}
 
-                    <div class="row">
+                    <div class="row align-items-center">
                         <!-- IMAGE -->
-                        <div class="col-lg-8 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <img
                                 src="{{ department.banner.url }}"
                                 alt="{{ department.title }}"
                                 class="img-fluid rounded"
+                                loading="lazy" decoding="async"
                             />
                         </div>
 
                         <!-- STATIC CONTENT BESIDE IMAGE -->
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <div class="department-static-info">
                                 <!-- TITLE DYNAMIC -->
-                                <h2>{{ department.title }}</h2>
+                                <h2 class="service-heading">{{ department.title }}</h2>
 
                                 <p>
                                     Welcome to the {{ department.title }} Department at NRI Hospital. Our department is
@@ -115,7 +128,7 @@
                 <div class="info">
                   
 
-                    <p>{{ department.description|safe }}</p>
+                    {{ department.description|safe }}</p>
                 </div>
             </div>
             <!-- End Services Content -->
@@ -144,7 +157,7 @@
                                             src="{{ doctor.photo.url }}"
                                             alt="{{ doctor.name }}"
                                             class="services_details_doctor"
-                                        />
+                                        loading="lazy" decoding="async"/>
                                         {% endif %}
                                     </div>
 

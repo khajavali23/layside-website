@@ -21,7 +21,7 @@
     <!-- end::NexLink Mobile Specific -->
 
     <!-- begin::NexLink Favicon Tags -->
-    <link rel="shortcut icon" href="{% static 'frontend/assets/img/favicon.png' %}" />
+    <link rel="shortcut icon" href="{% static 'frontend/assets/img/favicon.png' %}" loading="lazy" decoding="async"/>
 
     <!-- begin::NexLink Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
@@ -219,7 +219,7 @@
       <!-- begin::NexLink Sidebar Menu -->
       <aside class="app-menubar-tabs" id="appMenubar">
         <div class="app-navbar-brand">
-          <a class="navbar-brand-logo" href="{% url 'dashboard' %}"><img src="{% static 'frontend/assets/img/logo.png' %}" style="width: 50px;" alt="NexLink Admin Dashboard Logo" /></a>
+          <a class="navbar-brand-logo" href="{% url 'dashboard' %}"><img src="{% static 'frontend/assets/img/logo.png' %}" style="width: 50px;" alt="NexLink Admin Dashboard Logo" loading="lazy" decoding="async"/></a>
         </div>
         <div class="app-navbar-tabs" data-simplebar>
           <ul class="nav" id="appMenubarTabs" role="tablist" aria-orientation="vertical">

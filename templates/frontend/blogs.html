@@ -1,11 +1,24 @@
 {% extends "frontend/base.html" %}
 {% load static %}
+{% block title %}
+Health Blogs | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Explore the latest health blogs from Lakeside Hospital Bangalore. Read expert articles on regenerative medicine, stem cell therapy, wellness, preventive care and healthy living.
+{% endblock %}
+
+{% block meta_keywords %}
+Lakeside Hospital, health blogs, medical blogs, healthcare articles, regenerative medicine, stem cell therapy, wellness, health tips, Bangalore hospital, preventive healthcare
+{% endblock %}
+
+
 {% block content %}
 
 
 <!-- Blogs Page -->
 <section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/blog_banner.jpg' %}');">
+    style="background-image: url('{% static 'frontend/assets/img/banner/blog_banner.jpg' %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -56,7 +69,7 @@
 
                         <div class="thumb">
                             <a href="{% url 'blog_detail' blog.slug %}">
-                                <img src="{{ blog.image.url }}" alt="{{ blog.heading }}">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" loading="lazy" decoding="async"/>
                             </a>
                         </div>
 
@@ -75,7 +88,7 @@
                             </h4>
 
                             <p>
-                                {{ blog.content|striptags|truncatewords:15 }}
+                                {{ blog.content|striptags|truncatewords:13 }}
                             </p>
 
                             <a class="btn btn-theme circle border btn-sm"

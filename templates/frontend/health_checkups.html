@@ -1,52 +1,21 @@
 {% extends "frontend/base.html" %}
 {% load static %}
 
+{% block title %}
+Health Checkup Packages | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Explore comprehensive health checkup packages at Lakeside Hospital Bangalore. Our preventive health screenings help detect potential health concerns early and support your long-term wellness.
+{% endblock %}
+å
+{% block meta_keywords %}
+Lakeside Hospital, health checkup Bangalore, preventive health checkup, full body checkup, health screening, medical checkup, wellness checkup, diagnostic tests, Bangalore hospital
+{% endblock %}
+
 {% block content %}
-<section class="inner-banner"
-    style="background-image: url('{% static "frontend/assets/img/banner/check_up_banners.jpg" %}');">
 
-    <div class="banner-overlay"></div>
 
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Preventive Healthcare Packages
-            </span>
-
-            <h1>
-                Health Checkups
-            </h1>
-
-            <p>
-                Comprehensive health checkup packages designed for early
-                detection, better prevention, and a healthier lifestyle.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Health Checkups
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-</section>
 
 
 <div class="health-checkup-section">
@@ -56,7 +25,7 @@
             <div class="health-card">
                 
                 {% if plan.image %}
-                <img src="{{ plan.image.url }}" alt="{{ plan.title }}" class="health-img" />
+                <img src="{{ plan.image.url }}" alt="{{ plan.title }}" class="health-img"  loading="lazy" decoding="async"/>
                 {% endif %}
 
                 <h4 class="health-title">{{ plan.title }}</h4>

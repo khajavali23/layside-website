@@ -1,12 +1,24 @@
 {% extends "frontend/base.html" %}
 {% load static %}
 
+{% block title %}
+Contact Us | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Contact Lakeside Hospital Bangalore to book an appointment, speak with our specialists, or learn more about our regenerative medicine, stem cell therapy and healthcare services.
+{% endblock %}
+
+{% block meta_keywords %}
+Lakeside Hospital, contact Lakeside Hospital, Bangalore hospital, hospital contact, book appointment Bangalore, regenerative medicine Bangalore, stem cell therapy Bangalore, healthcare services
+{% endblock %}
+
 {% block content %}
 
 
 <!-- Contact Page -->
 <section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}');">
+    style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -106,60 +118,27 @@
 <!-- Contact Area -->
 <div class="contact-area default-padding bg-light">
     <div class="container">
-
         <div class="row align-items-center">
-
             <!-- Left Content -->
-<!-- Left Content -->
-<div class="col-lg-5">
-
-    <div class="contact-image-box">
-
-        <!-- Small Floating Card -->
-        <div class="contact-floating-card">
-
-            <div class="icon">
-                <i class="fas fa-headset"></i>
+            <!-- Left Content -->
+            <div class="col-lg-5">
+                <div class="contact-image-box">
+                    <!-- Main Image -->
+                    <div class="contact-image contact-banner-image">
+                        <img src="{% static 'frontend/assets/img/about/contect_page.jpg' %}" alt="Hospital" loading="lazy" decoding="async"/>
+                    </div>
+                </div>
             </div>
-
-            <div class="content">
-
-                <span>24/7 Support</span>
-
-                <h4>
-                    Quick Medical <br>
-                    Assistance
-                </h4>
-
-            </div>
-
-        </div>
-
-        <!-- Main Image -->
-        <div class="contact-image">
-            <img src="{% static 'frontend/assets/img/about/about_us.jpg' %}"
-                 alt="Hospital">
-        </div>
-
-    </div>
-
-</div>
-
 
             <!-- Right Form -->
             <div class="col-lg-7">
-
                 <div class="contact-form-box">
-
-                    <h2 class="title">
-                        Get In Touch
-                    </h2>
+                    <h2 class="title">Get In Touch</h2>
 
                     <form method="POST" action="/contact/create/">
                         {% csrf_token %}
 
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <input
@@ -171,11 +150,9 @@
                                     />
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="row">
-
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <input
@@ -199,11 +176,9 @@
                                     />
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <div class="form-group comments">
                                     <textarea
@@ -214,44 +189,41 @@
                                     ></textarea>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <button type="submit" class="btn btn-theme">
                                     Send Message
                                     <i class="fa fa-paper-plane"></i>
                                 </button>
                             </div>
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </div>
 <!-- Google Maps -->
 <div class="maps-area">
     <div class="container-full">
         <div class="row">
-
             <div class="google-maps">
-
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248815.91022426088!2d77.45715984114211!3d12.987925088639738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1782119874161!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248815.91022426088!2d77.45715984114211!3d12.987925088639738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1782119874161!5m2!1sen!2sin"
+                    width="600"
+                    height="450"
+                    style="border: 0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
             </div>
-
         </div>
     </div>
 </div>
+
 
 <!-- Sweet Alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

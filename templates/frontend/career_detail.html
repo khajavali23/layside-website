@@ -1,10 +1,20 @@
 {% extends "frontend/base.html" %}
 {% load static %}
+{% block title %}
+{{ job.job_title }} | Careers at Lakeside Hospital Bangalore
+{% endblock %}
 
+{% block meta_description %}
+Apply for the {{ job.job_title }} position at Lakeside Hospital Bangalore. Explore exciting healthcare career opportunities and join our team of experienced medical professionals.
+{% endblock %}
+
+{% block meta_keywords %}
+{{ job.job_title }}, Lakeside Hospital careers, healthcare jobs Bangalore, hospital jobs, medical careers, Bangalore hospital, healthcare recruitment
+{% endblock %}
 {% block content %}
 
 <section class="inner-banner"
-    style="background-image: url('{% static "frontend/assets/img/banner/dailasic_banner.jpg" %}');">
+    style="background-image: url('{% static "frontend/assets/img/banner/dailasic_banner.jpg" %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 

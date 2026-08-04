@@ -150,80 +150,99 @@
             # Doctor Carousel
          ===============================================*/
         $('.doctor-carousel').owlCarousel({
-            loop: true,
-            margin: 30,
-            nav: false,
-            navText: [
-                "<i class='fa fa-angle-left'></i>",
-                "<i class='fa fa-angle-right'></i>"
-            ],
-            dots: false,
-            autoplay: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 2
-                },
-                1024: {
-                    items: 3
-                }
-            }
-        });
+    loop: true,
+    margin: 30,
+    nav: false,
+    navText: [
+        "<i class='fa fa-angle-left'></i>",
+        "<i class='fa fa-angle-right'></i>"
+    ],
+    dots: false,
+    autoplay: true,
+
+    // Timing Options
+    autoplayTimeout: 3000, // Wait 3 seconds before next slide
+    autoplaySpeed: 800,    // Slide animation speed
+    smartSpeed: 800,  
+     autoplayHoverPause: true, // Add this     // Smooth transition speed
+
+    responsive: {
+        0: {
+            items: 1
+        },
+        768: {
+            items: 2
+        },
+        1024: {
+            items: 3
+        }
+    }
+});
 
 
         /* ==================================================
             # Services Carousel
          ===============================================*/
-        $('.services-carousel').owlCarousel({
-            loop: true,
-            margin: 30,
-            nav: false,
-            navText: [
-                "<i class='fa fa-angle-left'></i>",
-                "<i class='fa fa-angle-right'></i>"
-            ],
-            dots: false,
-            autoplay: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 2
-                },
-                1024: {
-                    items: 3
-                }
-            }
-        });
+       $('.services-carousel').owlCarousel({
+    loop: true,
+    margin: 30,
+    nav: false,
+    navText: [
+        "<i class='fa fa-angle-left'></i>",
+        "<i class='fa fa-angle-right'></i>"
+    ],
+    dots: false,
 
+    autoplay: true,
+    autoplayTimeout: 3000,     // Time before next slide (3000ms = 3 seconds)
+    autoplaySpeed: 800,         // Slide animation speed (800ms)
+    smartSpeed: 800, 
+    autoplayHoverPause: true, // Add this           // Smooth transition speed
+
+    responsive: {
+        0: {
+            items: 1
+        },
+        768: {
+            items: 2
+        },
+        1024: {
+            items: 3
+        }
+    }
+});
         /* ==================================================
             # Testimonials Carousel
          ===============================================*/
-        $('.testimonial-carousel').owlCarousel({
-            loop: true,
-            margin: 30,
-            nav: false,
-            navText: [
-                "<i class='fa fa-angle-left'></i>",
-                "<i class='fa fa-angle-right'></i>"
-            ],
-            dots: false,
-            autoplay: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 2
-                },
-                1024: {
-                    items:2
-                }
-            }
-        });
+       $('.testimonial-carousel').owlCarousel({
+    loop: true,
+    margin: 30,
+    nav: false,
+    navText: [
+        "<i class='fa fa-angle-left'></i>",
+        "<i class='fa fa-angle-right'></i>"
+    ],
+    dots: false,
+    autoplay: true,
+
+    // Timing Options
+    autoplayTimeout: 3000, // Wait 3 seconds before next slide
+    autoplaySpeed: 800,    // Slide animation speed
+    smartSpeed: 800, 
+     autoplayHoverPause: true, // Add this      // Smooth transition speed
+
+    responsive: {
+        0: {
+            items: 1
+        },
+        768: {
+            items: 2
+        },
+        1024: {
+            items: 2
+        }
+    }
+});
 
 
         /* ==================================================
@@ -313,3 +332,58 @@ setTimeout(function(){
 
 
 
+$('.blog-carousel').owlCarousel({
+    loop: true,
+    margin: 30,
+    nav: false,
+    navText: [
+        "<i class='fa fa-angle-left'></i>",
+        "<i class='fa fa-angle-right'></i>"
+    ],
+    dots: false,
+    autoplay: true,
+
+    // Timing Options
+    autoplayTimeout: 3000,
+    autoplaySpeed: 800,
+    smartSpeed: 800,
+     autoplayHoverPause: true, // Add this
+
+    responsive: {
+        0: {
+            items: 1
+        },
+        768: {
+            items: 2
+        },
+        1024: {
+            items: 3
+        }
+    }
+});
+
+function handleCarouselVisibility(selector) {
+    const $carousel = $(selector);
+
+    $(window).on('scroll', function () {
+        const top = $carousel.offset().top;
+        const bottom = top + $carousel.outerHeight();
+
+        const viewportTop = $(window).scrollTop();
+        const viewportBottom = viewportTop + $(window).height();
+
+        if (viewportBottom > top && viewportTop < bottom) {
+            // Carousel is visible
+            $carousel.trigger('stop.owl.autoplay');
+        } else {
+            // Carousel is not visible
+            $carousel.trigger('play.owl.autoplay', [3000]);
+        }
+    });
+}
+
+// Apply to all carousels
+handleCarouselVisibility('.services-carousel');
+handleCarouselVisibility('.doctor-carousel');
+handleCarouselVisibility('.testimonial-carousel');
+handleCarouselVisibility('.blog-carousel');

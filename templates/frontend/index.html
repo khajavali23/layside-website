@@ -1,16 +1,17 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 {% block title %}
-Lakeside Hospital Bangalore | Stem Cell & Regenerative Wellness
+Lakeside Hospital | Regenerative Medicine & Stem Cell Therapy Bangalore
 {% endblock %}
 
 {% block meta_description %}
-Advanced healthcare, stem cell therapy, wellness and holistic healing under one roof.
+Lakeside Hospital in Bangalore offers regenerative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda and wellness services. Book an appointment with our specialists.
 {% endblock %}
 
 {% block meta_keywords %}
-hospital, stem cell therapy, wellness, regenerative medicine
+Lakeside Hospital, Bangalore hospital, regenerative medicine Bangalore, stem cell therapy Bangalore, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors, healthcare Bangalore
 {% endblock %}
+
 {% block content %}
 
 
@@ -183,20 +184,20 @@ hospital, stem cell therapy, wellness, regenerative medicine
                     </li>
                 </ul>
                 <div class="bottom">
-    <div class="video">
-    <a href="https://www.youtube.com/watch?v=5vY-D42NFP4"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="relative theme video-play-button item-center">
-        <i class="fa fa-play"></i>
-    </a>
-</div>
+                    <div class="video">
+                    <a href="https://www.youtube.com/watch?v=5vY-D42NFP4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="relative theme video-play-button item-center">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
 
-    <div class="content">
-        <h4>Inside Lakeside Hospital</h4>
-        <p>Take a closer look at our facilities, specialists, and the care experience that makes us a trusted name in healthcare.</p>
-    </div>
-</div>
+                    <div class="content">
+                        <h4>Inside Lakeside Hospital</h4>
+                        <p>Take a closer look at our facilities, specialists, and the care experience that makes us a trusted name in healthcare.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -340,7 +341,7 @@ hospital, stem cell therapy, wellness, regenerative medicine
 
                   <div class="icon-wrap">
                     {% if dep.icon %}
-                      <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon" />
+                     <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon" loading="lazy" decoding="async">
                     {% else %}
                       <i class="flaticon-anatomy"></i>
                     {% endif %}
@@ -378,9 +379,9 @@ hospital, stem cell therapy, wellness, regenerative medicine
                     <div class="item">
                         <div class="thumb">
                             {% if doctor.photo %}
-                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" />
+                            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" loading="lazy" decoding="async">
                             {% else %}
-                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" />
+                            <img src="{% static 'frontend/assets/img/doctors/doctor.jpg' %}" alt="Doctor" loading="lazy" decoding="async">
                             {% endif %}
 
                             <div class="overlay">
@@ -475,7 +476,7 @@ hospital, stem cell therapy, wellness, regenerative medicine
 
                         <div class="provider">
                             <div class="thumb">
-                                <img src="{% static 'frontend/assets/img/team/user.png' %}" alt="User" />
+                                <img src="{% static 'frontend/assets/img/team/user.png' %}" alt="User"  loading="lazy" decoding="async"/>
                             </div>
                             <div class="info">
                                 <h4>{{ t.name }}</h4>
@@ -511,42 +512,42 @@ hospital, stem cell therapy, wellness, regenerative medicine
             <div class="col-lg-8 offset-lg-2">
                 <div class="site-heading text-center">
                     <h2>Recent <span>Blog</span></h2>
-                    <p>Stay informed, stay healthy. Explore expert insights, health tips, and the latest updates fromLakeside Hospital.</p>
+                    <p>Stay informed, stay healthy. Explore expert insights, health tips, and the latest updates from Lakeside Hospital.</p>
                 </div>
             </div>
         </div>
-        <div class="blog-items">
-            <div class="row">
-                {% for blog in blogs %}
-                <div class="col-lg-4 col-md-6 single-item">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="{% url 'blog_detail' blog.slug %}">
-                                <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" />
-                            </a>
-                        </div>
 
-                        <div class="info">
-                            <div class="meta">
-                                <ul>
-                                    <li><a href="#">{{ blog.author }}</a></li>
-                                    <li>{{ blog.createdAt|date:'d F, Y' }}</li>
-                                </ul>
-                            </div>
-                           <h4>
-                                <a href="{% url 'blog_detail' blog.slug %}" class="blog-heading">
-                                    {{ blog.heading|truncatewords:8 }}
-                                </a>
-                            </h4>
-                            <p>{{ blog.content|striptags|truncatewords:15 }}</p>
-                            <a class="btn btn-theme circle border btn-sm" href="{% url 'blog_detail' blog.slug %}">
-                                Read More <i class="fas fa-long-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+        <div class="blog-carousel owl-carousel owl-theme">
+            {% for blog in blogs %}
+            <div class="item">
+                <div class="thumb">
+                    <a href="{% url 'blog_detail' blog.slug %}">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" loading="lazy" decoding="async">
+                    </a>
                 </div>
-                {% endfor %}
+
+                <div class="info">
+                    <div class="meta">
+                        <ul>
+                            <li><a href="#">{{ blog.author }}</a></li>
+                            <li>{{ blog.createdAt|date:'d F, Y' }}</li>
+                        </ul>
+                    </div>
+
+                    <h4>
+                        <a href="{% url 'blog_detail' blog.slug %}" class="blog-heading">
+                            {{ blog.heading|truncatewords:8 }}
+                        </a>
+                    </h4>
+
+                    <p>{{ blog.content|striptags|truncatewords:13 }}</p>
+
+                    <a class="btn btn-theme circle border btn-sm" href="{% url 'blog_detail' blog.slug %}">
+                        Read More <i class="fas fa-long-arrow-right"></i>
+                    </a>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -558,7 +559,6 @@ hospital, stem cell therapy, wellness, regenerative medicine
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("Script Loaded ✅");
 
     const department = document.getElementById("department");
     const doctor = document.getElementById("doctor");
@@ -701,6 +701,32 @@ document.addEventListener("DOMContentLoaded", function () {
             showToast("Server error");
         }
     });
+});
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const row = document.querySelector(".blog-items .row");
+    const cards = row.querySelectorAll(".single-item");
+
+    let index = 0;
+
+    function scrollNext() {
+        index++;
+
+        if (index >= cards.length) {
+            index = 0;
+        }
+
+        row.scrollTo({
+            left: cards[index].offsetLeft,
+            behavior: "smooth"
+        });
+    }
+
+    setInterval(scrollNext, 3000);
+
 });
 </script>
 {% endblock %}

@@ -1,9 +1,21 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 
+{% block title %}
+Dr. {{ doctor.name }} | {{ doctor.designation }} | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+Meet Dr. {{ doctor.name }}, {{ doctor.designation }} at Lakeside Hospital Bangalore. Learn about their expertise, specialties and book an appointment for personalized medical care.
+{% endblock %}
+
+{% block meta_keywords %}
+Dr. {{ doctor.name }}, {{ doctor.designation }}, Lakeside Hospital, specialist doctor Bangalore, doctor Bangalore, healthcare specialist, regenerative medicine, hospital Bangalore
+{% endblock %}
+
 {% block content %}
 <section class="inner-banner"
-    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
+    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -66,7 +78,7 @@
         <div class="col-lg-6">
           <div class="thumb">
             {% if doctor.photo %}
-              <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor_details_img" />
+              <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor_details_img" loading="lazy" decoding="async"/>
             {% endif %}
           </div>
         </div>

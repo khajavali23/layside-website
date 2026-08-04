@@ -1,53 +1,56 @@
-{% extends 'backend/base.html' %}
+{% extends 'backend/base.html' %} {% block title %}
+<title>Applications | {{ career.job_title }}</title>
+{% endblock %} {% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <h4>Applications for {{ career.job_title }}</h4>
+    <a href="{% url 'career-list' %}" class="btn btn-secondary">Back</a>
+  </div>
 
-{% block title %}
-  <title>Applications | {{ career.job_title }}</title>
-{% endblock %}
-
-{% block content %}
-  <div class="container mt-4">
-    <div class="d-flex justify-content-between mb-3">
-      <h4>Applications for {{ career.job_title }}</h4>
-      <a href="{% url 'career-list' %}" class="btn btn-secondary">Back</a>
-    </div>
-
-    <div class="card">
-      <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Cover Letter</th>
-              <th>CV</th>
-              <th>Applied On</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for app in applications %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ app.name }}</td>
-                <td>{{ app.email }}</td>
-                <td>{{ app.number }}</td>
-                <td>{{ app.cover_letter|default:'-' }}</td>
-                <td>
-                  {% if app.cv %}
-                    <a href="{{ app.cv.url }}" target="_blank" class="btn btn-sm btn-primary">View CV</a>
-                  {% endif %}
-                </td>
-                <td>{{ app.created_at }}</td>
-              </tr>
-            {% empty %}
-              <tr>
-                <td colspan="7" class="text-center">No applications for this job</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Cover Letter</th>
+            <th>CV</th>
+            <th>Applied On</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in applications %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ app.name }}</td>
+            <td>{{ app.email }}</td>
+            <td>{{ app.number }}</td>
+            <td>{{ app.cover_letter|default:'-' }}</td>
+            <td>
+              {% if app.cv %}
+              <a
+                href="{{ app.cv.url }}"
+                target="_blank"
+                class="btn btn-sm btn-primary"
+                >View CV</a
+              >
+              {% endif %}
+            </td>
+            <td>{{ app.created_at }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center">
+              No applications for this job
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 {% endblock %}

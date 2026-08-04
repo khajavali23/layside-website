@@ -1,9 +1,20 @@
 {% extends "frontend/base.html" %}
 {% load static %}
+{% block title %}
+{{ blog.heading }} | Lakeside Hospital Bangalore
+{% endblock %}
+
+{% block meta_description %}
+{{ blog.content|striptags|truncatewords:25 }}
+{% endblock %}
+
+{% block meta_keywords %}
+{{ blog.heading }}, Lakeside Hospital, Bangalore hospital, healthcare blog, health tips, regenerative medicine, stem cell therapy, wellness
+{% endblock %}
 
 {% block content %}
 <section class="inner-banner"
-    style="background-image: url('{% if blog.banner %}{{ blog.banner.url }}{% else %}{% static "frontend/assets/img/banner/blog_banner.jpg" %}{% endif %}');">
+    style="background-image: url('{% if blog.banner %}{{ blog.banner.url }}{% else %}{% static "frontend/assets/img/banner/blog_banner.jpg" %}{% endif %}');" loading="lazy" decoding="async">
 
     <div class="banner-overlay"></div>
 
@@ -69,7 +80,7 @@
                         <!-- Post Image -->
                         <div class="thumb">
                             {% if blog.image %}
-                            <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" />
+                            <img src="{{ blog.image.url }}" alt="{{ blog.heading }}"  loading="lazy" decoding="async"/>
                             {% endif %}
                         </div>
 
@@ -88,8 +99,8 @@
 
                             <!-- Content -->
                            <div class="blog-rich-text">
-    {{ blog.content|safe }}
-</div>
+                                {{ blog.content|safe }}
+                            </div>
 
                             <!-- Tags -->
                             <div class="post-tags share mt-5">
