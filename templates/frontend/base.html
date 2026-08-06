@@ -41,6 +41,11 @@
 </head>
 
     <body>
+        <!-- Emergency Contact -->
+<a href="tel:+919000000000" class="emergency-contact">
+    <i class="fas fa-phone-alt"></i>
+    <span>24/7 Emergency</span>
+</a>
 
        <!-- Preloader -->
 <div id="preloader">
@@ -175,11 +180,11 @@
                             </span>
 
                         </a>
-                    </div>
+                   </div>
 
 
             
-                </div>
+                    </div>
 
                 
             </nav>
@@ -391,6 +396,23 @@
 
         </footer>
 
+        <!-- Floating WhatsApp Button -->
+<a
+    href="https://wa.me/919876543210?text=Hi%20Lakeside%20Hospital%2C%20I%20would%20like%20to%20know%20more%20about%20your%20health%20checkup%20packages."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-float"
+    aria-label="Chat with Lakeside Hospital on WhatsApp"
+    title="Chat with us on WhatsApp"
+>
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -440,17 +462,19 @@
         <script src="{% static 'frontend/assets/js/circle-progress.js' %}"></script>
         <script src="{% static 'frontend/assets/js/validnavs.js' %}"></script>
         <script src="{% static 'frontend/assets/js/main.js' %}"></script>
+        
         <script>
             window.addEventListener("load", function () {
 
-    const preloader = document.getElementById("preloader");
+                    const preloader = document.getElementById("preloader");
 
-    setTimeout(function () {
-        preloader.classList.add("hide");
-    }, 1200);
+                    setTimeout(function () {
+                        preloader.classList.add("hide");
+                    }, 1200);
 
-});
+                });
         </script>
+        
 
         {% block script %}{% endblock %}
 
