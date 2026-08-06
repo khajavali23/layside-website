@@ -1443,7 +1443,7 @@ p {
 }
 
 .site-heading {
-  margin-bottom: 60px;
+  
   overflow: hidden;
   margin-top: -5px;
 }
@@ -10504,7 +10504,7 @@ footer .f-item h4::after{
     width: 48px;
     padding: 14px 8px;
 
-    background: #d62828;
+    background: #b6202e;
     color: #fff !important;
 
     border-radius: 8px 0 0 8px;
@@ -10535,5 +10535,1251 @@ footer .f-item h4::after{
     white-space: nowrap;
 }
 
+/* =========================================================LAKESIDE PREMIUM PATIENT JOURNEY========================================================= */
+/* Background decoration */
+/* =========================================================
+   LAKESIDE PREMIUM PATIENT JOURNEY
+   ========================================================= */
+
+.lakeside-journey-section {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 110px 0 100px;
+    background: #102f33;
+}
+
+/* Premium image + dark gradient overlay */
+.lakeside-journey-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+   background-image:
+    linear-gradient(
+        90deg,
+        rgba(0, 7, 7, 0.82) 0%,
+        rgba(1, 13, 13, 0.62) 35%,
+        rgba(0, 10, 10, 0.28) 70%,
+        rgba(1, 18, 18, 0.12) 100%
+    ),
+    linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+    ),
+    url("/static/frontend/assets/img/about/jurny-pastiant.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 1;
+    z-index: -1;
+}
+
+/* Subtle premium glow */
+.lakeside-journey-section::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: -220px;
+    right: -180px;
+
+    background: radial-gradient(
+        circle,
+        rgba(10, 124, 134, 0.25) 0%,
+        rgba(10, 124, 134, 0) 70%
+    );
+
+    pointer-events: none;
+    z-index: -1;
+}
+/* =========================================================HEADER========================================================= */
+
+.lakeside-journey-header {
+    position: relative;
+    z-index: 2;
+    
+    margin: 0 auto 50px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 28px 32px;
+}
+
+.lakeside-journey-eyebrow {display: inline-block;
+
+margin-bottom: 15px;
+
+font-size: 12px;
+font-weight: 700;
+
+letter-spacing: 2.5px;
+
+color: #0a7c86;
+
+}
+
+.lakeside-journey-header h2 {margin: 0 0 18px;
+
+font-size: 44px;
+
+line-height: 1.2;
+
+font-weight: 700;
+
+color: #172b35;
+
+}
+
+.lakeside-journey-header h2 span {color: #0a7c86;}
+
+.lakeside-journey-header p {
+
+margin: 0 auto;
+
+color: #718087;
+
+font-size: 16px;
+
+line-height: 1.8;
+
+}
+
+/* =========================================================MAIN JOURNEY========================================================= */
+
+.lakeside-journey {position: relative;
+
+max-width: 1100px;
+
+height: 650px;
+
+margin: 0 auto;
+
+}
+
+/* Connecting circle */
+
+.lakeside-journey::before {content: "";
+
+position: absolute;
+
+width: 430px;
+height: 430px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgb(255 255 255 / 60%);
+
+border-radius: 50%;
+
+}
+
+/* Inner circle */
+
+.lakeside-journey::after {content: "";
+
+position: absolute;
+
+width: 300px;
+height: 300px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgb(255 255 255 / 60%);
+
+border-radius: 50%;
+
+}
+
+/* =========================================================CENTER========================================================= */
+
+.journey-center {position: absolute;
+
+width: 190px;
+height: 190px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+
+border-radius: 50%;
+
+background: #ffffff;
+
+box-shadow:
+    0 20px 60px rgba(25, 70, 75, 0.12);
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
+
+text-align: center;
+
+z-index: 5;
+
+}
+
+.journey-center-ring {position: absolute;
+
+width: 210px;
+height: 210px;
+
+border-radius: 50%;
+
+border: 1px solid rgb(255 255 255 / 35%);
+
+}
+
+.journey-center-icon {width: 45px;height: 45px;
+
+    
+    
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+
+}
+
+.journey-center span {font-size: 10px;
+
+letter-spacing: 2px;
+
+font-weight: 700;
+
+color: #f2831e;
+
+}
+
+.journey-center strong {margin-top: 4px;
+
+font-size: 13px;
+
+line-height: 1.15;
+
+color: #009eaa;
+    font-weight: 500;
+
+}
+
+/* =========================================================JOURNEY CARDS========================================================= */
+
+.journey-card {position: absolute;
+
+width: 320px;
+
+padding: 22px;
+
+display: flex;
+
+gap: 17px;
+
+background: #ffffffd4;
+
+border: 1px solid rgba(10, 124, 134, 0.08);
+
+border-radius: 14px;
 
 
+
+transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+
+z-index: 6;
+
+}
+
+.journey-card {transform: translateY(-7px);
+
+border-color: rgba(10, 124, 134, 0.25);
+
+
+
+}
+
+/* =========================================================CARD POSITIONS========================================================= */
+
+.journey-card-1 {left: 0;top: 20px;}
+
+.journey-card-2 {right: 0;top: 20px;}
+
+.journey-card-3 {left: -20px;top: 260px;}
+
+.journey-card-4 {right: -20px;top: 260px;}
+
+.journey-card-5 {left: 70px;bottom: 0;}
+
+.journey-card-6 {right: 70px;bottom: 0;}
+
+/* =========================================================NUMBER========================================================= */
+
+.journey-card-number {position: absolute;
+
+top: -10px;
+right: 18px;
+
+font-size: 11px;
+
+font-weight: 700;
+
+letter-spacing: 1px;
+
+color: #0a7c86;
+
+background: #f7fbfb;
+
+padding: 4px 8px;
+
+border-radius: 10px;
+
+}
+
+/* =========================================================ICON========================================================= */
+
+.journey-card-icon {flex-shrink: 0;
+
+width: 52px;
+height: 52px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 50%;
+
+background: rgba(10, 124, 134, 0.08);
+
+color: #0a7c86;
+
+font-size: 19px;
+
+transition: all 0.3s ease;
+
+}
+
+.journey-card .journey-card-icon {background: #0a7c86;
+
+color: #ffffff;
+
+transform: rotate(0deg);
+
+}
+
+/* =========================================================CONTENT========================================================= */
+
+.journey-card-content span {display: block;
+
+margin-bottom: 5px;
+
+font-size: 10px;
+
+font-weight: 700;
+
+letter-spacing: 1.5px;
+
+color: #0a7c86;
+
+}
+
+.journey-card-content h4 {margin: 0 0 7px;
+
+font-size: 17px;
+
+font-weight: 700;
+
+color: #172b35;
+
+}
+
+.journey-card-content p {margin: 0;
+
+font-size: 13px;
+
+line-height: 1.65;
+
+color: #7a888d;
+
+}
+
+/* =========================================================CTA========================================================= */
+
+.journey-cta {position: relative;
+
+z-index: 5;
+
+max-width: 1000px;
+
+margin: 50px auto 0;
+
+padding: 28px 32px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 30px;
+
+background: #ffffff;
+
+border: 1px solid rgba(10, 124, 134, 0.08);
+
+border-radius: 12px;
+
+box-shadow:
+    0 15px 45px rgba(30, 70, 75, 0.07);
+
+}
+
+.journey-cta-text span {display: block;
+
+margin-bottom: 5px;
+
+font-size: 10px;
+
+font-weight: 700;
+
+letter-spacing: 1.5px;
+
+color: #0a7c86;
+
+}
+
+.journey-cta-text h3 {margin: 0;
+
+font-size: 22px;
+
+color: #172b35;
+
+}
+
+/* CTA Buttons */
+
+.journey-cta-buttons {display: flex;
+
+align-items: center;
+
+gap: 10px;
+
+flex-shrink: 0;
+
+}
+
+.journey-primary-btn,.journey-secondary-btn {display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 8px;
+
+padding: 13px 20px;
+
+border-radius: 5px;
+
+font-size: 12px;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: 0.4px;
+
+transition: all 0.3s ease;
+
+}
+
+.journey-primary-btn {background: #0a7c86;
+
+color: #ffffff;
+
+}
+
+.journey-primary-btn {background: #009eaa;
+
+color: #ffffff;
+
+transform: translateY(-2px);
+
+}
+
+.journey-secondary-btn {background: #f5f8f8;
+
+color: #172b35;
+
+}
+
+.journey-secondary-btn {background: #e9f1f1;
+
+color: #0a7c86;
+
+}
+
+/* =========================================================TABLET========================================================= */
+
+@media (max-width: 1199px) {
+
+.lakeside-journey {
+    max-width: 950px;
+}
+
+.journey-card {
+    width: 285px;
+}
+
+.journey-card-5 {
+    left: 20px;
+}
+
+.journey-card-6 {
+    right: 20px;
+}
+
+}
+
+/* =========================================================MOBILE / TABLET========================================================= */
+
+@media (max-width: 991px) {
+
+.lakeside-journey-section {
+    padding: 80px 0;
+}
+
+
+.lakeside-journey-header {
+    margin-bottom: 50px;
+}
+
+
+.lakeside-journey-header h2 {
+    font-size: 36px;
+}
+
+
+.lakeside-journey {
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.lakeside-journey::before,
+.lakeside-journey::after {
+    display: none;
+}
+
+
+.journey-center {
+    display: none;
+}
+
+
+.journey-card,
+.journey-card-1,
+.journey-card-2,
+.journey-card-3,
+.journey-card-4,
+.journey-card-5,
+.journey-card-6 {
+
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+
+    width: 100%;
+}
+
+
+.journey-cta {
+    margin-top: 40px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+}
+
+/* =========================================================MOBILE========================================================= */
+
+@media (max-width: 575px) {
+
+.lakeside-journey-section {
+    padding: 65px 15px;
+}
+
+
+.lakeside-journey-header h2 {
+    font-size: 30px;
+}
+
+
+.lakeside-journey-header p {
+    font-size: 14px;
+}
+
+
+.lakeside-journey {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+}
+
+
+.journey-card {
+    padding: 20px;
+}
+
+
+.journey-cta {
+    padding: 25px 20px;
+}
+
+
+.journey-cta-text h3 {
+    font-size: 20px;
+}
+
+/* =========================================================LAKESIDE PREMIUM PATIENT JOURNEY========================================================= */
+
+.lakeside-journey-section {position: relative;overflow: hidden;padding: 110px 0 100px;background: #f7fbfb;}
+
+/* Background decoration */
+
+.lakeside-journey-section::before {content: "";position: absolute;
+
+width: 500px;
+height: 500px;
+
+top: -250px;
+right: -180px;
+
+border-radius: 50%;
+
+background: rgba(10, 124, 134, 0.04);
+
+pointer-events: none;
+
+}
+
+.lakeside-journey-section::after {content: "";position: absolute;
+
+width: 400px;
+height: 400px;
+
+bottom: -220px;
+left: -180px;
+
+border-radius: 50%;
+
+background: rgba(10, 124, 134, 0.035);
+
+pointer-events: none;
+
+}
+
+/* =========================================================HEADER========================================================= */
+
+.lakeside-journey-header {position: relative;z-index: 2;
+
+max-width: 720px;
+
+margin: 0 auto 50px;
+
+text-align: center;
+
+}
+
+.lakeside-journey-eyebrow {display: inline-block;
+
+margin-bottom: 15px;
+
+font-size: 12px;
+font-weight: 700;
+
+letter-spacing: 2.5px;
+
+color: #0a7c86;
+
+}
+
+.lakeside-journey-header h2 {margin: 0 0 18px;
+
+font-size: 44px;
+
+line-height: 1.2;
+
+font-weight: 700;
+
+color: #172b35;
+
+}
+
+.lakeside-journey-header h2 span {color: #0a7c86;}
+
+.lakeside-journey-header p {max-width: 650px;
+
+margin: 0 auto;
+
+color: #718087;
+
+font-size: 16px;
+
+line-height: 1.8;
+
+}
+
+/* =========================================================MAIN JOURNEY========================================================= */
+
+.lakeside-journey {position: relative;
+
+max-width: 1100px;
+
+height: 650px;
+
+margin: 0 auto;
+
+}
+
+/* Connecting circle */
+
+.lakeside-journey::before {content: "";
+
+position: absolute;
+
+width: 430px;
+height: 430px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+
+border: 1px dashed rgba(10, 124, 134, 0.25);
+
+border-radius: 50%;
+
+}
+
+/* Inner circle */
+
+.lakeside-journey::after {content: "";
+
+position: absolute;
+
+width: 300px;
+height: 300px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+
+border: 1px solid rgba(10, 124, 134, 0.08);
+
+border-radius: 50%;
+
+}
+
+/* =========================================================CENTER========================================================= */
+
+.journey-center {position: absolute;
+
+width: 190px;
+height: 190px;
+
+left: 50%;
+top: 50%;
+
+transform: translate(-50%, -50%);
+
+border-radius: 50%;
+
+background: #ffffff;
+
+box-shadow:
+    0 20px 60px rgba(25, 70, 75, 0.12);
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
+
+text-align: center;
+
+z-index: 5;
+
+}
+
+.journey-center-ring {position: absolute;
+
+width: 210px;
+height: 210px;
+
+border-radius: 50%;
+
+border: 1px solid rgba(10, 124, 134, 0.15);
+
+}
+
+.journey-center-icon {width: 45px;height: 45px;
+
+margin-bottom: 10px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 50%;
+
+background: #0a7c86;
+
+color: #ffffff;
+
+font-size: 18px;
+
+}
+
+.journey-center span {font-size: 10px;
+
+letter-spacing: 2px;
+
+font-weight: 700;
+
+color: #8a989d;
+
+}
+
+.journey-center strong {margin-top: 4px;
+
+font-size: 20px;
+
+line-height: 1.15;
+
+color: #172b35;
+
+}
+
+/* =========================================================JOURNEY CARDS========================================================= */
+
+.journey-card {position: absolute;
+
+width: 320px;
+
+padding: 22px;
+
+display: flex;
+
+gap: 17px;
+
+background: #ffffff;
+
+border: 1px solid rgba(10, 124, 134, 0.08);
+
+border-radius: 14px;
+
+box-shadow:
+    0 12px 35px rgba(30, 70, 75, 0.07);
+
+transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+
+z-index: 6;
+
+}
+
+.journey-card {transform: translateY(-7px);
+
+border-color: rgba(10, 124, 134, 0.25);
+
+box-shadow:
+    0 20px 45px rgba(30, 70, 75, 0.13);
+
+}
+
+/* =========================================================CARD POSITIONS========================================================= */
+
+.journey-card-1 {left: 0;top: 20px;}
+
+.journey-card-2 {right: 0;top: 20px;}
+
+.journey-card-3 {left: -20px;top: 260px;}
+
+.journey-card-4 {right: -20px;top: 260px;}
+
+.journey-card-5 {left: 70px;bottom: 0;}
+
+.journey-card-6 {right: 70px;bottom: 0;}
+
+/* =========================================================NUMBER========================================================= */
+
+.journey-card-number {position: absolute;
+
+top: -10px;
+right: 18px;
+
+font-size: 11px;
+
+font-weight: 700;
+
+letter-spacing: 1px;
+
+color: #0a7c86;
+
+background: #f7fbfb;
+
+padding: 4px 8px;
+
+border-radius: 20px;
+
+}
+
+/* =========================================================ICON========================================================= */
+
+.journey-card-icon {flex-shrink: 0;
+
+width: 52px;
+height: 52px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+border-radius: 50%;
+
+background: rgba(10, 124, 134, 0.08);
+
+color: #0a7c86;
+
+font-size: 19px;
+
+transition: all 0.3s ease;
+
+}
+
+.journey-card .journey-card-icon {background: #0a7c86;
+
+color: #ffffff;
+
+transform: rotate(0deg);
+
+}
+
+/* =========================================================CONTENT========================================================= */
+
+.journey-card-content span {display: block;
+
+margin-bottom: 5px;
+
+font-size: 10px;
+
+font-weight: 700;
+
+letter-spacing: 1.5px;
+
+color: #0a7c86;
+
+}
+
+.journey-card-content h4 {margin: 0 0 7px;
+
+font-size: 17px;
+
+font-weight: 700;
+
+color: #172b35;
+
+}
+
+.journey-card-content p {margin: 0;
+
+font-size: 13px;
+
+line-height: 1.65;
+
+color: #7a888d;
+
+}
+
+/* =========================================================CTA========================================================= */
+
+.journey-cta {position: relative;
+
+z-index: 5;
+
+max-width: 1000px;
+
+margin: 60px auto 0;
+
+padding: 28px 32px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 30px;
+
+background: #ffffff;
+
+border: 1px solid rgba(10, 124, 134, 0.08);
+
+border-radius: 12px;
+
+box-shadow:
+    0 15px 45px rgba(30, 70, 75, 0.07);
+
+}
+
+.journey-cta-text span {display: block;
+
+margin-bottom: 5px;
+
+font-size: 10px;
+
+font-weight: 700;
+
+letter-spacing: 1.5px;
+
+color: #0a7c86;
+
+}
+
+.journey-cta-text h3 {margin: 0;
+
+font-size: 22px;
+
+color: #172b35;
+
+}
+
+/* CTA Buttons */
+
+.journey-cta-buttons {display: flex;
+
+align-items: center;
+
+gap: 10px;
+
+flex-shrink: 0;
+
+}
+
+.journey-primary-btn,.journey-secondary-btn {display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 8px;
+
+padding: 13px 20px;
+
+border-radius: 5px;
+
+font-size: 12px;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: 0.4px;
+
+transition: all 0.3s ease;
+
+}
+
+.journey-primary-btn {background: #0a7c86;
+
+color: #ffffff;
+
+}
+
+.journey-primary-btn {background: #075e66;
+
+color: #ffffff;
+
+transform: translateY(-2px);
+
+}
+
+.journey-secondary-btn {background: #f5f8f8;
+
+color: #172b35;
+
+}
+
+.journey-secondary-btn {background: #e9f1f1;
+
+color: #0a7c86;
+
+}
+
+/* =========================================================TABLET========================================================= */
+
+@media (max-width: 1199px) {
+
+.lakeside-journey {
+    max-width: 950px;
+}
+
+.journey-card {
+    width: 285px;
+}
+
+.journey-card-5 {
+    left: 20px;
+}
+
+.journey-card-6 {
+    right: 20px;
+}
+
+}
+
+/* =========================================================MOBILE / TABLET========================================================= */
+
+@media (max-width: 991px) {
+
+.lakeside-journey-section {
+    padding: 80px 0;
+}
+
+
+.lakeside-journey-header {
+    margin-bottom: 50px;
+}
+
+
+.lakeside-journey-header h2 {
+    font-size: 36px;
+}
+
+
+.lakeside-journey {
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.lakeside-journey::before,
+.lakeside-journey::after {
+    display: none;
+}
+
+
+.journey-center {
+    display: none;
+}
+
+
+.journey-card,
+.journey-card-1,
+.journey-card-2,
+.journey-card-3,
+.journey-card-4,
+.journey-card-5,
+.journey-card-6 {
+
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+
+    width: 100%;
+}
+
+
+.journey-cta {
+    margin-top: 40px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+}
+
+/* =========================================================MOBILE========================================================= */
+
+@media (max-width: 575px) {
+
+.lakeside-journey-section {
+    padding: 65px 15px;
+}
+
+
+.lakeside-journey-header h2 {
+    font-size: 30px;
+}
+
+
+.lakeside-journey-header p {
+    font-size: 14px;
+}
+
+
+.lakeside-journey {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+}
+
+
+.journey-card {
+    padding: 20px;
+}
+
+
+.journey-cta {
+    padding: 25px 20px;
+}
+
+
+.journey-cta-text h3 {
+    font-size: 20px;
+}
+}
+}
