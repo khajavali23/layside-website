@@ -10,11 +10,11 @@
 
 <meta
     name="description"
-    content="{% block meta_description %}Lakeside Hospital Bangalore offers advanced healthcare with regenerative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda and wellness services.{% endblock %}" />
+    content="{% block meta_description %}Lakeside Hospital Bangalore offers advanced healthcare with Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda and wellness services.{% endblock %}" />
 
 <meta
     name="keywords"
-    content="{% block meta_keywords %}Lakeside Hospital, Bangalore hospital, advanced healthcare, regenerative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors{% endblock %}" />
+    content="{% block meta_keywords %}Lakeside Hospital, Bangalore hospital, advanced healthcare, Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors{% endblock %}" />
 
 <meta name="author" content="Lakeside Hospital">
 <meta name="robots" content="index, follow">
@@ -53,7 +53,7 @@
 
         <div class="loader-ring"></div>
 
-        <img src="{% static 'frontend/assets/img/logo.png' %}"
+        <img src="{% static 'frontend/assets/img/logo-circle.png' %}"
              alt="Lakeside Logo"
              class="loader-logo">
 
@@ -407,12 +407,155 @@
 >
     <i class="fab fa-whatsapp"></i>
 </a>
+<!-- Find Department Floating Search -->
+
+<div class="department-search-widget">
+
+    <button class="department-search-toggle" id="departmentSearchToggle">
+        <i class="fas fa-search"></i>
+        <span>Find Department</span>
+    </button>
+
+    <div class="department-search-box" id="departmentSearchBox">
+
+        <div class="department-search-input">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                type="text"
+                id="departmentSearchInput"
+                placeholder="Search department..."
+                autocomplete="off"
+            >
+
+            <button type="button" id="departmentSearchClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+        </div>
+
+        <div id="departmentSearchResults"></div>
+
+    </div>
+
+</div>
 
 
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const toggle = document.getElementById("departmentSearchToggle");
+    const box = document.getElementById("departmentSearchBox");
+    const input = document.getElementById("departmentSearchInput");
+    const close = document.getElementById("departmentSearchClose");
+    const results = document.getElementById("departmentSearchResults");
+
+
+    /* Django Departments */
+
+    const departments = [
+        {% for department in departments %}
+        {
+            name: "{{ department.title|escapejs }}",
+            slug: "{{ department.slug|escapejs }}",
+            icon: "{{ department.icon|escapejs }}",
+            url: "{% url 'department_detail' department.slug %}"
+        },
+        {% endfor %}
+    ];
+
+
+    /* Open */
+
+    toggle.addEventListener("click", function () {
+
+        box.classList.toggle("active");
+
+        if (box.classList.contains("active")) {
+            input.focus();
+        }
+
+    });
+
+
+    /* Close */
+
+    close.addEventListener("click", function () {
+
+        box.classList.remove("active");
+
+        input.value = "";
+
+        results.innerHTML = "";
+
+    });
+
+
+    /* Search */
+
+    input.addEventListener("input", function () {
+
+        const searchValue = input.value
+            .toLowerCase()
+            .trim();
+
+        results.innerHTML = "";
+
+        if (!searchValue) {
+            return;
+        }
+
+
+        const matches = departments.filter(function (department) {
+
+            return department.name
+                .toLowerCase()
+                .includes(searchValue);
+
+        });
+
+
+        /* No Result */
+
+        if (matches.length === 0) {
+
+            results.innerHTML = `
+                <div class="department-no-result">
+                    No department found.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* Results */
+
+        matches.forEach(function (department) {
+
+            const item = document.createElement("a");
+
+            item.href = department.url;
+
+            item.className = "department-result";
+
+            item.innerHTML = `
+                <i class="${department.icon}"></i>
+                <span>${department.name}</span>
+            `;
+
+            results.appendChild(item);
+
+        });
+
+    });
+
+});
+</script>
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -464,17 +607,16 @@
         <script src="{% static 'frontend/assets/js/main.js' %}"></script>
         
         <script>
-            window.addEventListener("load", function () {
+window.addEventListener("load", function () {
 
-                    const preloader = document.getElementById("preloader");
+    const preloader = document.getElementById("preloader");
 
-                    setTimeout(function () {
-                        preloader.classList.add("hide");
-                    }, 1200);
+    setTimeout(function () {
+        preloader.classList.add("hide");
+    }, 7000);
 
-                });
-        </script>
-        
+});
+</script>
 
         {% block script %}{% endblock %}
 
