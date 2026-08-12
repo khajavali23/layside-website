@@ -1315,6 +1315,7 @@ nav.navbar.validnavs.brand-center {
 		box-shadow: var(--box-shadow-extra);
 		padding: 20px;
 		width: 300px;
+		top: 104%;
 	}
 
 	nav.navbar.validnavs li.dropdown ul.dropdown-menu.cart-list {

@@ -278,20 +278,49 @@
 
                     <!-- Departments (ADMIN + SUPER ADMIN) -->
                     {% if request.user|has_role:'admin,super-admin' %}
-                      <li class="menu-item has-submenu">
-                        <a class="menu-link" href="javascript:void(0)" onclick="toggleSubmenu(this)">
-                          <i class="fa-regular fa-chart-bar"></i>
-                          <span class="menu-label">Departments</span>
+                    <li class="menu-item has-submenu">
+
+                        <a class="menu-link"
+                          href="javascript:void(0)"
+                          onclick="toggleSubmenu(this)">
+
+                            <i class="fa-regular fa-chart-bar"></i>
+
+                            <span class="menu-label">Departments</span>
+
                         </a>
+
                         <ul class="submenu">
-                          <li>
-                            <a href="{% url 'departments' %}">View Departments</a>
-                          </li>
-                          <li>
-                            <a href="{% url 'create_department' %}">Create Department</a>
-                          </li>
+
+                            <li>
+                                <a href="{% url 'departments' %}">
+                                    View Departments
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'create_department' %}">
+                                    Create Department
+                                </a>
+                            </li>
+
+                            <!-- NEW -->
+                            <li>
+                                <a href="{% url 'sub_departments' %}">
+                                    View Sub Departments
+                                </a>
+                            </li>
+
+                            <!-- NEW -->
+                            <li>
+                                <a href="{% url 'create_sub_department' %}">
+                                    Create Sub Department
+                                </a>
+                            </li>
+
                         </ul>
-                      </li>
+
+                    </li>
                     {% endif %}
 
                     <!-- Doctors (EXCEPT RECEPTIONIST) -->

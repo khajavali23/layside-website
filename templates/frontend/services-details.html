@@ -133,6 +133,103 @@ Learn about {{ department.title }} at Lakeside Hospital Bangalore. Our experienc
             </div>
             <!-- End Services Content -->
 
+
+          <!-- ================================
+     SUB DEPARTMENTS
+================================= -->
+<section class="sub-departments-section">
+    <div class="container">
+
+       <div class="site-heading text-center">
+                                <h2>Explore Our <span>Specialized Services</span></h2>
+                                <p class="service_pergraph">
+                                   Discover our specialized medical services, designed to provide
+                expert care, advanced treatments, and personalized support
+                for every patient's needs.
+                                </p>
+                            </div>
+
+        <div class="row g-4">
+
+            {% for sub in sub_departments %}
+
+            <div class="col-lg-4 col-md-6">
+
+                <a href="{% url 'sub_department_detail' department.slug sub.slug %}"
+                   class="sub-department-card">
+
+                    <div class="sub-card-top">
+
+                        <div class="sub-department-icon">
+
+                            {% if sub.icon %}
+                                <img src="{{ sub.icon.url }}"
+                                     alt="{{ sub.title }}"
+                                     loading="lazy">
+                            {% else %}
+                                <i class="fas fa-heartbeat"></i>
+                            {% endif %}
+
+                        </div>
+
+                        <span class="sub-card-number">
+                            {{ forloop.counter|stringformat:"02d" }}
+                        </span>
+
+                    </div>
+
+                    <div class="sub-card-content">
+
+                        <h3>
+                            {{ sub.title }}
+                        </h3>
+
+                        {% if sub.description %}
+                            <div class="sub-card-description">
+                                {{ sub.description|striptags|truncatewords:20 }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="sub-card-footer">
+
+                        <span>
+                            Explore Service
+                        </span>
+
+                        <span class="sub-card-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+                <div class="no-sub-departments">
+                    <i class="fas fa-info-circle"></i>
+
+                    <h4>No Specialized Services Available</h4>
+
+                    <p>
+                        Specialized services for this department will be
+                        available soon.
+                    </p>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section> 
+
             <!-- DOCTORS (UNCHANGED STATIC) -->
             <div class="doctor-area bg-gray service_doctor_main_section">
                 <div class="container">

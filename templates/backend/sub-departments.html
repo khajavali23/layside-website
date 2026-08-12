@@ -1,0 +1,292 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Sub Departments | Lakeside Hospital</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="app-page-head d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
+  <div class="clearfix">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'dashboard' %}">
+            <i class="fi fi-rr-home"></i> Home
+          </a>
+        </li>
+
+        <li class="breadcrumb-item">
+          <a href="{% url 'departments' %}">
+            Departments
+          </a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">
+          Sub Departments
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <a href="{% url 'create_sub_department' %}" class="btn btn-primary">
+    <i class="fi fi-rr-plus me-1"></i>
+    New Sub Department
+  </a>
+</div>
+
+
+<div class="row mt-3">
+  <div class="col-12">
+
+    <div class="card overflow-hidden">
+
+      <div class="card-header d-flex flex-wrap gap-3 align-items-center justify-content-between border-0 pb-0">
+
+        <div>
+          <h6 class="card-title mb-1">Sub Department List</h6>
+          <small class="text-muted">
+            Manage all sub departments
+          </small>
+        </div>
+
+        <div class="clearfix d-flex align-items-center gap-2">
+          <div id="dt_SubDepartment_Search"></div>
+        </div>
+
+      </div>
+
+
+      <div class="card-body px-1 pt-3 pb-2">
+
+        <table id="dt_SubDepartment"
+               class="table table-sm table-row-rounded">
+
+          <thead class="table-light">
+            <tr>
+              <th class="minw-200px">Sub Department</th>
+              <th class="minw-180px">Main Department</th>
+              <th class="minw-150px">Priority</th>
+              <th class="minw-150px">Created At</th>
+              <th class="minw-120px">Status</th>
+              <th class="minw-100px">Action</th>
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+            {% for x in sub_departments %}
+
+            <tr>
+
+              <!-- Sub Department -->
+              <td>
+                <div class="d-flex align-items-center">
+
+                  <div class="avatar avatar-xxs me-2 rounded-circle">
+
+                    {% if x.icon %}
+                      <img
+                        src="{{ x.icon.url }}"
+                        alt="{{ x.title }}"
+                      />
+                    {% else %}
+                      <img
+                        src="{% static 'frontend/assets/img/default.png' %}"
+                        alt="{{ x.title }}"
+                      />
+                    {% endif %}
+
+                  </div>
+
+                  <div>
+                    <div class="fw-semibold">
+                      {{ x.title }}
+                    </div>
+
+                    <small class="text-muted">
+                      {{ x.slug }}
+                    </small>
+                  </div>
+
+                </div>
+              </td>
+
+
+              <!-- Main Department -->
+              <td>
+                <span class="badge bg-primary-subtle text-primary">
+                  {{ x.department.title }}
+                </span>
+              </td>
+
+
+              <!-- Priority -->
+              <td>
+                {% if x.priority %}
+                  {{ x.priority }}
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+
+
+              <!-- Created -->
+              <td>
+                {{ x.created_at|date:"d M Y" }}
+              </td>
+
+
+              <!-- Status -->
+              {% if x.status %}
+
+                <td>
+                  <span class="badge badge-lg bg-success-subtle text-success">
+                    Active
+                  </span>
+                </td>
+
+              {% else %}
+
+                <td>
+                  <span class="badge badge-lg bg-danger-subtle text-danger">
+                    Inactive
+                  </span>
+                </td>
+
+              {% endif %}
+
+
+              <!-- Action -->
+              <td>
+
+                <div class="btn-group">
+
+                  <button
+                    class="btn btn-subtle-primary btn-sm btn-shadow btn-icon waves-effect dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+
+                    <i class="fi fi-rr-menu-dots"></i>
+
+                  </button>
+
+
+                  <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="{% url 'edit_sub_department' x.slug %}">
+                        <i class="fi fi-rr-edit me-2"></i>
+                        Edit
+                      </a>
+                    </li>
+
+
+                    <li>
+                      <a
+                        href="javascript:void(0)"
+                        class="dropdown-item text-danger"
+                        onclick="confirmDelete(
+                          '{% url 'delete_sub_department' x.slug %}',
+                          '{{ x.title|escapejs }}'
+                        )">
+
+                        <i class="fi fi-rr-trash me-2"></i>
+                        Delete
+
+                      </a>
+                    </li>
+
+                  </ul>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+
+            {% empty %}
+
+            <tr>
+
+              <td colspan="6" class="text-center py-5">
+
+                <div class="text-muted">
+
+                  <i class="fi fi-rr-folder-open fs-3"></i>
+
+                  <h6 class="mt-2">
+                    No Sub Departments Found
+                  </h6>
+
+                  <p class="mb-0">
+                    Create your first sub department.
+                  </p>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+            {% endfor %}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+
+function confirmDelete(url, title) {
+
+  Swal.fire({
+
+    title: 'Are you sure?',
+
+    text: 'You are about to delete "' + title + '"',
+
+    icon: 'warning',
+
+    showCancelButton: true,
+
+    confirmButtonColor: '#d33',
+
+    cancelButtonColor: '#6c757d',
+
+    confirmButtonText: 'Yes, delete it!',
+
+    cancelButtonText: 'Cancel'
+
+  }).then((result) => {
+
+    if (result.isConfirmed) {
+
+      window.location.href = url;
+
+    }
+
+  });
+
+}
+
+</script>
+
+{% endblock %}

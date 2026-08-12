@@ -2,26 +2,42 @@ from django.urls import path
 from .views import *
 
 
-
 urlpatterns = [
     path('', home, name='home'),
     path('about/', about, name='about'),
+
     path('doctors/', doctors_frontend, name='frontend_doctors'),
     path('doctor/<slug:slug>/', doctor_detail, name='doctor_detail'),
+
     path('departments/', services, name='services'),
-    path('departments/<slug:slug>/', department_detail, name='department_detail'),
+
+    # Main Department
+    path(
+        'departments/<slug:slug>/',
+        department_detail,
+        name='department_detail'
+    ),
+
+    path(
+    'departments/<slug:department_slug>/<slug:sub_slug>/',
+    sub_department_detail,
+    name='sub_department_detail'
+),
     path('contact/', contact, name='contact'),
     path('contact/create/', create_message, name='create_message'),
+
     path('gallery/', gallery, name='gallery'),
+
     path('blogs/', frontned_blogs, name='frontned_blogs'),
     path('blog/<slug:slug>/', blog_detail, name='blog_detail'),
+
     path('health-checkups/', health_checkups, name='health_checkups'),
     path('health-booking/', create_health_booking, name='create_health_booking'),
-    
-    path('careers/apply/', apply_job, name='apply_job'),  # keep this FIRST
+
+    path('careers/apply/', apply_job, name='apply_job'),
     path('careers/', careers, name='careers'),
     path('careers/<slug:slug>/', career_detail, name='career_detail'),
-   
+
    
     
     path('insurance-schemes', insurance_schemes, name='insurance_schemes'),
@@ -51,7 +67,30 @@ urlpatterns = [
 
     path('account/', dashboard, name='dashboard'), 
     path('account/departments/', departments, name='departments'), 
+    # Sub Departments
+path(
+    'account/sub-departments/',
+    sub_departments,
+    name='sub_departments'
+),
 
+path(
+    'account/sub-departments/create/',
+    create_sub_department,
+    name='create_sub_department'
+),
+
+path(
+    'account/sub-departments/edit/<slug:slug>/',
+    edit_sub_department,
+    name='edit_sub_department'
+),
+
+path(
+    'account/sub-departments/delete/<slug:slug>/',
+    delete_sub_department,
+    name='delete_sub_department'
+),
     path('account/users/', user_list, name='user-list'),
     path('account/users/create/', user_create, name='user-create'),
     path('account/users/edit/<int:id>/', user_edit, name='user-edit'),

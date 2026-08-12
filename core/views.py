@@ -31,6 +31,7 @@ from datetime import datetime
 from datetime import date
 
 
+
 class RoleRequiredMixin:
     allowed_roles = []
 
@@ -2792,20 +2793,70 @@ def services(request):
         'departments': departments
     })
 
-
 def department_detail(request, slug):
-    department = get_object_or_404(Department, slug=slug, status=True)
+    department = get_object_or_404(
+        Department,
+        slug=slug,
+        status=True
+    )
 
     doctors = Doctor.objects.filter(
         department=department,
         status=True
     )
 
+    sub_departments = department.sub_departments.filter(
+        status=True
+    ).order_by('priority', 'title')
+
     return render(request, 'frontend/services-details.html', {
         'department': department,
         'doctors': doctors,
-        'departments': Department.objects.filter(status=True)
+        'departments': Department.objects.filter(status=True),
+        'sub_departments': sub_departments,
     }) 
+
+
+def sub_department_detail(request, department_slug, sub_slug):
+
+    department = get_object_or_404(
+        Department,
+        slug=department_slug,
+        status=True
+    )
+
+    sub_department = get_object_or_404(
+        SubDepartment,
+        department=department,
+        slug=sub_slug,
+        status=True
+    )
+
+    doctors = Doctor.objects.filter(
+        department=department,
+        status=True
+    )
+
+    departments = Department.objects.filter(
+        status=True
+    )
+
+    sub_departments = SubDepartment.objects.filter(
+        department=department,
+        status=True
+    )
+
+    return render(
+        request,
+        'frontend/sub-department-details.html',
+        {
+            'department': department,
+            'sub_department': sub_department,
+            'doctors': doctors,
+            'departments': departments,
+            'sub_departments': sub_departments,
+        }
+    )
 
 def contact(request):
 
@@ -3069,3 +3120,101 @@ def terms_conditions(request):
         'departments': departments
     })
     
+
+def sub_departments(request):
+    sub_departments = SubDepartment.objects.all().order_by('priority', '-created_at')
+
+    return render(request, 'backend/sub-departments.html', {
+    'sub_departments': sub_departments
+})
+
+
+def create_sub_department(request):
+
+    if request.method == "POST":
+
+        form = SubDepartmentForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            msg.success(
+                request,
+                "Sub Department created successfully"
+            )
+
+            return redirect("sub_departments")
+
+    else:
+
+        form = SubDepartmentForm()
+
+    return render(
+        request,
+        "backend/create-sub-department.html",
+        {
+            "form": form
+        }
+    )
+
+@role_required(['super-admin', 'admin'])
+@login_required(login_url='login')
+def edit_sub_department(request, slug):
+
+    sub_department = get_object_or_404(
+        SubDepartment,
+        slug=slug
+    )
+
+    if request.method == 'POST':
+
+        form = SubDepartmentForm(
+            request.POST,
+            request.FILES,
+            instance=sub_department
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            msg.success(
+                request,
+                "Sub Department updated successfully"
+            )
+
+            return redirect('sub_departments')
+
+    else:
+
+        form = SubDepartmentForm(
+            instance=sub_department
+        )
+
+    return render(
+        request,
+        'backend/edit-sub-department.html',
+        {
+            'form': form,
+            'is_edit': True,
+        }
+    )
+
+def delete_sub_department(request, slug):
+    sub_department = get_object_or_404(
+        SubDepartment,
+        slug=slug
+    )
+
+    sub_department.delete()
+
+    messages.success(
+        request,
+        "Sub Department deleted successfully."
+    )
+
+    return redirect("sub_departments")

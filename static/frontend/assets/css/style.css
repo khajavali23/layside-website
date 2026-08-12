@@ -11965,3 +11965,1670 @@ color: #0a7c86;
 .bg-cover-about{
     background-size: cover;
 }
+
+
+/* ==========================================
+   PREMIUM SUB DEPARTMENTS SECTION
+========================================== */
+
+.sub-departments-section {
+    position: relative;
+    padding: 65px 0px;
+    background: #f7fafb;
+    overflow: hidden;
+    margin: 100px 0px;
+}
+
+
+/* ------------------------------------------
+   SECTION HEADING
+------------------------------------------ */
+
+.sub-department-heading {
+    max-width: 760px;
+    margin: 0 auto 55px;
+}
+
+.sub-department-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+
+    color: #0a7c86;
+}
+
+.sub-department-eyebrow i {
+    font-size: 11px;
+}
+
+.sub-department-heading h2 {
+    margin: 0 0 16px;
+
+    font-size: 40px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #183238;
+}
+
+.sub-department-heading h2 span {
+    color: #0a7c86;
+}
+
+.sub-department-heading p {
+    max-width: 680px;
+    margin: 0 auto;
+
+    font-size: 15px;
+    line-height: 1.8;
+
+    color: #718084;
+}
+
+
+/* ------------------------------------------
+   CARD
+------------------------------------------ */
+
+.sub-department-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    min-height: 325px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+    border-radius: 20px;
+
+    text-decoration: none;
+
+    overflow: hidden;
+
+    box-shadow: 0 5px 25px rgba(20, 60, 65, 0.04);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* Top accent */
+
+.sub-department-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 3px;
+
+    background: #0a7c86;
+
+    transition: width 0.4s ease;
+}
+
+
+/* Very subtle background decoration */
+
+.sub-department-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -90px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background: rgba(10, 124, 134, 0.035);
+
+    pointer-events: none;
+
+    transition: transform 0.4s ease;
+}
+
+
+/* Hover */
+
+.sub-department-card:hover {
+    transform: translateY(-7px);
+
+    border-color: #d3e6e8;
+
+    box-shadow:
+        0 18px 45px rgba(20, 70, 75, 0.10);
+}
+
+.sub-department-card:hover::before {
+    width: 100%;
+}
+
+.sub-department-card:hover::after {
+    transform: scale(1.35);
+}
+
+
+/* ------------------------------------------
+   CARD TOP
+------------------------------------------ */
+
+.sub-card-top {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+
+/* ------------------------------------------
+   ICON
+------------------------------------------ */
+
+.sub-department-icon {
+    width: 68px;
+    height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf8f8;
+
+    border: 1px solid #e0f0f1;
+
+    border-radius: 17px;
+
+    color: #0a7c86;
+
+    transition:
+        background 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.sub-department-icon img {
+    width: 40px;
+    height: 40px;
+
+    object-fit: contain;
+
+    transition: transform 0.35s ease;
+}
+
+.sub-department-icon i {
+    font-size: 27px;
+}
+
+
+/* Icon hover */
+
+.sub-department-card:hover .sub-department-icon {
+    background: #0a7c86;
+
+    border-color: #0a7c86;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(10, 124, 134, 0.18);
+}
+
+.sub-department-card:hover .sub-department-icon img {
+    transform: scale(1.08);
+}
+
+.sub-department-card:hover .sub-department-icon i {
+    color: #ffffff;
+}
+
+
+/* ------------------------------------------
+   NUMBER
+------------------------------------------ */
+
+.sub-card-number {
+    position: relative;
+    z-index: 2;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #b4c4c7;
+}
+
+
+/* ------------------------------------------
+   CARD CONTENT
+------------------------------------------ */
+
+.sub-card-content {
+    position: relative;
+    z-index: 2;
+
+    flex: 1;
+}
+
+.sub-card-content h3 {
+    margin: 0 0 13px;
+
+    font-size: 21px;
+    line-height: 1.4;
+    font-weight: 700;
+
+    color: #183238;
+
+    transition: color 0.3s ease;
+}
+
+.sub-department-card:hover .sub-card-content h3 {
+    color: #0a7c86;
+}
+
+
+.sub-card-description {
+    font-size: 14px;
+    line-height: 1.8;
+
+    color: #748286;
+
+    /* Prevent very long descriptions from making cards different heights */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* ------------------------------------------
+   CARD FOOTER
+------------------------------------------ */
+
+.sub-card-footer {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 28px;
+    padding-top: 18px;
+
+    border-top: 1px solid #edf1f2;
+}
+
+
+/* Explore Service */
+
+.sub-card-footer > span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+
+    color: #0a7c86;
+}
+
+
+/* ------------------------------------------
+   ARROW
+------------------------------------------ */
+
+.sub-card-arrow {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f0f7f7;
+
+    color: #0a7c86;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.sub-card-arrow i {
+    font-size: 13px;
+}
+
+.sub-department-card:hover .sub-card-arrow {
+    background: #0a7c86;
+    color: #ffffff;
+
+    transform: translateX(5px);
+}
+
+
+/* ------------------------------------------
+   EMPTY STATE
+------------------------------------------ */
+
+.no-sub-departments {
+    padding: 65px 25px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+    border-radius: 20px;
+}
+
+.no-sub-departments i {
+    display: inline-flex;
+
+    width: 55px;
+    height: 55px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: #edf8f8;
+
+    color: #0a7c86;
+
+    font-size: 22px;
+}
+
+.no-sub-departments h4 {
+    margin-bottom: 8px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: #183238;
+}
+
+.no-sub-departments p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #748286;
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 991px) {
+
+    .sub-departments-section {
+        padding: 70px 0 80px;
+    }
+
+    .sub-department-heading {
+        margin-bottom: 40px;
+    }
+
+    .sub-department-heading h2 {
+        font-size: 34px;
+    }
+
+    .sub-department-card {
+        min-height: 310px;
+        padding: 26px;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 767px) {
+
+    .sub-departments-section {
+        padding: 55px 0 65px;
+    }
+
+    .sub-department-heading {
+        padding: 0 10px;
+        margin-bottom: 32px;
+    }
+
+    .sub-department-heading h2 {
+        font-size: 29px;
+    }
+
+    .sub-department-heading p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .sub-department-card {
+        min-height: 285px;
+        padding: 23px;
+        border-radius: 17px;
+    }
+
+    .sub-department-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+    }
+
+    .sub-department-icon img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .sub-card-content h3 {
+        font-size: 19px;
+    }
+
+    .sub-card-description {
+        font-size: 13px;
+    }
+
+}
+
+
+/* ============================================================
+   KHAJA DEPARTMENT MEGA MENU
+   ============================================================ */
+
+
+/* Main parent */
+
+.khaja-department-parent {
+    position: relative;
+}
+
+
+
+/* ============================================================
+   MEGA MENU
+   ============================================================ */
+
+.khaja-department-mega {
+    position: absolute !important;
+    top: 84% !important;
+
+    width: 75vw !important;
+    max-width: 100vw !important;
+
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+
+    padding: 0 !important;
+    margin-top: 18px !important;
+
+    border: 0 !important;
+    border-radius: 16px !important;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.14);
+
+    z-index: 9999;
+}
+
+/* Main two-column layout */
+
+.khaja-department-mega-inner {
+
+    display: grid;
+
+    grid-template-columns: 350px 1fr;
+
+    min-height: 500px;
+
+}
+
+
+
+/* ============================================================
+   LEFT SIDE
+   ============================================================ */
+
+.khaja-main-department-panel {
+
+    background: #f7fafb;
+
+    border-right: 1px solid #e7ecee;
+
+    padding: 25px 16px;
+
+}
+
+
+
+/* Heading */
+
+.khaja-main-department-heading {
+
+    padding: 0 12px 18px;
+
+    border-bottom: 1px solid #e3e8ea;
+
+    margin-bottom: 12px;
+
+}
+
+
+.khaja-main-department-heading span {
+
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    color: #087f83;
+
+}
+
+
+.khaja-main-department-heading small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 15px;
+
+    color: #5F6B7A;
+    font-weight: 500;
+
+}
+
+
+
+/* Department list */
+
+.khaja-main-department-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+
+/* Main department item */
+
+.khaja-main-department-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+
+/* Hover */
+
+.khaja-main-department-item:hover {
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.06);
+
+}
+
+
+
+/* Active hover */
+
+.khaja-main-department-item.khaja-hover-active {
+
+    background:#009eaa21;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.06);
+
+}
+
+
+
+/* Icon */
+
+.khaja-main-department-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #009eaa9e;
+
+    color: #087f83;
+
+    overflow: hidden;
+
+}
+
+
+.khaja-main-department-icon img {
+
+    width: 23px;
+
+    height: 23px;
+
+    object-fit: contain;
+    display: block !important;
+
+}
+
+
+.khaja-main-department-icon i {
+
+    font-size: 16px;
+
+}
+
+
+
+/* Name */
+
+.khaja-main-department-name {
+
+    flex: 1;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #102542;
+
+    line-height: 1.3;
+
+}
+
+
+.khaja-main-department-item:hover
+.khaja-main-department-name {
+
+    color: #087f83;
+
+}
+
+
+
+/* Arrow */
+
+.khaja-main-department-arrow {
+
+    width: 27px;
+    height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 12px;
+    transition: transform 0.25s ease, color 0.25s ease;
+    background: #009eaa;
+    font-weight: 600;
+    border-radius: 8px;
+
+}
+
+
+.khaja-main-department-item:hover
+.khaja-main-department-arrow {
+
+    color: white;
+
+    transform: translateX(3px);
+
+}
+
+
+
+/* ============================================================
+   RIGHT SIDE
+   ============================================================ */
+
+.khaja-sub-department-panel {
+
+    position: relative;
+
+    padding: 30px;
+
+    background: #ffffff !important;
+
+}
+
+
+
+/* Each department content */
+
+.khaja-sub-department-content {
+
+    display: none;
+
+    animation:
+        khajaSubFade 0.25s ease;
+
+}
+
+
+.khaja-sub-department-content.khaja-sub-visible {
+
+    display: block;
+
+}
+
+
+
+@keyframes khajaSubFade {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+
+
+/* ============================================================
+   RIGHT HEADER
+   ============================================================ */
+
+.khaja-sub-department-header {
+
+    padding-bottom: 18px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #edf0f1;
+
+}
+
+
+.khaja-sub-department-label {
+
+    display: inline-block;
+
+    margin-bottom: 6px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+    text-transform: uppercase;
+
+    color: #087f83;
+
+}
+
+
+.khaja-sub-department-header h3 {
+
+    margin: 0;
+
+    font-size: 22px;
+
+    line-height: 1.25;
+
+    font-weight: 500;
+
+    color: #183b42;
+
+}
+
+
+.khaja-sub-department-header p {
+
+    margin: 7px 0 0;
+
+    max-width: 500px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    
+
+}
+
+
+
+
+
+/* ============================================================
+   SUB DEPARTMENT GRID
+   ============================================================ */
+
+.khaja-sub-department-grid {
+
+    display: grid;
+
+    
+    gap: 10px;
+
+}
+
+
+
+/* Sub department card */
+
+.khaja-sub-department-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid #edf0f1;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    text-decoration: none !important;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+
+}
+
+
+.khaja-sub-department-card:hover {
+
+    background: #f8fcfc;
+
+    border-color: #c4e0e1;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 25px rgba(0, 0, 0, 0.07);
+
+}
+
+
+
+/* Sub icon */
+
+.khaja-sub-department-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    min-width: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #79c2c9;
+
+    color: #087f83;
+
+}
+
+
+.khaja-sub-department-icon img {
+
+    width: 23px;
+
+    height: 23px;
+
+    object-fit: contain;
+    display: block !important;
+
+}
+
+
+.khaja-sub-department-icon i {
+
+    font-size: 16px;
+
+}
+
+
+
+/* Content */
+
+.khaja-sub-department-info {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.khaja-sub-department-info h4 {
+
+    margin: 0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: #29474c;
+
+}
+
+
+.khaja-sub-department-info p {
+
+    margin: 4px 0 0;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+
+    color: #879497;
+
+}
+
+
+
+/* Card arrow */
+
+.khaja-sub-department-card-arrow {
+
+        width: 27px;
+    height: 27px;
+    min-width: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #009eaa;
+    color: #ffffff;
+    font-size: 10px;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+
+}
+
+
+.khaja-sub-department-card:hover
+.khaja-sub-department-card-arrow {
+
+    background: #087f83;
+
+    color: #ffffff;
+
+    transform: translateX(3px);
+
+}
+
+
+
+/* ============================================================
+   FOOTER / VIEW ALL
+   ============================================================ */
+
+.khaja-sub-department-footer {
+
+    margin-top: 20px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #edf0f1;
+
+}
+
+
+.khaja-view-all-services {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 15px;
+
+    border-radius: 9px;
+
+    background: #f2f8f8;
+
+    color: #087f83 !important;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none !important;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+
+}
+
+
+.khaja-view-all-services:hover {
+
+    background: #087f83;
+
+    color: #ffffff !important;
+
+}
+
+
+.khaja-view-all-services i {
+
+    font-size: 11px;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.khaja-view-all-services:hover i {
+
+    transform: translateX(4px);
+
+}
+
+
+
+/* ============================================================
+   NO SUB DEPARTMENT
+   ============================================================ */
+
+.khaja-no-sub-department {
+
+    padding: 15px 15px;
+
+    text-align: center;
+
+}
+
+
+.khaja-no-sub-department > i {
+
+    font-size: 25px;
+
+    color: #a4b1b3;
+
+    margin-bottom: 12px;
+
+}
+
+
+.khaja-no-sub-department h4 {
+
+        margin: 0 0 6px;
+    font-size: 13px;
+    color: #5F6B7A;
+    font-weight: 400;
+
+}
+
+
+.khaja-no-sub-department p {
+
+    margin: 0;
+
+    font-size: 12px;
+
+    color: #899698;
+
+}
+
+
+
+/* ============================================================
+   DESKTOP POSITION
+   ============================================================ */
+
+@media (min-width: 992px) {
+
+    .khaja-department-mega {
+
+        left: 50% !important;
+
+        right: auto !important;
+
+        transform:
+            translateX(-50%);
+
+    }
+
+}
+
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 991px) {
+
+    .khaja-department-mega {
+
+        width: 100% !important;
+
+        max-width: 100%;
+
+        margin-top: 8px !important;
+
+        border: 1px solid #e5eaeb !important;
+
+        border-radius: 12px !important;
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.10);
+
+    }
+
+
+    .khaja-department-mega-inner {
+
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+
+    }
+
+
+    .khaja-main-department-panel {
+
+        border-right: 0;
+
+        border-bottom: 1px solid #e6ebec;
+
+        padding: 18px 14px;
+
+    }
+
+
+    .khaja-sub-department-panel {
+
+        padding: 22px;
+
+    }
+
+}
+
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+    .khaja-department-mega {
+
+        position: static !important;
+
+        width: 100% !important;
+
+        max-width: 100%;
+
+        margin: 7px 0 0 !important;
+
+        transform: none !important;
+
+        border-radius: 10px !important;
+
+    }
+
+
+    .khaja-main-department-panel {
+
+        padding: 14px 10px;
+
+    }
+
+
+    .khaja-main-department-heading {
+
+        padding: 0 8px 13px;
+
+    }
+
+
+    .khaja-main-department-item {
+
+        padding: 9px 8px;
+
+    }
+
+
+    .khaja-main-department-icon {
+
+        width: 35px;
+
+        height: 35px;
+
+        min-width: 35px;
+
+    }
+
+
+    .khaja-main-department-name {
+
+        font-size: 13px;
+
+    }
+
+
+    .khaja-sub-department-panel {
+
+        padding: 18px 13px;
+
+    }
+
+
+    .khaja-sub-department-header h3 {
+
+        font-size: 21px;
+
+    }
+
+
+    .khaja-sub-department-header p {
+
+        font-size: 12px;
+
+    }
+
+
+    .khaja-sub-department-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+
+    }
+
+
+    .khaja-sub-department-card {
+
+        padding: 10px;
+
+    }
+
+
+    .khaja-sub-department-info h4 {
+
+        font-size: 13px;
+
+    }
+
+
+    .khaja-sub-department-footer {
+
+        margin-top: 15px;
+
+    }
+
+}
+
+.icon_khaja_main{
+  margin-bottom: 0px !important;
+}
+
+.khaja-main-department-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.khaja-main-department-link:hover {
+    text-decoration: none !important;
+}
+
+.khaja-main-department-name {
+    flex: 1;
+}
+
+.khaja-main-department-arrow {
+    margin-left: 10px;
+}
+.khaja-no-sub-logo {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 18px;
+    display: block !important;
+}
+
+/* =========================================
+   NO SUB-DEPARTMENT PREMIUM EMPTY STATE
+========================================= */
+
+.khaja-no-sub-department {
+    position: relative;
+    max-width: 850px;
+    margin: 30px auto 10px;
+    padding: 55px 45px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid rgba(10, 124, 134, 0.10);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.07);
+}
+
+/* Soft background decoration */
+
+.khaja-no-sub-department::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: -140px;
+    left: -120px;
+    background: rgba(10, 124, 134, 0.07);
+    border-radius: 50%;
+}
+
+.khaja-no-sub-department::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -110px;
+    bottom: -120px;
+    background: rgba(10, 124, 134, 0.05);
+    border-radius: 50%;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.khaja-no-sub-logo-wrap {
+    position: relative;
+    z-index: 2;
+
+    width: 82px;
+    height: 82px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border: 1px solid rgb(0 158 170);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        0 0 0 8px rgba(10, 124, 134, 0.04);
+}
+
+.khaja-no-sub-logo {
+    width: 62px;
+    height: 62px;
+
+    object-fit: contain;
+    margin-bottom: 0px !important;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.khaja-no-sub-content {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Small label */
+
+.khaja-no-sub-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 14px;
+
+    padding: 7px 14px;
+
+    border-radius: 50px;
+
+    background: rgba(10, 124, 134, 0.07);
+
+    color: #0a7c86;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.khaja-no-sub-label i {
+    font-size: 11px;
+}
+
+
+/* Heading */
+
+.khaja-no-sub-content h4 {
+    max-width: 650px;
+
+    margin: 0 auto 14px;
+
+    color: #1d2939;
+
+    font-size: 28px;
+    line-height: 1.35;
+
+    font-weight: 700;
+}
+
+.khaja-no-sub-content h4 span {
+    color: #0a7c86;
+}
+
+
+/* Description */
+
+.khaja-no-sub-content p {
+    max-width: 600px;
+
+    margin: 0 auto 25px;
+
+    color: #667085;
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.khaja-no-sub-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 12px 20px;
+
+    color: #ffffff;
+
+    background: #0a7c86;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+.khaja-no-sub-btn i {
+    font-size: 12px;
+
+    transition: transform 0.3s ease;
+}
+
+.khaja-no-sub-btn:hover {
+    color: #ffffff;
+
+    background: #076a72;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 25px rgba(10, 124, 134, 0.20);
+}
+
+.khaja-no-sub-btn:hover i {
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 767px) {
+
+    .khaja-no-sub-department {
+        margin: 20px 10px 5px;
+
+        padding: 40px 22px;
+
+        border-radius: 18px;
+    }
+
+    .khaja-no-sub-logo-wrap {
+        width: 78px;
+        height: 78px;
+
+        margin-bottom: 20px;
+    }
+
+    .khaja-no-sub-logo {
+        width: 52px;
+        height: 52px;
+    }
+
+    .khaja-no-sub-content h4 {
+        font-size: 22px;
+        line-height: 1.4;
+    }
+
+    .khaja-no-sub-content p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .khaja-no-sub-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}

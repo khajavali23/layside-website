@@ -17,3 +17,6 @@ admin.site.register(AvailableTime)
 admin.site.register(Blog)
 admin.site.register(BlogComment)
 admin.site.register(Message)
+admin.site.register(SubDepartment)
+
+

@@ -100,39 +100,307 @@
                                 </a>
                             </li>
 
-                            <!-- Departments -->
-                            <li class="dropdown profisha-parent">
-                                <a
-                                    href="/departments/"
-                                    class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Departments
-                                    <span class="caret"></span>
+                           
+<!-- =====================================================
+     DEPARTMENTS MEGA MENU
+===================================================== -->
+
+<li class="dropdown khaja-department-parent">
+
+    <a
+        href="{% url 'services' %}"
+        class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+    >
+        Departments
+        <span class="caret"></span>
+    </a>
+
+
+    <!-- MEGA MENU -->
+
+    <div class="dropdown-menu khaja-department-mega">
+
+        <div class="khaja-department-mega-inner">
+
+
+            <!-- =================================================
+                 LEFT SIDE - MAIN DEPARTMENTS
+            ================================================== -->
+
+            <div class="khaja-main-department-panel">
+
+                <div class="khaja-main-department-heading">
+
+                    <span>
+                        OUR DEPARTMENTS
+                    </span>
+
+                    <small>
+                        Explore our specialized care
+                    </small>
+
+                </div>
+
+
+                <div class="khaja-main-department-list">
+
+
+                    {% for department in departments %}
+
+                    <div
+                        class="khaja-main-department-item {% if forloop.first %}khaja-hover-active{% endif %}"
+                        data-khaja-department="{{ department.slug }}"
+                    >
+
+                        <div class="khaja-main-department-icon">
+
+                            {% if department.icon %}
+
+                                <img
+                                    src="{{ department.icon.url }}"
+                                    alt="{{ department.title }}"
+                                    loading="lazy"
+                                 class="icon_khaja_main">
+
+                            {% else %}
+
+                                <i class="fas fa-hospital"></i>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <a href="{% url 'department_detail' department.slug %}"
+                                class="khaja-main-department-link">
+
+                                    <div class="khaja-main-department-name">
+                                        {{ department.title }}
+                                    </div>
+
+                                    <div class="khaja-main-department-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+
                                 </a>
 
-                                <ul class="dropdown-menu profisha-mega">
-                                    {% for department in departments %}
+                    </div>
 
-                                    <li class="profisha-item">
-                                        <a class="dropdown-item" href="/departments/{{ department.slug }}/">
-                                            {{ department.title }}
-                                        </a>
-                                    </li>
+                    {% endfor %}
 
-                                    {% endfor %}
 
-                                    <!-- View All Bottom -->
+                </div>
 
-                                    <li class="profisha-item profisha-view-all">
-                                        <a class="dropdown-item view-all-btn" href="{% url 'services' %}">
-                                            <i class="fas fa-hospital-alt"></i>
-                                            View All Departments
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE - SUB DEPARTMENTS
+            ================================================== -->
+
+            <div class="khaja-sub-department-panel">
+
+
+                {% for department in departments %}
+
+                <div
+                    class="khaja-sub-department-content {% if forloop.first %}khaja-sub-visible{% endif %}"
+                    data-khaja-subdepartment="{{ department.slug }}"
+                >
+
+
+                    <!-- HEADER -->
+
+                    <div class="khaja-sub-department-header">
+
+                        <div>
+
+                            <span class="khaja-sub-department-label">
+                                SPECIALIZED CARE
+                            </span>
+
+                            <h3>
+                                {{ department.title }}
+                            </h3>
+
+                            <p>
+                                Explore specialized services available
+                                under {{ department.title }}.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SUB DEPARTMENTS -->
+
+                    {% with sub_departments=department.sub_departments.all %}
+
+                    {% if sub_departments %}
+
+                    <div class="khaja-sub-department-grid">
+
+
+                        {% for sub in sub_departments %}
+
+                        {% if sub.status %}
+
+                        <a
+                            href="{% url 'sub_department_detail' department.slug sub.slug %}"
+                            class="khaja-sub-department-card"
+                        >
+
+
+                            <!-- ICON -->
+
+                            <div class="khaja-sub-department-icon">
+
+                                {% if sub.icon %}
+
+                                <img
+                                    src="{{ sub.icon.url }}"
+                                    alt="{{ sub.title }}"
+                                    loading="lazy"
+                                >
+
+                                {% else %}
+
+                                <i class="fas fa-heartbeat"></i>
+
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <!-- CONTENT -->
+
+                            <div class="khaja-sub-department-info">
+
+                                <h4>
+                                    {{ sub.title }}
+                                </h4>
+
+
+                                {% if sub.description %}
+
+                                <p>
+                                    {{ sub.description|striptags|truncatewords:10 }}
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <!-- ARROW -->
+
+                            <div class="khaja-sub-department-card-arrow">
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </div>
+
+
+                        </a>
+
+                        {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    {% else %}
+
+
+                    <!-- NO SUB DEPARTMENT -->
+
+                   <div class="khaja-no-sub-department">
+
+    <div class="khaja-no-sub-logo-wrap">
+        <img
+            src="{% static 'frontend/assets/img/logo-circle.png' %}"
+            alt="Lakeside Hospital"
+            class="khaja-no-sub-logo"
+            loading="lazy"
+        >
+    </div>
+
+    <div class="khaja-no-sub-content">
+
+        <span class="khaja-no-sub-label">
+            <i class="fas fa-stethoscope"></i>
+            Specialized Care
+        </span>
+
+        <h4>
+            More services for
+            <span>{{ department.title }}</span>
+            are coming soon
+        </h4>
+
+        <p>
+            We are continuously expanding our specialized healthcare
+            services to provide you with better care and treatment options.
+            Please check back soon for new services.
+        </p>
+
+        <a href="{% url 'services' %}" class="khaja-no-sub-btn">
+            <span>Explore Departments</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+</div>
+
+                    {% endif %}
+
+                    {% endwith %}
+
+
+
+                    <!-- VIEW ALL -->
+
+                    <div class="khaja-sub-department-footer">
+
+                        <a
+                            href="{% url 'department_detail' department.slug %}"
+                            class="khaja-view-all-services"
+                        >
+
+                            <span>
+                                View All {{ department.title }} Services
+                            </span>
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</li>
+                            
 
                            
 
@@ -586,7 +854,110 @@ document.addEventListener("DOMContentLoaded", function () {
                     }, 800);
                 }, 1500);
             });
-            </script>
+        </script>
+        <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const khajaMainDepartments =
+        document.querySelectorAll(
+            '.khaja-main-department-item'
+        );
+
+
+    const khajaSubDepartments =
+        document.querySelectorAll(
+            '.khaja-sub-department-content'
+        );
+
+
+    khajaMainDepartments.forEach(function (departmentItem) {
+
+
+        departmentItem.addEventListener(
+            'mouseenter',
+            function () {
+
+                const selectedDepartment =
+                    this.getAttribute(
+                        'data-khaja-department'
+                    );
+
+
+                /*
+                 * Remove active state
+                 * from all main departments
+                 */
+
+                khajaMainDepartments.forEach(
+                    function (item) {
+
+                        item.classList.remove(
+                            'khaja-hover-active'
+                        );
+
+                    }
+                );
+
+
+                /*
+                 * Hide all sub departments
+                 */
+
+                khajaSubDepartments.forEach(
+                    function (content) {
+
+                        content.classList.remove(
+                            'khaja-sub-visible'
+                        );
+
+                    }
+                );
+
+
+                /*
+                 * Activate hovered
+                 * main department
+                 */
+
+                this.classList.add(
+                    'khaja-hover-active'
+                );
+
+
+                /*
+                 * Find matching
+                 * sub department panel
+                 */
+
+                const selectedSubDepartment =
+                    document.querySelector(
+                        '[data-khaja-subdepartment="' +
+                        selectedDepartment +
+                        '"]'
+                    );
+
+
+                /*
+                 * Show matching
+                 * sub departments
+                 */
+
+                if (selectedSubDepartment) {
+
+                    selectedSubDepartment.classList.add(
+                        'khaja-sub-visible'
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+});
+</script>
 
         <!-- JS -->
         <script src="{% static 'frontend/assets/js/jquery-3.6.0.min.js' %}"></script>
@@ -607,16 +978,16 @@ document.addEventListener("DOMContentLoaded", function () {
         <script src="{% static 'frontend/assets/js/main.js' %}"></script>
         
         <script>
-window.addEventListener("load", function () {
+            window.addEventListener("load", function () {
 
-    const preloader = document.getElementById("preloader");
+                const preloader = document.getElementById("preloader");
 
-    setTimeout(function () {
-        preloader.classList.add("hide");
-    }, 7000);
+                setTimeout(function () {
+                    preloader.classList.add("hide");
+                }, 7000);
 
-});
-</script>
+            });
+            </script>
 
         {% block script %}{% endblock %}
 

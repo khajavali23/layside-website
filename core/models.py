@@ -68,7 +68,93 @@ class Department(models.Model):
     def __str__(self):
         return self.title
         
-        
+
+
+class SubDepartment(models.Model):
+
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        related_name='sub_departments'
+    )
+
+    title = models.CharField(max_length=200)
+
+    banner = models.FileField(
+        upload_to='sub-departments',
+        null=True,
+        blank=True
+    )
+
+    breadcamp = models.FileField(
+        upload_to='sub-department-banners',
+        null=True,
+        blank=True
+    )
+
+    priority = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+
+    icon = models.FileField(
+        upload_to='sub-department-icons',
+        null=True,
+        blank=True
+    )
+
+    description = RichTextField(
+        null=True,
+        blank=True
+    )
+
+    status = models.BooleanField(
+        default=True
+    )
+
+    slug = models.SlugField(
+        unique=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    meta_title = models.TextField(
+        null=True,
+        blank=True
+    )
+
+    meta_keyword = models.TextField(
+        null=True,
+        blank=True
+    )
+
+    meta_description = models.TextField(
+        null=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+
+        if self.description:
+            self.description = re.sub(
+                r'<h[1-6]>\s*&nbsp;\s*</h[1-6]>',
+                '',
+                self.description,
+                flags=re.IGNORECASE
+            )
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.department.title} - {self.title}"
 
 
 

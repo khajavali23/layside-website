@@ -63,11 +63,60 @@ class DepartmentForm(forms.ModelForm):
 
 
 
+class SubDepartmentForm(forms.ModelForm):
 
+    description = forms.CharField(
+        widget=CKEditorWidget(),
+        required=False
+    )
 
+    class Meta:
+        model = SubDepartment
 
+        fields = [
+            'department',
+            'title',
+            'slug',
+            'icon',
+            'description',
+            'priority',
+            'status',
+            'meta_title',
+            'meta_keyword',
+            'meta_description',
+        ]
 
+        widgets = {
+            'department': forms.Select(attrs={
+                'class': 'form-control'
+            }),
 
+            'status': forms.Select(
+                choices=STATUS_CHOICES,
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+
+            'icon': forms.FileInput(attrs={
+                'class': 'file__input',
+                'accept': 'image/*'
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['department'].widget.attrs['class'] = 'form-control'
+        self.fields['title'].widget.attrs['class'] = 'form-control'
+        self.fields['slug'].widget.attrs['class'] = 'form-control'
+        self.fields['icon'].widget.attrs['class'] = 'form-control'
+        self.fields['priority'].widget.attrs['class'] = 'form-control'
+        self.fields['meta_title'].widget.attrs['class'] = 'form-control'
+        self.fields['meta_keyword'].widget.attrs['class'] = 'form-control'
+        self.fields['meta_description'].widget.attrs['class'] = 'form-control'
+
+        self.fields['slug'].required = True
 class DoctorForm(forms.ModelForm):
 
     class Meta:
