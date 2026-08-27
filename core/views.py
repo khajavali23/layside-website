@@ -855,7 +855,7 @@ def doctor_appointments(request, doctor_id):
             appointment_datetime = timezone.datetime.combine(related_object.date, related_object.start_time)
             timing_details = f"{related_object.start_time.strftime('%I:%M %p')} to {related_object.end_time.strftime('%I:%M %p')}"
 
-        # Make appointment_datetime timezone-aware
+        # Book Appointment_datetime timezone-aware
         appointment_datetime = timezone.make_aware(appointment_datetime, timezone.get_current_timezone())
 
         payment_details = RazorpayPaymentDetails.objects.filter(status='COMPLETED', appointment=appointment).first()
@@ -3122,12 +3122,21 @@ def terms_conditions(request):
     
 
 def sub_departments(request):
-    sub_departments = SubDepartment.objects.all().order_by('priority', '-created_at')
 
-    return render(request, 'backend/sub-departments.html', {
-    'sub_departments': sub_departments
-})
+    sub_departments = SubDepartment.objects.select_related(
+        'department'
+    ).order_by(
+        'priority',
+        '-created_at'
+    )
 
+    return render(
+        request,
+        "backend/sub-departments.html",
+        {
+            "sub_departments": sub_departments
+        }
+    )
 
 def create_sub_department(request):
 

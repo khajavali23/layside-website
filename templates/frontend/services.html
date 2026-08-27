@@ -55,50 +55,119 @@ Lakeside Hospital, medical services Bangalore, hospital services, Regenerrative 
 
 </section>
 
-        <div class="services-area inc-icon default-padding">
-            <div class="container">
-                <div class="row text-center">
+        <!-- =========================================================
+     MAIN PAGE — SPECIALTIES / DEPARTMENTS
+========================================================= -->
 
-                    {% for dep in departments %}
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="item">
-                            <div class="info">
+<div class="services-area lakeside-specialties-section">
 
-                                <!-- Title -->
-                                <h4>
-                                    <a href="{% url 'department_detail' dep.slug %}">
-                                        {{ dep.title }}
-                                    </a>
-                                </h4>
+    <div class="container">
 
-                                <!-- Icon -->
-                                <div class="overlay">
-                                    {% if dep.icon %}
-                                        <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon" loading="lazy" decoding="async">
-                                    {% else %}
-                                        <i class="flaticon-anatomy"></i>
-                                    {% endif %}
-                                </div>
+        <!-- CARDS -->
+        <div class="row">
 
-                                <!-- Description -->
-                                <p>
-                                    {{ dep.description|striptags|truncatewords:22}}
-                                </p>
+            {% for dep in departments %}
 
-                                <!-- Button -->
-                                <a class="btn btn-border theme circle btn-md"
-                                href="{% url 'department_detail' dep.slug %}">
-                                    Read More
-                                </a>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+
+                <div class="lakeside-specialty-card">
+
+                    <!-- IMAGE -->
+                    <div class="specialty-image">
+
+                        {% if dep.image %}
+
+                            <img
+                                src="{{ dep.image.url }}"
+                                alt="{{ dep.title }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <div class="specialty-image-fallback">
+
+                                {% if dep.icon %}
+
+                                    <img
+                                        src="{{ dep.banner.url }}"
+                                        alt="{{ dep.title }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <i class="flaticon-anatomy"></i>
+
+                                {% endif %}
 
                             </div>
+
+                        {% endif %}
+
+                        <div class="specialty-image-overlay"></div>
+
+                        <!-- ICON -->
+                        <div class="specialty-icon">
+
+                            {% if dep.icon %}
+
+                                <img
+                                    src="{{ dep.icon.url }}"
+                                    alt="{{ dep.title }}"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <i class="flaticon-anatomy"></i>
+
+                            {% endif %}
+
                         </div>
+
                     </div>
-                    {% endfor %}
+
+                    <!-- CONTENT -->
+                    <div class="specialty-content">
+
+                        <h3>
+                            <a href="{% url 'department_detail' dep.slug %}">
+                                {{ dep.title }}
+                            </a>
+                        </h3>
+
+                        <div class="specialty-content-line"></div>
+
+                        <p>
+                            {{ dep.description|striptags|truncatechars:145 }}
+                        </p>
+
+                        <a
+                            href="{% url 'department_detail' dep.slug %}"
+                            class="specialty-read-more"
+                        >
+                            Read More
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
 
                 </div>
+
             </div>
+
+            {% endfor %}
+
         </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+     END MAIN PAGE SPECIALTIES
+========================================================= -->
 
 
 

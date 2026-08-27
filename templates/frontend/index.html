@@ -75,7 +75,7 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                 <div class="appoinment-box">
                     <div class="heading">
                         <h4>Online Appointment</h4>
-                        <h2>Make an Appointment</h2>
+                        <h2>Book Appointment</h2>
                     </div>
                     <form id="appointmentForm">
                         {% csrf_token %}
@@ -153,7 +153,7 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                 </div>
             </div>
 
-            <div class="col-lg-5 offset-lg-1 features-items">
+            <div class="col-lg-5 pl-80 features-items">
                 <ul>
                     <li>
                         <div class="icon">
@@ -178,8 +178,8 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                             <i class="flaticon-24-hours"></i>
                         </div>
                         <div class="info">
-                            <h4>24/7 Emergency &amp; Patient Support</h4>
-                            <p>Round-the-clock emergency services and dedicated support teams to assist you whenever you need care the most.</p>
+                            <h4>Hospital Timings &amp; Support</h4>
+                            <p>Our hospital is open during convenient hours with dedicated support to assist you with your healthcare needs.</p>
                         </div>
                     </li>
                 </ul>
@@ -194,7 +194,7 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                 </div>
 
                     <div class="content">
-                        <h4>Inside Lakeside Hospital</h4>
+                       
                         <p>Take a closer look at our facilities, specialists, and the care experience that makes us a trusted name in healthcare.</p>
                     </div>
                 </div>
@@ -216,28 +216,32 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                     <div class="thumb bg-cover-about about-image-area"
                         style="background-image: url('{% static "frontend/assets/img/about/about_us.jpg" %}')">
 
-                        <!-- Floating Modern Card -->
-                        <div class="floating-care-box">
+                      <!-- Floating Modern Card -->
+                    <div class="floating-care-box">
 
-                            <div class="care-icon">
-                                <i class="fas fa-user-md"></i>
-                            </div>
+                        <div class="care-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
 
-                            <div class="care-content">
+                        <div class="care-content">
 
-                                
+                            <span>Why Choose Us</span>
 
-                                
+                            <h4>
+                                Expert Care &
+                                <br>
+                                Trusted Treatment
+                            </h4>
 
-                                <a href="{% url "about" %}" class="btn btn-theme">
-                                    Explore More
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-
-                            </div>
+                            <a href="#" class="btn btn-theme">
+                                Explore More
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
 
                         </div>
-                        <!-- End Card -->
+
+                    </div>
+                    <!-- End Card -->
 
                     </div>
 
@@ -315,46 +319,154 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
 </div>
 <!-- Why Choose Us End -->
 
-<!-- Services -->
-<div class="services-area inc-icon bg-gray carousel-shadow default-padding bottom-less">
+<!-- =========================================================
+     LAKESIDE SPECIALTIES — DESIGN 3
+========================================================= -->
+
+<div class="services-area lakeside-specialties-section">
+
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-          <div class="site-heading text-center">
-            <h2>Our <span>Specialties</span></h2>
-            <p>Comprehensive healthcare services with experienced doctors and advanced medical facilities.</p>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="services-items text-center services-carousel owl-carousel owl-theme">
-            {% for dep in departments %}
-              <div class="item">
-                <div class="info">
-                  <h4><a href="{% url 'department_detail' dep.slug %}">{{ dep.title }}</a></h4>
+        <!-- HEADER -->
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
 
-                  <div class="icon-wrap">
-                    {% if dep.icon %}
-                     <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" class="dep-icon" loading="lazy" decoding="async">
-                    {% else %}
-                      <i class="flaticon-anatomy"></i>
-                    {% endif %}
-                  </div>
+                <div class="site-heading text-center lakeside-specialties-header">
 
-                  <p>{{ dep.description|striptags|truncatechars:120 }}</p>
+                    <h2>
+                        Our <span>Specialties</span>
+                    </h2>
 
-                  <a class="btn btn-border theme circle btn-md" href="{% url 'department_detail' dep.slug %}">Read More</a>
+
+
+                    <p>
+                        Comprehensive healthcare services with experienced
+                        doctors and advanced medical facilities.
+                    </p>
+
                 </div>
-              </div>
-            {% endfor %}
-          </div>
+
+            </div>
         </div>
-      </div>
+
+
+        <!-- CARDS -->
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <div class="services-items text-center services-carousel owl-carousel owl-theme">
+
+                    {% for dep in departments %}
+
+                    <div class="item">
+
+                        <div class="lakeside-specialty-card">
+
+                            <!-- IMAGE -->
+                            <div class="specialty-image">
+
+                                {% if dep.image %}
+
+                                    <img
+                                        src="{{ dep.image.url }}"
+                                        alt="{{ dep.title }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="specialty-image-fallback">
+
+                                        {% if dep.icon %}
+
+                                            <img
+                                                src="{{ dep.banner.url }}"
+                                                alt="{{ dep.title }}"
+                                                loading="lazy"
+                                            >
+
+                                        {% else %}
+
+                                            <i class="flaticon-anatomy"></i>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% endif %}
+
+                                <div class="specialty-image-overlay"></div>
+
+
+                                <!-- ICON -->
+                                <div class="specialty-icon">
+
+                                    {% if dep.icon %}
+
+                                        <img
+                                            src="{{ dep.icon.url }}"
+                                            alt="{{ dep.title }}"
+                                            loading="lazy"
+                                        >
+
+                                    {% else %}
+
+                                        <i class="flaticon-anatomy"></i>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CONTENT -->
+                            <div class="specialty-content">
+
+                              
+
+                                <h3>
+                                    <a href="{% url 'department_detail' dep.slug %}">
+                                        {{ dep.title }}
+                                    </a>
+                                </h3>
+
+                                <div class="specialty-content-line"></div>
+
+                                <p>
+                                    {{ dep.description|striptags|truncatechars:145 }}
+                                </p>
+
+                                <a
+                                    href="{% url 'department_detail' dep.slug %}"
+                                    class="specialty-read-more"
+                                >
+                                    Read More
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
+
 </div>
-<!-- Services End -->
+
+<!-- =========================================================
+     END SPECIALTIES
+========================================================= -->
 
 <!-- Doctors -->
 <div class="doctor-area carousel-shadow default-padding">
@@ -390,7 +502,7 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
                             <h5>{{ doctor.designation }}</h5>
 
                             <div class="appoinment-btn">
-                                <a href="{% url 'doctor_detail' doctor.slug %}">Make Appointment</a>
+                                <a href="{% url 'doctor_detail' doctor.slug %}">Book Appointment</a>
                             </div>
                         </div>
                     </div>
@@ -639,8 +751,8 @@ Lakeside Hospital, Bangalore hospital, Regenerrative medicine Bangalore, stem ce
 
                 
                  <a href="{% url 'frontend_doctors' %}"
-                <button type="submit" class="btn btn-theme">
-                    <i class="fas fa-calendar-check"></i>
+                <button type="submit" class="btn btn-theme  ">
+                    <i class="fas fa-calendar-check btn_jurney_section"></i>
                                      Book An Appointment
                                     
                                 </button>

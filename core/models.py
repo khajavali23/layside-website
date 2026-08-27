@@ -69,7 +69,6 @@ class Department(models.Model):
         return self.title
         
 
-
 class SubDepartment(models.Model):
 
     department = models.ForeignKey(
@@ -105,25 +104,16 @@ class SubDepartment(models.Model):
         blank=True
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    status = models.BooleanField(default=True)
+
+    slug = models.SlugField(unique=True)
+
     description = RichTextField(
         null=True,
         blank=True
-    )
-
-    status = models.BooleanField(
-        default=True
-    )
-
-    slug = models.SlugField(
-        unique=True
-    )
-
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True
     )
 
     meta_title = models.TextField(

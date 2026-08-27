@@ -1,29 +1,39 @@
-{% extends 'backend/base.html' %} {% block title %}
+{% extends 'backend/base.html' %}
+
+{% block title %}
   <title>
-    Dashboard |{% if is_edit %}
+    Dashboard |
+    {% if is_edit %}
       Edit Sub Department
     {% else %}
       Create Sub Department
     {% endif %}
   </title>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
+
   <style>
     .form-wrapper {
       max-width: 1100px;
       margin: auto;
     }
+
     .card {
       border-radius: 12px;
       border: none;
     }
+
     .card-body {
       padding: 30px;
     }
+
     .page-title {
       font-weight: 600;
       font-size: 22px;
       color: #333;
     }
+
     .form-control,
     .file__input,
     select,
@@ -33,22 +43,26 @@
       border: 1px solid #dcdcdc;
       transition: 0.2s ease-in-out;
     }
+
     .form-control:focus,
     textarea:focus,
     select:focus {
       border-color: #0d6efd;
       box-shadow: none;
     }
+
     .form-check-input {
       width: 18px;
       height: 18px;
       margin-right: 8px;
     }
+
     .btn-primary {
       padding: 10px 22px;
       border-radius: 8px;
       font-weight: 500;
     }
+
     .django-ckeditor-widget {
       width: 100%;
     }
@@ -56,139 +70,290 @@
 
 
   <div class="container mt-4 form-wrapper">
+
     <div class="card shadow-sm">
+
       <div class="card-body">
 
         <!-- Dynamic Title -->
         <h4 class="page-title mb-4">
+
           {% if is_edit %}
             Edit Sub Department
           {% else %}
             Create Sub Department
           {% endif %}
+
         </h4>
 
 
         <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{ form.media }}
+
+          {% csrf_token %}
+
+          {{ form.media }}
 
 
           <div class="row">
 
+
             <!-- Main Department -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Department</label>
+
+              <label class="form-label">
+                Department
+              </label>
+
               {{ form.department }}
+
             </div>
 
 
             <!-- Title -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Title</label>
+
+              <label class="form-label">
+                Title
+              </label>
+
               {{ form.title }}
+
             </div>
 
 
             <!-- Slug -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Slug</label>
+
+              <label class="form-label">
+                Slug
+              </label>
+
               {{ form.slug }}
+
             </div>
 
 
             <!-- Icon -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Icon</label><br />
+
+              <label class="form-label">
+                Icon
+              </label>
+
+              <br />
+
               {{ form.icon }}
 
               {% if is_edit and form.instance.icon %}
+
                 <div class="mt-2">
-                  <img src="{{ form.instance.icon.url }}" width="80" class="rounded" />
+
+                  <img
+                    src="{{ form.instance.icon.url }}"
+                    width="80"
+                    class="rounded"
+                  />
+
                 </div>
+
               {% endif %}
+
+            </div>
+
+
+            <!-- Banner -->
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Banner
+              </label>
+
+              <br />
+
+              {{ form.banner }}
+
+              {% if is_edit and form.instance.banner %}
+
+                <div class="mt-2">
+
+                  <img
+                    src="{{ form.instance.banner.url }}"
+                    width="120"
+                    class="rounded"
+                  />
+
+                </div>
+
+              {% endif %}
+
+            </div>
+
+
+            <!-- Breadcamp -->
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Breadcamp
+              </label>
+
+              <br />
+
+              {{ form.breadcamp }}
+
+              {% if is_edit and form.instance.breadcamp %}
+
+                <div class="mt-2">
+
+                  <img
+                    src="{{ form.instance.breadcamp.url }}"
+                    width="120"
+                    class="rounded"
+                  />
+
+                </div>
+
+              {% endif %}
+
             </div>
 
 
             <!-- Status -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Status</label>
+
+              <label class="form-label">
+                Status
+              </label>
+
               {{ form.status }}
+
             </div>
 
 
             <!-- Priority -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Priority</label>
+
+              <label class="form-label">
+                Priority
+              </label>
+
               {{ form.priority }}
+
             </div>
 
 
             <!-- Description -->
             <div class="col-md-12 mb-3">
-              <label class="form-label">Description</label>
+
+              <label class="form-label">
+                Description
+              </label>
+
               {{ form.description }}
+
             </div>
 
 
             <!-- Meta Title -->
             <div class="col-md-4 mb-3">
-              <label class="form-label">Meta Title</label>
+
+              <label class="form-label">
+                Meta Title
+              </label>
+
               {{ form.meta_title }}
+
             </div>
 
 
             <!-- Meta Keyword -->
             <div class="col-md-4 mb-3">
-              <label class="form-label">Meta Keyword</label>
+
+              <label class="form-label">
+                Meta Keyword
+              </label>
+
               {{ form.meta_keyword }}
+
             </div>
 
 
             <!-- Meta Description -->
             <div class="col-md-4 mb-3">
-              <label class="form-label">Meta Description</label>
+
+              <label class="form-label">
+                Meta Description
+              </label>
+
               {{ form.meta_description }}
+
             </div>
+
 
           </div>
 
 
           <!-- Dynamic Button -->
           <button type="submit" class="btn btn-primary mt-2">
+
             {% if is_edit %}
               Update Sub Department
             {% else %}
               Create Sub Department
             {% endif %}
+
           </button>
+
 
         </form>
 
       </div>
+
     </div>
+
   </div>
 
 {% endblock %}
 
 
 {% block script %}
+
   <script>
+
     document.addEventListener('DOMContentLoaded', function () {
 
       // Django template flag
-      const isEdit = "{{ is_edit|yesno:'true,false' }}" === 'true'
+      const isEdit =
+        "{{ is_edit|yesno:'true,false' }}" === 'true'
 
       if (isEdit) {
 
-        // get file input
-        const iconInput = document.querySelector('input[name="icon"]')
+        // get file inputs
+        const iconInput =
+          document.querySelector('input[name="icon"]')
+
+        const bannerInput =
+          document.querySelector('input[name="banner"]')
+
+        const breadcampInput =
+          document.querySelector('input[name="breadcamp"]')
+
 
         if (iconInput) {
           iconInput.removeAttribute('required')
         }
 
+        if (bannerInput) {
+          bannerInput.removeAttribute('required')
+        }
+
+        if (breadcampInput) {
+          breadcampInput.removeAttribute('required')
+        }
+
       }
 
     })
+
   </script>
+
 {% endblock %}

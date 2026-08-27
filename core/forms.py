@@ -62,12 +62,10 @@ class DepartmentForm(forms.ModelForm):
         self.fields['slug'].required = True
 
 
-
 class SubDepartmentForm(forms.ModelForm):
 
     description = forms.CharField(
-        widget=CKEditorWidget(),
-        required=False
+        widget=CKEditorWidget()
     )
 
     class Meta:
@@ -76,20 +74,25 @@ class SubDepartmentForm(forms.ModelForm):
         fields = [
             'department',
             'title',
-            'slug',
             'icon',
-            'description',
+            'banner',
+            'breadcamp',
             'priority',
+            'description',
             'status',
             'meta_title',
             'meta_keyword',
             'meta_description',
+            'slug',
         ]
 
         widgets = {
-            'department': forms.Select(attrs={
-                'class': 'form-control'
-            }),
+
+            'department': forms.Select(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
 
             'status': forms.Select(
                 choices=STATUS_CHOICES,
@@ -98,25 +101,53 @@ class SubDepartmentForm(forms.ModelForm):
                 }
             ),
 
-            'icon': forms.FileInput(attrs={
-                'class': 'file__input',
-                'accept': 'image/*'
-            }),
+            'icon': forms.FileInput(
+                attrs={
+                    'class': 'file__input',
+                    'onchange': 'readURL3(this)',
+                    'accept': 'image/*'
+                }
+            ),
+
+            'banner': forms.FileInput(
+                attrs={
+                    'class': 'file__input',
+                    'onchange': 'readURL(this)',
+                    'accept': 'image/*'
+                }
+            ),
+
+            'breadcamp': forms.FileInput(
+                attrs={
+                    'class': 'file__input',
+                    'onchange': 'readURL2(this)',
+                    'accept': 'image/*'
+                }
+            ),
         }
 
     def __init__(self, *args, **kwargs):
+
         super().__init__(*args, **kwargs)
 
         self.fields['department'].widget.attrs['class'] = 'form-control'
         self.fields['title'].widget.attrs['class'] = 'form-control'
         self.fields['slug'].widget.attrs['class'] = 'form-control'
-        self.fields['icon'].widget.attrs['class'] = 'form-control'
         self.fields['priority'].widget.attrs['class'] = 'form-control'
+
         self.fields['meta_title'].widget.attrs['class'] = 'form-control'
         self.fields['meta_keyword'].widget.attrs['class'] = 'form-control'
         self.fields['meta_description'].widget.attrs['class'] = 'form-control'
 
+        self.fields['icon'].widget.attrs['class'] = 'form-control'
+        self.fields['banner'].widget.attrs['class'] = 'form-control'
+        self.fields['breadcamp'].widget.attrs['class'] = 'form-control'
+
         self.fields['slug'].required = True
+
+        self.fields['department'].queryset = Department.objects.filter(
+            status=True
+        )
 class DoctorForm(forms.ModelForm):
 
     class Meta:

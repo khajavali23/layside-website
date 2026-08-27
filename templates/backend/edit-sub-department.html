@@ -102,6 +102,7 @@
 
             </div>
 
+
             <!-- Title -->
             <div class="col-md-6 mb-3">
 
@@ -113,6 +114,7 @@
 
             </div>
 
+
             <!-- Slug -->
             <div class="col-md-6 mb-3">
 
@@ -123,6 +125,7 @@
               {{ form.slug }}
 
             </div>
+
 
             <!-- Icon -->
             <div class="col-md-6 mb-3">
@@ -151,6 +154,63 @@
 
             </div>
 
+
+            <!-- Banner -->
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Banner
+              </label>
+
+              <br />
+
+              {{ form.banner }}
+
+              {% if is_edit and form.instance.banner %}
+
+                <div class="mt-2">
+
+                  <img
+                    src="{{ form.instance.banner.url }}"
+                    width="120"
+                    class="rounded"
+                  />
+
+                </div>
+
+              {% endif %}
+
+            </div>
+
+
+            <!-- Breadcamp -->
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Breadcamp
+              </label>
+
+              <br />
+
+              {{ form.breadcamp }}
+
+              {% if is_edit and form.instance.breadcamp %}
+
+                <div class="mt-2">
+
+                  <img
+                    src="{{ form.instance.breadcamp.url }}"
+                    width="120"
+                    class="rounded"
+                  />
+
+                </div>
+
+              {% endif %}
+
+            </div>
+
+
             <!-- Status -->
             <div class="col-md-6 mb-3">
 
@@ -161,6 +221,7 @@
               {{ form.status }}
 
             </div>
+
 
             <!-- Priority -->
             <div class="col-md-6 mb-3">
@@ -173,6 +234,7 @@
 
             </div>
 
+
             <!-- Description -->
             <div class="col-md-12 mb-3">
 
@@ -183,6 +245,7 @@
               {{ form.description }}
 
             </div>
+
 
             <!-- Meta Title -->
             <div class="col-md-4 mb-3">
@@ -195,6 +258,7 @@
 
             </div>
 
+
             <!-- Meta Keyword -->
             <div class="col-md-4 mb-3">
 
@@ -205,6 +269,7 @@
               {{ form.meta_keyword }}
 
             </div>
+
 
             <!-- Meta Description -->
             <div class="col-md-4 mb-3">
@@ -218,6 +283,7 @@
             </div>
 
           </div>
+
 
           <!-- Dynamic Button -->
 
@@ -241,6 +307,7 @@
 
 {% endblock %}
 
+
 {% block script %}
 
   <script>
@@ -255,8 +322,23 @@
         const iconInput =
           document.querySelector('input[name="icon"]')
 
+        const bannerInput =
+          document.querySelector('input[name="banner"]')
+
+        const breadcampInput =
+          document.querySelector('input[name="breadcamp"]')
+
+
         if (iconInput) {
           iconInput.removeAttribute('required')
+        }
+
+        if (bannerInput) {
+          bannerInput.removeAttribute('required')
+        }
+
+        if (breadcampInput) {
+          breadcampInput.removeAttribute('required')
         }
 
       }

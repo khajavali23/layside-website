@@ -41,11 +41,8 @@
 </head>
 
     <body>
-        <!-- Emergency Contact -->
-<a href="tel:+919000000000" class="emergency-contact">
-    <i class="fas fa-phone-alt"></i>
-    <span>24/7 Emergency</span>
-</a>
+       
+
 
        <!-- Preloader -->
 <div id="preloader">
@@ -435,7 +432,7 @@
                     <!-- Appointment Button -->
                    <div class="button">
                         <a href="{% url 'frontend_doctors' %}"
-                        class="btn btn-md btn-theme appointment-btn main_bookappointment-btn">
+                        class="btn btn-md btn-theme appointment-btn main_bookappointment-btn ">
 
                             <img
                                 src="{% static 'frontend/assets/img/departments/mediacl.png' %}"
@@ -464,47 +461,39 @@
         <!-- FOOTER -->
         <footer class="bg-dark text-light">
 
-            <div class="f-items default-padding">
+            <div class="f-items default-padding_footer">
 
                 <div class="container">
 
                     <div class="row">
 
-                        <!-- About -->
-                        <div class="col-lg-3 col-md-6 equal-height item">
+                                        <!-- About -->
+                    <div class="col-lg-3 col-md-6 equal-height item">
 
-                            <div class="f-item">
+                        <div class="f-item">
 
-                                <h4>About</h4>
-
-                                <p>
-                                   Lakeside Hospital is a trusted multi-specialty healthcare institution offering advanced treatments, experienced specialists, and compassionate patient care.
-                                </p>
-
-                                <div class="opening-info">
-
-                                    <h5>OPENING HOURS</h5>
-
-                                    <ul>
-
-                                        <li>
-                                            <span>Mon – Sat :</span>
-                                            <div class="pull-right">6.00 am – 10.00 pm</div>
-                                        </li>
-
-                                        <li>
-                                            <span>Emergency :</span>
-                                            <div class="pull-right">24/7 Available</div>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-
+                            <!-- Logo -->
+                            <div class="footer-logo">
+                                <a href="{% url 'home' %}">
+                                    <img
+                                        src="{% static 'frontend/assets/img/logo.png' %}"
+                                        alt="Lakeside Hospital"
+                                        loading="lazy"
+                                    >
+                                </a>
                             </div>
 
-                        </div>
+       
 
+        <p class="navber_pera">
+            Lakeside Hospital is a trusted multi-specialty healthcare
+            institution offering advanced treatments, experienced
+            specialists, and compassionate patient care.
+        </p>
+
+    </div>
+
+</div>
                         <!-- Quick Links -->
                         <div class="col-lg-3 col-md-6 equal-height item pl-50 pl-md-10 pl-xs-10">
 
@@ -540,10 +529,7 @@
                                         </p>
                                     </div>
 
-                                    <div class="twitter-context">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <span class="twitter-date"></span>
-                                    </div>
+                                   
 
                                 </div>
 
@@ -662,7 +648,7 @@
 
             </div>
 
-        </footer>
+</footer>
 
         <!-- Floating WhatsApp Button -->
 <a
