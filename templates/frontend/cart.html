@@ -1,0 +1,1651 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+
+<section class="inner-banner"
+    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Your Shopping Cart
+            </span>
+
+            <h1>
+                Shopping Cart
+            </h1>
+
+            <p>
+                Review your selected healthcare products and continue
+                securely to checkout.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    Cart
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cart-page">
+
+    <div class="container">
+
+        <!-- =====================================================
+             CART HEADER
+        ====================================================== -->
+
+      
+
+
+        {% if cart_items %}
+
+        <!-- =====================================================
+             CART LAYOUT
+        ====================================================== -->
+
+        <div class="cart-layout">
+
+
+            <!-- =================================================
+                 LEFT : PRODUCTS
+            ================================================== -->
+
+            <div class="cart-products">
+
+
+                <!-- CART TOP BAR -->
+
+                <div class="cart-products-header">
+
+                    <span>
+                        Product
+                    </span>
+
+                    <span>
+                        Price
+                    </span>
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- =================================================
+                     CART ITEMS
+                ================================================== -->
+
+                {% for item in cart_items %}
+
+                <div class="cart-item">
+
+
+                    <!-- PRODUCT -->
+
+                    <div class="cart-product">
+
+                        <div class="cart-product-image">
+
+                            {% if item.product.main_image %}
+
+                                <img
+                                    src="{{ item.product.main_image.url }}"
+                                    alt="{{ item.product.name }}"
+                                >
+
+                            {% else %}
+
+                                <i class="fa-regular fa-image"></i>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="cart-product-info">
+
+                            {% if item.product.brand %}
+
+                                <span class="cart-product-brand">
+                                    {{ item.product.brand }}
+                                </span>
+
+                            {% endif %}
+
+                            <h3>
+                                {{ item.product.name }}
+                            </h3>
+
+                            {% if item.product.product_size %}
+
+                                <span class="cart-product-size">
+                                    Size: {{ item.product.product_size }}
+                                </span>
+
+                            {% endif %}
+
+                            <span class="cart-stock">
+                                <i class="fa-solid fa-circle-check"></i>
+                                In Stock
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UNIT PRICE -->
+
+                    <div class="cart-price">
+
+                        <span class="mobile-label">
+                            Price
+                        </span>
+
+                        ₹{{ item.unit_price }}
+
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="cart-quantity">
+
+                        <span class="mobile-label">
+                            Quantity
+                        </span>
+
+                        <div class="quantity-control">
+
+                            <a
+                                href="{% url 'decrease_cart_quantity' item.id %}"
+                                aria-label="Decrease quantity"
+                            >
+                                −
+                            </a>
+
+                            <span>
+                                {{ item.quantity }}
+                            </span>
+
+                            <a
+                                href="{% url 'increase_cart_quantity' item.id %}"
+                                aria-label="Increase quantity"
+                            >
+                                +
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="cart-total">
+
+                        <span class="mobile-label">
+                            Total
+                        </span>
+
+                        <strong>
+                            ₹{{ item.total_price }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- REMOVE -->
+
+                    <a
+                        href="{% url 'remove_from_cart' item.id %}"
+                        class="cart-remove"
+                        title="Remove item"
+                        onclick="return confirm('Remove this product from your cart?');"
+                    >
+                        <i class="fa-regular fa-trash-can"></i>
+                    </a>
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- CONTINUE SHOPPING -->
+
+                <div class="continue-shopping">
+
+                    <a href="{% url 'product_frontend_list' %}">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Continue Shopping
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT : ORDER SUMMARY
+            ================================================== -->
+
+            <aside class="cart-sidebar">
+
+
+                <!-- ORDER SUMMARY -->
+
+                <div class="order-summary">
+
+                    <div class="summary-header">
+
+                        <div>
+
+                            <span>
+                                ORDER SUMMARY
+                            </span>
+
+                            <h3>
+                                Cart Total
+                            </h3>
+
+                        </div>
+
+                        <div class="summary-icon">
+
+                            <i class="fas fa-receipt"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-lines">
+
+                        <div class="summary-row">
+
+                            <span>
+                                Items
+                            </span>
+
+                            <strong>
+                                {{ cart.total_items }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹{{ cart.total_price }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong class="free-delivery">
+                                FREE
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            Total Amount
+                        </span>
+
+                        <strong>
+                            ₹{{ cart.total_price }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- CHECKOUT -->
+
+                   <a href="{% url 'checkout' %}" class="checkout-button">
+                            Proceed to Checkout
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+
+                    <div class="secure-checkout">
+
+                        <i class="fas fa-shield-alt"></i>
+
+                        <span>
+                            Secure &amp; trusted checkout
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+               
+
+               
+
+            </aside>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =====================================================
+             EMPTY CART
+        ====================================================== -->
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+            </div>
+
+            <span class="empty-label">
+                YOUR CART
+            </span>
+
+            <h2>
+                Your Cart is Empty
+            </h2>
+
+            <p>
+                Looks like you haven't added any healthcare products yet.
+                Explore our products and find what you need.
+            </p>
+
+            <a
+                href="{% url 'product_frontend_list' %}"
+                class="empty-cart-button"
+            >
+
+                Explore Products
+
+                <i class="fas fa-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<style>
+
+/* =========================================================
+   CART PAGE
+========================================================= */
+
+.cart-page {
+
+    padding: 70px 0 100px;
+
+   
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.cart-header {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+
+    gap: 20px;
+}
+
+
+.cart-eyebrow {
+
+    display: block;
+
+    color: #0a7c86;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+
+.cart-header h1 {
+
+    margin: 0 0 8px;
+
+    color: #182b2d;
+
+    font-size: 36px;
+
+    font-weight: 750;
+}
+
+
+.cart-header p {
+
+    margin: 0;
+
+    color: #899399;
+
+    font-size: 14px;
+}
+
+
+.cart-item-count {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 15px;
+
+    background: #eaf7f7;
+
+    color: #0a7c86;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CART LAYOUT
+========================================================= */
+
+.cart-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        350px;
+
+    gap: 30px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CART PRODUCTS
+========================================================= */
+
+.cart-products {
+
+    background: #ffffff;
+
+    border: 1px solid #e8eeee;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.04);
+}
+
+
+/* =========================================================
+   CART PRODUCTS HEADER
+========================================================= */
+
+.cart-products-header {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        100px
+        130px
+        100px
+        35px;
+
+    gap: 15px;
+
+    align-items: center;
+
+    padding: 17px 22px;
+
+    background: #f8fbfb;
+
+    border-bottom: 1px solid #e9eeee;
+
+    color: #232323;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   CART ITEM
+========================================================= */
+
+.cart-item {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        100px
+        130px
+        100px
+        35px;
+
+    gap: 15px;
+
+    align-items: center;
+
+    padding: 22px;
+
+    border-bottom: 1px solid #edf1f1;
+
+    transition: .25s;
+}
+
+
+.cart-item:hover {
+
+    background: #fcfefe;
+}
+
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+.cart-product {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-width: 0;
+}
+
+
+.cart-product-image {
+
+    width: 82px;
+
+    height: 82px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f6fafa;
+
+    border: 1px solid #edf2f2;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    color: #b7c0c1;
+
+    font-size: 22px;
+}
+
+
+.cart-product-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    padding: 8px;
+}
+
+
+.cart-product-info {
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+
+.cart-product-brand {
+
+    color: #0a7c86;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+
+.cart-product-info h3 {
+
+    margin: 0 0 5px;
+
+    color: #26373a;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    line-height: 1.4;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    max-width: 100%;
+}
+
+
+.cart-product-size {
+
+    color: #929d9f;
+
+    font-size: 11px;
+
+    margin-bottom: 6px;
+}
+
+
+.cart-stock {
+
+    color: #16806f;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+.cart-stock i {
+
+    font-size: 8px;
+
+    margin-right: 4px;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.cart-price {
+
+    color: #232323;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.cart-quantity {
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.quantity-control {
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid #dfe7e7;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+}
+
+
+.quantity-control a {
+
+    width: 32px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #0a7c86;
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    background: #f7fafa;
+
+    transition: .2s;
+}
+
+
+.quantity-control a:hover {
+
+    background: #e7f5f5;
+
+}
+
+
+.quantity-control span {
+
+    min-width: 34px;
+
+    text-align: center;
+
+    color: #26373a;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.cart-total strong {
+
+    color: #0a7c86;
+
+    font-size: 14px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   REMOVE
+========================================================= */
+
+.cart-remove {
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #a5afb1;
+
+    text-decoration: none;
+
+    transition: .25s;
+}
+
+
+.cart-remove:hover {
+
+    background: #fff1f1;
+
+    color: #d64545;
+}
+
+
+/* =========================================================
+   MOBILE LABEL
+========================================================= */
+
+.mobile-label {
+
+    display: none;
+}
+
+
+/* =========================================================
+   CONTINUE SHOPPING
+========================================================= */
+
+.continue-shopping {
+
+    padding: 20px 22px;
+}
+
+
+.continue-shopping a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #0a7c86;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+
+.continue-shopping a:hover {
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.cart-sidebar {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    position: sticky;
+
+    top: 25px;
+}
+
+
+/* =========================================================
+   ORDER SUMMARY
+========================================================= */
+
+.order-summary {
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.05);
+}
+
+
+.summary-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #edf1f1;
+}
+
+
+.summary-header span {
+
+    display: block;
+
+    color: #0a7c86;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 5px;
+}
+
+
+.summary-header h3 {
+
+    margin: 0;
+
+    color: #26373a;
+
+    font-size: 20px;
+}
+
+
+.summary-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eaf7f7;
+
+    color: #0a7c86;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   SUMMARY LINES
+========================================================= */
+
+.summary-lines {
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #edf1f1;
+}
+
+
+.summary-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+
+    color: #232323;
+
+    font-size: 13px;
+}
+
+
+.summary-row:last-child {
+
+    margin-bottom: 0;
+}
+
+
+.summary-row strong {
+
+    color: #374649;
+
+    font-weight: 650;
+}
+
+
+.free-delivery {
+
+    color: #16806f !important;
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   SUMMARY TOTAL
+========================================================= */
+
+.summary-total {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px 0;
+}
+
+
+.summary-total span {
+
+    color: #374649;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.summary-total strong {
+
+    color: #0a7c86;
+
+    font-size: 23px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+.checkout-button {
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    border-radius: 9px;
+
+    background: #009eaa;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: .25s;
+}
+
+
+.checkout-button:hover {
+
+   
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   SECURE CHECKOUT
+========================================================= */
+
+.secure-checkout {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding-top: 15px;
+
+    color: #8d999b;
+
+    font-size: 10px;
+}
+
+
+.secure-checkout i {
+
+    color: #16806f;
+}
+
+
+/* =========================================================
+   TRUST CARD
+========================================================= */
+
+.cart-trust-card {
+
+    padding: 20px;
+
+    background: #f7fbfb;
+
+    border: 1px solid #e5eeee;
+
+    border-radius: 16px;
+}
+
+
+.trust-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 15px;
+
+    color: #26373a;
+
+    font-size: 13px;
+}
+
+
+.trust-heading i {
+
+    color: #0a7c86;
+
+    font-size: 16px;
+}
+
+
+.trust-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 9px 0;
+}
+
+
+.trust-small-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #0a7c86;
+
+    font-size: 12px;
+}
+
+
+.trust-row strong,
+.trust-row span {
+
+    display: block;
+}
+
+
+.trust-row strong {
+
+    color: #475457;
+
+    font-size: 11px;
+
+    margin-bottom: 2px;
+}
+
+
+.trust-row span {
+
+    color: #9aa4a6;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   EMPTY CART
+========================================================= */
+
+.empty-cart {
+
+    max-width: 650px;
+
+    margin: 30px auto 0;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eeee;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.05);
+}
+
+
+.empty-cart-icon {
+
+    width: 85px;
+
+    height: 85px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf7f7;
+
+    color: #0a7c86;
+
+    font-size: 30px;
+}
+
+
+.empty-label {
+
+    display: block;
+
+    color: #0a7c86;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+
+.empty-cart h2 {
+
+    margin: 0 0 10px;
+
+    color: #26373a;
+
+    font-size: 27px;
+}
+
+
+.empty-cart p {
+
+    max-width: 480px;
+
+    margin: 0 auto 25px;
+
+    color: #899399;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+.empty-cart-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    height: 48px;
+
+    padding: 0 22px;
+
+    border-radius: 8px;
+
+    background: #0a7c86;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    transition: .25s;
+}
+
+
+.empty-cart-button:hover {
+
+    background: #075e65;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .cart-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .cart-sidebar {
+
+        position: static;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .cart-page {
+
+        padding: 40px 15px 70px;
+
+    }
+
+
+    .cart-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .cart-header h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .cart-item-count {
+
+        align-self: flex-start;
+
+    }
+
+
+    .cart-products-header {
+
+        display: none;
+
+    }
+
+
+    .cart-item {
+
+        grid-template-columns: 1fr auto;
+
+        gap: 15px;
+
+        padding: 18px;
+
+    }
+
+
+    .cart-product {
+
+        grid-column: 1 / -1;
+
+    }
+
+
+    .cart-price,
+    .cart-quantity,
+    .cart-total {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 5px;
+
+    }
+
+
+    .mobile-label {
+
+        display: block;
+
+        color: #9aa4a6;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        text-transform: uppercase;
+
+        letter-spacing: .8px;
+
+    }
+
+
+    .cart-remove {
+
+        position: absolute;
+
+        right: 18px;
+
+        margin-top: -65px;
+
+    }
+
+
+    .cart-item {
+
+        position: relative;
+
+    }
+
+
+    .cart-sidebar {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .order-summary {
+
+        padding: 20px;
+
+    }
+
+
+    .cart-product-info h3 {
+
+        max-width: 220px;
+
+        white-space: normal;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .cart-product-image {
+
+        width: 68px;
+
+        height: 68px;
+
+    }
+
+
+    .cart-product {
+
+        gap: 11px;
+
+    }
+
+
+    .cart-product-info h3 {
+
+        font-size: 13px;
+
+    }
+
+
+    .quantity-control a {
+
+        width: 28px;
+
+    }
+
+
+    .quantity-control span {
+
+        min-width: 30px;
+
+    }
+
+
+    .summary-total strong {
+
+        font-size: 20px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

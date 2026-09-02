@@ -477,3 +477,258 @@ class BlogCommentForm(forms.ModelForm):
     class Meta:
         model = BlogComment
         fields = ['name', 'email', 'rating', 'message']
+
+
+
+
+
+class ProductForm(forms.ModelForm):
+
+    class Meta:
+        model = Product
+
+        fields = [
+            'name',
+            'department',
+            'sub_department',
+            'brand',
+            'short_description',
+            'description',
+            'main_image',
+            'price',
+            'discount_price',
+            'stock',
+            'product_size',
+            'ingredients',
+            'specifications',
+            'benefits',
+            'usage',
+            'is_active',
+        ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter product name'
+            }),
+
+            'brand': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter brand name'
+            }),
+
+            'short_description': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Short product description'
+            }),
+
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5
+            }),
+
+            'ingredients': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4
+            }),
+
+            'specifications': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4
+            }),
+
+            'benefits': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4
+            }),
+
+            'usage': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4
+            }),
+
+            'price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.01'
+            }),
+
+            'discount_price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.01'
+            }),
+
+            'stock': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': '0'
+            }),
+
+            'product_size': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Example: 50ml'
+            }),
+
+            'main_image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+
+            'department': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+
+            'sub_department': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+
+            'is_active': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+        }
+
+
+
+
+class RegisterForm(forms.ModelForm):
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter password'
+        })
+    )
+
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm password'
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+        ]
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'First name'
+            }),
+
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Last name'
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email address'
+            }),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+
+        if User.objects.filter(username=email).exists():
+            raise forms.ValidationError(
+                'An account with this email already exists.'
+            )
+
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                'Passwords do not match.'
+            )
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        user.username = self.cleaned_data['email']
+        user.email = self.cleaned_data['email']
+
+        user.set_password(
+            self.cleaned_data['password']
+        )
+
+        if commit:
+            user.save()
+
+        return user
+
+from django import forms
+from django.contrib.auth.models import User
+
+
+class CustomerRegisterForm(forms.Form):
+
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter first name'
+        })
+    )
+
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter last name'
+        })
+    )
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter email address'
+        })
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Create password'
+        })
+    )
+
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm password'
+        })
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+
+        if User.objects.filter(username=email).exists():
+            raise forms.ValidationError(
+                'An account with this email already exists.'
+            )
+
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password and confirm_password:
+            if password != confirm_password:
+                raise forms.ValidationError(
+                    'Passwords do not match.'
+                )
+
+        return cleaned_data

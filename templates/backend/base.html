@@ -150,7 +150,7 @@
 
                   <!-- Appointments (ALL) -->
                   <li>
-                    <a class="search-item" href="{% url 'appointments' %}"><i class="fa-regular fa-calendar"></i> Appointments</a>
+                    <a class="search-item" href="{% url 'appointments' %}"><i class="fas fa-calendar"></i> Appointments</a>
                   </li>
 
 
@@ -271,7 +271,7 @@
                     <!-- Appointments (ALL) -->
                     <li class="menu-item">
                       <a class="menu-link" href="{% url 'appointments' %}">
-                        <i class="fa-regular fa-calendar"></i>
+                        <i class="fas fa-calendar"></i>
                         <span class="menu-label">Appointments</span>
                       </a>
                     </li>
@@ -340,6 +340,74 @@
                         </ul>
                       </li>
                     {% endif %}
+                   <!-- Products (ADMIN + SUPER ADMIN) -->
+{% if request.user|has_role:'admin,super-admin' %}
+  <li class="menu-item has-submenu">
+
+    <a class="menu-link"
+      href="javascript:void(0)"
+      onclick="toggleSubmenu(this)">
+
+      <i class="fa-solid fa-bag-shopping"></i>
+
+      <span class="menu-label">Products</span>
+
+    </a>
+
+    <ul class="submenu">
+
+      <li>
+        <a href="{% url 'product_list' %}">
+          View Products
+        </a>
+      </li>
+
+      <li>
+        <a href="{% url 'create_product' %}">
+          Create Product
+        </a>
+      </li>
+
+    </ul>
+
+  </li>
+{% endif %}
+
+
+<!-- CUSTOMERS (ADMIN + SUPER ADMIN) -->
+{% if request.user|has_role:'admin,super-admin' %}
+
+  <li class="menu-item">
+
+    <a class="menu-link" href="{% url 'customers' %}">
+
+      <i class="fa-solid fa-users"></i>
+
+      <span class="menu-label">Customers</span>
+
+    </a>
+
+  </li>
+
+{% endif %}
+
+
+<!-- ORDERS (ADMIN + SUPER ADMIN) -->
+{% if request.user|has_role:'admin,super-admin' %}
+
+  <li class="menu-item">
+
+    <a class="menu-link" href="{% url 'order_list' %}">
+
+      <i class="fas fa-shopping-cart"></i>
+
+      <span class="menu-label">Orders</span>
+
+    </a>
+
+  </li>
+
+{% endif %}
 
                     <!-- Health Checkups (ADMIN + SUPER ADMIN) -->
                     {% if request.user|has_role:'admin,super-admin' %}

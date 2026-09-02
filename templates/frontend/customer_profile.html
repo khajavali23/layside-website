@@ -1,0 +1,1499 @@
+
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!-- Profile Page -->
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');" loading="lazy" decoding="async">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Your Personal Healthcare Account
+            </span>
+
+            <h1>
+                My Profile
+            </h1>
+
+            <p>
+                Manage your personal information, account details,
+                orders, wishlist, and healthcare preferences in one place.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    My Profile
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="profile-page">
+
+    <div class="profile-container">
+
+        <!-- =========================================
+             LEFT : PROFILE CARD
+        ========================================== -->
+
+        <div class="profile-card">
+
+            <!-- PROFILE TOP -->
+
+            <div class="profile-top">
+
+                <div class="profile-avatar-wrapper">
+
+                    <div class="profile-avatar">
+
+                        {% if profile.profile_image %}
+
+                            <img
+                                src="{{ profile.profile_image.url }}"
+                                alt="Profile Image"
+                            >
+
+                        {% else %}
+
+                            <i class="fas fa-user"></i>
+
+                        {% endif %}
+
+                    </div>
+
+                    <span class="profile-status"></span>
+
+                </div>
+
+
+                <span class="profile-label">
+                    PATIENT PROFILE
+                </span>
+
+                <h2>
+                    {{ profile.user.get_full_name|default:profile.user.username }}
+                </h2>
+
+                <p>
+                    Manage your personal information and account details.
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE DETAILS -->
+
+            <div class="profile-details">
+
+                <!-- FULL NAME -->
+
+                <div class="profile-field">
+
+                    <div class="field-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div class="field-content">
+
+                        <span>FULL NAME</span>
+
+                        <strong>
+                            {{ profile.user.get_full_name|default:"Not Added" }}
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-check-circle field-check"></i>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="profile-field">
+
+                    <div class="field-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+
+                    <div class="field-content">
+
+                        <span>EMAIL ADDRESS</span>
+
+                        <strong>
+                            {{ profile.user.email }}
+                        </strong>
+
+                    </div>
+
+                    <i class="fas fa-check-circle field-check"></i>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="profile-field">
+
+                    <div class="field-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+
+                    <div class="field-content">
+
+                        <span>PHONE NUMBER</span>
+
+                        <strong>
+                            {{ profile.phone|default:"Not Added" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REGISTERED -->
+
+                <div class="profile-field">
+
+                    <div class="field-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+
+                    <div class="field-content">
+
+                        <span>MEMBER SINCE</span>
+
+                        <strong>
+                            {{ profile.created_at|date:"d M Y" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SHOPPING BUTTON -->
+
+            <div class="profile-actions">
+
+                <a
+                    href="{% url 'product_frontend_list' %}"
+                    class="profile-btn"
+                >
+
+                    <span>
+                        Continue Shopping
+                    </span>
+
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             RIGHT : ACCOUNT MENU
+        ========================================== -->
+
+        <div class="account-menu">
+
+            <!-- HEADER -->
+
+            <div class="account-menu-header">
+
+                <div class="account-menu-icon">
+
+                    <i class="fas fa-user-circle"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        MY ACCOUNT
+                    </span>
+
+                    <h3>
+                        Account Menu
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- MENU -->
+
+            <div class="account-menu-list">
+
+
+                <!-- PROFILE -->
+
+                <a
+                    href="{% url 'customer_profile' %}"
+                    class="account-menu-item active"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            My Profile
+                        </strong>
+
+                        <span>
+                            Personal information
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+
+                <!-- ORDERS -->
+
+                <a
+                    href="#"
+                    class="account-menu-item"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            My Orders
+                        </strong>
+
+                        <span>
+                            View your orders
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+
+                <!-- CART -->
+
+                <a
+                    href="{% url 'cart' %}"
+                    class="account-menu-item"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            My Cart
+                        </strong>
+
+                        <span>
+                            View cart items
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+
+                <!-- WISHLIST -->
+
+                <a
+                    href="{% url 'wishlist' %}"
+                    class="account-menu-item"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            My Wishlist
+                        </strong>
+
+                        <span>
+                            Saved products
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+
+                <!-- EDIT PROFILE -->
+
+                <a
+                    href="#"
+                    class="account-menu-item"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-pen"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            Edit Profile
+                        </strong>
+
+                        <span>
+                            Update your details
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    href="{% url 'customer_logout' %}"
+                    class="account-menu-item logout-item"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+
+                    <div class="menu-text">
+
+                        <strong>
+                            Logout
+                        </strong>
+
+                        <span>
+                            Sign out of your account
+                        </span>
+
+                    </div>
+
+                    <div class="menu-arrow-box">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- SECURITY FOOTER -->
+
+            <div class="account-security">
+
+                <div class="security-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your account is secure
+                    </strong>
+
+                    <span>
+                        Your personal information is protected.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<style>
+
+/* =====================================================
+   PROFILE PAGE
+===================================================== */
+
+.profile-page {
+
+    min-height: calc(100vh - 100px);
+
+    padding: 75px 20px 90px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(10,124,134,0.06),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(10,124,134,0.05),
+            transparent 30%
+        ),
+        #f5f9f9;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.profile-container {
+
+    width: 100%;
+
+    max-width: 1120px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.85fr);
+
+    gap: 28px;
+
+    align-items: start;
+}
+
+
+/* =====================================================
+   PROFILE CARD
+===================================================== */
+
+.profile-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 42px;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(10,124,134,0.08);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 60px rgba(20,55,60,0.07);
+}
+
+
+
+
+/* =====================================================
+   PROFILE TOP
+===================================================== */
+
+.profile-top {
+
+    text-align: center;
+
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #edf2f2;
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+.profile-avatar-wrapper {
+
+    position: relative;
+
+    width: 92px;
+
+    height: 92px;
+
+    margin: 0 auto 20px;
+}
+
+
+.profile-avatar {
+
+   width: 92px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #e8f7f7, #d9f0f1);
+    border: 1px solid #12a3af;
+    /* box-shadow: 0 10px 30px rgba(10, 124, 134, 0.16); */
+    color: #0a7c86;
+    font-size: 35px;
+}
+
+
+.profile-avatar img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ONLINE / ACTIVE STATUS */
+
+.profile-status {
+
+    position: absolute;
+
+    right: -2px;
+
+    bottom: 2px;
+
+    width: 19px;
+
+    height: 19px;
+
+    border-radius: 50%;
+
+    background: #27ae79;
+
+    border: 4px solid #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.12);
+}
+
+
+/* =====================================================
+   PROFILE TITLE
+===================================================== */
+
+.profile-label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #0a7c86;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+}
+
+
+.profile-card h2 {
+
+    margin: 0 0 8px;
+
+    color: #18282d;
+
+    font-size: 30px;
+
+    line-height: 1.25;
+
+    font-weight: 750;
+}
+
+
+.profile-card > .profile-top p {
+
+    max-width: 480px;
+
+    margin: 0 auto;
+
+    color: #879499;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   PROFILE DETAILS
+===================================================== */
+
+.profile-details {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+
+    padding-top: 28px;
+}
+
+
+.profile-field {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 70px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #edf1f1;
+
+    border-radius: 13px;
+
+    background: #fbfdfd;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+
+
+
+/* =====================================================
+   FIELD ICON
+===================================================== */
+
+.field-icon {
+
+    width: 43px;
+
+    height: 43px;
+
+    margin-right: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: #e9f7f7;
+
+    color: #0a7c86;
+
+    font-size: 14px;
+}
+
+
+.field-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.field-content span {
+
+    color: #9aa5a8;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+.field-content strong {
+
+    color: #344348;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+
+.field-check {
+
+    margin-left: 10px;
+
+    color: #009eaa;
+
+    font-size: 13px;
+
+    opacity: .8;
+}
+
+
+/* =====================================================
+   SHOPPING BUTTON
+===================================================== */
+
+.profile-actions {
+
+    margin-top: 26px;
+}
+
+
+.profile-btn {
+
+    position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    min-height: 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    border-radius: 11px;
+
+       background: #009eaa;
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 10px 25px rgba(10,124,134,0.18);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.profile-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -100%;
+
+    width: 70%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.14),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left .55s ease;
+}
+
+
+.profile-btn:hover::before {
+
+    left: 130%;
+}
+
+
+.profile-btn:hover {
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(10,124,134,0.24);
+}
+
+
+.profile-btn i {
+
+    font-size: 11px;
+
+    transition: transform .25s ease;
+}
+
+
+.profile-btn:hover i {
+
+    transform: translateX(4px);
+}
+
+
+/* =====================================================
+   ACCOUNT MENU
+===================================================== */
+
+.account-menu {
+
+    position: sticky;
+
+    top: 100px;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(10,124,134,0.08);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 60px rgba(20,55,60,0.07);
+}
+
+
+/* =====================================================
+   ACCOUNT HEADER
+===================================================== */
+
+.account-menu-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 2px 3px 21px;
+
+    margin-bottom: 9px;
+
+    border-bottom: 1px solid #edf2f2;
+}
+
+
+.account-menu-icon {
+
+    width: 46px;
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eaf8f8,
+            #dff3f3
+        );
+
+    color: #0a7c86;
+
+    font-size: 20px;
+}
+
+
+.account-menu-header span {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #0a7c86;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+
+.account-menu-header h3 {
+
+       margin: 0;
+    color: #232323;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   MENU LIST
+===================================================== */
+
+.account-menu-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+/* =====================================================
+   MENU ITEM
+===================================================== */
+
+.account-menu-item {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 65px;
+
+    padding: 9px 8px;
+
+    border: 1px solid #2cafb9;
+
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.account-menu-item:hover {
+
+       background: linear-gradient(100deg, #eaf7f7, #009eaa);
+
+   
+
+    transform: translateX(3px);
+}
+
+
+.account-menu-item.active {
+
+   background: linear-gradient(100deg, #eaf7f7, #009eaa);
+    border-color: #d9eeee;
+
+   
+}
+
+
+/* =====================================================
+   MENU ICON
+===================================================== */
+
+.menu-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    margin-right: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: #f5f9f9;
+
+    color: #718083;
+
+    font-size: 14px;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
+
+
+
+
+
+.account-menu-item.active .menu-icon {
+
+    background: #ffffff;
+
+    color: #0a7c86;
+
+    box-shadow:
+        0 4px 12px rgba(10,124,134,0.08);
+}
+
+
+/* =====================================================
+   MENU TEXT
+===================================================== */
+
+.menu-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.menu-text strong {
+
+    color: #344348;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.menu-text span {
+
+    color: #9aa5a8;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+}
+
+
+.account-menu-item.active .menu-text strong {
+
+    color: #0a7c86;
+}
+
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+.menu-arrow-box {
+
+    width: 27px;
+
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #b3bdc0;
+
+    font-size: 8px;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        transform .25s ease;
+}
+
+
+.account-menu-item:hover .menu-arrow-box {
+
+    background: #eaf6f6;
+
+    color: #0a7c86;
+
+    transform: translateX(2px);
+}
+
+
+.account-menu-item.active .menu-arrow-box {
+
+    background: #ffffff;
+
+    color: #0a7c86;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.logout-item {
+
+    margin-top: 8px;
+
+    padding-top: 14px;
+
+    border-top: 1px solid #009eaa;
+
+    border-radius: 10px;
+}
+
+
+.logout-item:hover {
+
+    background: #fffafa;
+
+    border-color: transparent;
+}
+
+
+.logout-item .menu-icon {
+
+    background: #009eaa;
+
+    color: #fefefe;
+}
+
+
+
+
+.logout-item .menu-text strong {
+
+    color: #f5971b;
+}
+
+
+.logout-item .menu-arrow-box {
+
+    color: #d48a8a;
+}
+
+
+
+
+/* =====================================================
+   SECURITY FOOTER
+===================================================== */
+
+.account-security {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 17px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background: #f7fbfb;
+
+    border: 1px solid #edf3f3;
+}
+
+
+.security-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: #e8f6f6;
+
+    color: #0a7c86;
+
+    font-size: 12px;
+}
+
+
+.account-security div:last-child {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.account-security strong {
+
+    color: #536165;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+.account-security span {
+
+    color: #344349;
+
+    font-size: 8px;
+
+    line-height: 1.4;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 991px) {
+
+    .profile-container {
+
+        grid-template-columns: 1fr;
+
+        max-width: 720px;
+    }
+
+
+    .account-menu {
+
+        position: static;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .profile-page {
+
+        padding: 35px 13px 60px;
+    }
+
+
+    .profile-card {
+
+        padding: 32px 20px;
+
+        border-radius: 19px;
+    }
+
+
+    .account-menu {
+
+        padding: 19px;
+
+        border-radius: 19px;
+    }
+
+
+    .profile-avatar,
+    .profile-avatar-wrapper {
+
+        width: 78px;
+
+        height: 78px;
+    }
+
+
+    .profile-card h2 {
+
+        font-size: 24px;
+    }
+
+
+    .profile-card > .profile-top p {
+
+        font-size: 12px;
+    }
+
+
+    .profile-field {
+
+        min-height: 65px;
+
+        padding: 10px 11px;
+    }
+
+
+    .field-icon {
+
+        width: 39px;
+
+        height: 39px;
+
+        margin-right: 10px;
+    }
+
+
+    .field-content strong {
+
+        font-size: 12px;
+    }
+
+
+    .field-check {
+
+        display: none;
+    }
+
+
+    .account-menu-item {
+
+        min-height: 62px;
+    }
+
+
+    .menu-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        margin-right: 10px;
+    }
+
+
+    .menu-text strong {
+
+        font-size: 12px;
+    }
+
+
+    .menu-text span {
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL DEVICES
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .profile-page {
+
+        padding-left: 10px;
+
+        padding-right: 10px;
+    }
+
+
+    .profile-card {
+
+        padding: 28px 16px;
+    }
+
+
+    .account-menu {
+
+        padding: 16px;
+    }
+
+
+    .menu-arrow-box {
+
+        display: none;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+```

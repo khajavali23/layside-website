@@ -1,0 +1,2156 @@
+
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+<section class="inner-banner"
+    style="background-image: url('/static/frontend/assets/img/banner/doctor_banner.jpg');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Join Lakeside Healthcare
+            </span>
+
+            <h1>
+                Create Your Account
+            </h1>
+
+            <p>
+                Create your account to manage your healthcare products,
+                orders, wishlist and personal details with ease.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="/">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    Register
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="register-page">
+
+    <div class="register-wrapper">
+
+
+        <!-- =====================================================
+             LEFT SIDE
+        ====================================================== -->
+
+        <div class="register-visual">
+
+            <div class="visual-image"></div>
+
+            <div class="visual-overlay"></div>
+
+
+            <div class="visual-top">
+
+                <div class="trust-badge">
+
+                    <span class="trust-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </span>
+
+                    <span>
+                        Trusted Healthcare
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-content">
+
+                <span class="visual-kicker">
+                    LAKESIDE HEALTHCARE
+                </span>
+
+                <h2>
+                    Better care
+                    <br>
+                    starts with
+                    <span>you.</span>
+                </h2>
+
+                <p>
+                    Create your account to discover trusted healthcare
+                    products, manage orders and enjoy a simple,
+                    secure shopping experience.
+                </p>
+
+
+                <div class="visual-features">
+
+
+                    <div class="visual-feature">
+
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Trusted Products
+                            </strong>
+
+                            <span>
+                                Carefully selected for your needs
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="visual-feature">
+
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Secure &amp; Private
+                            </strong>
+
+                            <span>
+                                Your information stays protected
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="visual-feature">
+
+                        <div class="feature-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Easy Shopping
+                            </strong>
+
+                            <span>
+                                Manage your healthcare in one place
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="visual-footer">
+
+                    <span class="footer-dot"></span>
+
+                    <span>
+                        Your health. Your care. Your journey.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             RIGHT SIDE
+        ====================================================== -->
+
+        <div class="register-content">
+
+            <div class="register-form">
+
+
+                <!-- HEADER -->
+
+                <div class="form-header">
+
+                    <div class="form-mini-icon">
+
+                        <i class="fas fa-user-plus"></i>
+
+                    </div>
+
+                    <span class="form-label">
+                        CREATE ACCOUNT
+                    </span>
+
+                    <h2>
+                        Start your journey
+                    </h2>
+
+                    <p>
+                        Create your account and get access to your
+                        healthcare products, orders and wishlist.
+                    </p>
+
+                </div>
+
+
+
+                <!-- FORM -->
+
+                <form method="POST" novalidate>
+
+                    {% csrf_token %}
+
+
+                    {% if form.non_field_errors %}
+
+                    <div class="form-error">
+
+                        <div class="error-icon">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+
+                        <div>
+                            {{ form.non_field_errors }}
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+
+                    <!-- NAME -->
+
+                    <div class="form-grid">
+
+
+                        <div class="field-group">
+
+                            <label for="{{ form.first_name.id_for_label }}">
+                                First Name
+                            </label>
+
+                            <div class="field-wrapper">
+
+                                <span class="field-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+
+                                {{ form.first_name }}
+
+                            </div>
+
+                            {% if form.first_name.errors %}
+
+                            <div class="field-error">
+                                {{ form.first_name.errors }}
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <div class="field-group">
+
+                            <label for="{{ form.last_name.id_for_label }}">
+                                Last Name
+                            </label>
+
+                            <div class="field-wrapper">
+
+                                <span class="field-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+
+                                {{ form.last_name }}
+
+                            </div>
+
+                            {% if form.last_name.errors %}
+
+                            <div class="field-error">
+                                {{ form.last_name.errors }}
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="field-group">
+
+                        <label for="{{ form.email.id_for_label }}">
+                            Email Address
+                        </label>
+
+                        <div class="field-wrapper">
+
+                            <span class="field-icon">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+
+                            {{ form.email }}
+
+                            <span class="field-status-icon">
+                                <i class="fas fa-at"></i>
+                            </span>
+
+                        </div>
+
+                        {% if form.email.errors %}
+
+                        <div class="field-error">
+                            {{ form.email.errors }}
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="field-group">
+
+                        <div class="field-label-row">
+
+                            <label for="{{ form.password.id_for_label }}">
+                                Password
+                            </label>
+
+                            <span class="password-hint">
+                                8+ characters
+                            </span>
+
+                        </div>
+
+
+                        <div class="field-wrapper">
+
+                            <span class="field-icon">
+                                <i class="fas fa-lock"></i>
+                            </span>
+
+                            {{ form.password }}
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword(
+                                    '{{ form.password.id_for_label }}',
+                                    this
+                                )"
+                                aria-label="Show password"
+                            >
+
+                                <i class="fas fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="password-strength">
+
+                            <div class="strength-bars">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+                            <span class="strength-text">
+                                Password strength
+                            </span>
+
+                        </div>
+
+
+                        {% if form.password.errors %}
+
+                        <div class="field-error">
+                            {{ form.password.errors }}
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="field-group">
+
+                        <label for="{{ form.confirm_password.id_for_label }}">
+                            Confirm Password
+                        </label>
+
+                        <div class="field-wrapper">
+
+                            <span class="field-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </span>
+
+                            {{ form.confirm_password }}
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword(
+                                    '{{ form.confirm_password.id_for_label }}',
+                                    this
+                                )"
+                                aria-label="Show password"
+                            >
+
+                                <i class="fas fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        {% if form.confirm_password.errors %}
+
+                        <div class="field-error">
+                            {{ form.confirm_password.errors }}
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms-area">
+
+                        <label class="terms-label">
+
+                            <input
+                                type="checkbox"
+                                required
+                            >
+
+                            <span class="custom-check">
+
+                                <i class="fas fa-check"></i>
+
+                            </span>
+
+                            <span class="terms-text">
+
+                                I agree to the
+
+                                <a href="#">
+                                    Terms &amp; Conditions
+                                </a>
+
+                                and
+
+                                <a href="#">
+                                    Privacy Policy
+                                </a>.
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+
+                        <span>
+                            Create My Account
+                        </span>
+
+                        <span class="submit-arrow">
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- LOGIN -->
+
+                <div class="login-divider">
+
+                    <span></span>
+
+                    <small>
+                        Already registered?
+                    </small>
+
+                    <span></span>
+
+                </div>
+
+
+                <a
+                    href="{% url 'customer_login' %}"
+                    class="login-link"
+                >
+
+                    Sign in to your account
+
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+
+
+                <!-- SECURITY -->
+
+                <div class="secure-note">
+
+                    <i class="fas fa-shield-alt"></i>
+
+                    <span>
+                        Your information is encrypted and securely protected.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<style>
+
+/* =========================================================
+   REGISTER PAGE
+========================================================= */
+
+.register-page {
+
+    padding: 60px 20px 80px;
+
+    background:
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(10,124,134,0.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(10,124,134,0.06),
+            transparent 30%
+        ),
+        #f4f8f8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =========================================================
+   WRAPPER
+========================================================= */
+
+.register-wrapper {
+
+    width: 100%;
+
+    max-width: 1140px;
+
+    display: grid;
+
+    grid-template-columns: 0.95fr 1.05fr;
+
+    background: #ffffff;
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    border: 1px solid #e6eeee;
+
+    box-shadow:
+        0 28px 75px rgba(24,55,60,0.11),
+        0 5px 20px rgba(24,55,60,0.04);
+
+}
+
+
+/* =========================================================
+   LEFT VISUAL
+========================================================= */
+
+.register-visual {
+
+    position: relative;
+
+    
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+}
+
+
+.visual-image {
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        url("https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1500&q=90");
+
+    background-size: cover;
+
+    background-position: center;
+
+    transform: scale(1.02);
+
+}
+
+
+.visual-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(2,72,79,0.06) 0%,
+            rgba(2,58,64,0.30) 38%,
+            rgba(2,31,36,0.96) 100%
+        );
+
+}
+
+
+/* =========================================================
+   VISUAL TOP
+========================================================= */
+
+.visual-top {
+
+    position: absolute;
+
+    top: 35px;
+
+    left: 38px;
+
+    z-index: 3;
+
+}
+
+
+.trust-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 7px 14px 7px 7px;
+
+    border-radius: 50px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.20);
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+}
+
+
+.trust-icon {
+
+    width: 29px;
+
+    height: 29px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.14);
+
+    color: #a8e8e4;
+
+}
+
+
+/* =========================================================
+   VISUAL CONTENT
+========================================================= */
+
+.visual-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    
+
+    
+
+    padding: 48px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+}
+
+
+.visual-kicker {
+
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #98e3df;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.visual-content h2 {
+
+    margin: 0 0 15px;
+
+    color: #ffffff;
+
+    font-size: 46px;
+
+    line-height: 1.06;
+
+    font-weight: 800;
+
+    letter-spacing: -1.3px;
+
+}
+
+
+.visual-content h2 span {
+
+    color: #9ce5e0;
+
+}
+
+
+.visual-content > p {
+
+    max-width: 425px;
+
+    margin: 0;
+
+    color: rgba(255,255,255,0.76);
+
+    font-size: 11px;
+
+    line-height: 1.85;
+
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.visual-features {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+}
+
+
+.visual-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+
+.feature-icon {
+
+    width: 36px;
+
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.10);
+
+    border: 1px solid rgba(255,255,255,0.13);
+
+    color: #a3e8e4;
+
+    font-size: 10px;
+
+}
+
+
+.visual-feature strong {
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.visual-feature span {
+
+    display: block;
+
+    color: rgba(255,255,255,0.53);
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.visual-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 25px;
+
+}
+
+
+.footer-dot {
+
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #80d7d2;
+
+}
+
+
+.visual-footer span:last-child {
+
+    color: rgba(255,255,255,0.43);
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+========================================================= */
+
+.register-content {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 48px 58px;
+
+    background: #ffffff;
+
+}
+
+
+.register-form {
+
+    width: 100%;
+
+    max-width: 480px;
+
+}
+
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.form-header {
+
+    margin-bottom: 24px;
+
+}
+
+
+.form-mini-icon {
+
+    width: 43px;
+
+    height: 43px;
+
+    margin-bottom: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eaf8f8,
+            #dff2f2
+        );
+
+    color: #0a7c86;
+
+    font-size: 15px;
+
+}
+
+
+.form-label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #0a7c86;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+
+}
+
+
+.form-header h2 {
+
+    margin: 0 0 7px;
+
+    color: #19292e;
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    letter-spacing: -0.4px;
+
+}
+
+
+.form-header p {
+
+    max-width: 410px;
+
+    margin: 0;
+
+    color: #89969a;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+}
+
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.field-group {
+
+    margin-bottom: 14px;
+
+}
+
+
+.field-group label {
+
+    display: block;
+
+    margin: 0 0 6px 2px;
+
+    color: #35454a;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.field-label-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+}
+
+
+.password-hint {
+
+    color: #a3adaf;
+
+    font-size: 7px;
+
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.field-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.field-icon {
+
+    position: absolute;
+
+    left: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #9da8ab;
+
+    font-size: 11px;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    transition: color .25s ease;
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.field-wrapper input {
+
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 38px;
+
+    border: 1px solid #dfe7e8;
+
+    border-radius: 10px;
+
+    background: #fafcfc;
+
+    color: #293a3f;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    outline: none;
+
+    transition:
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.field-wrapper input:hover {
+
+    border-color: #cddadb;
+
+}
+
+
+.field-wrapper input:focus {
+
+    border-color: #0a7c86;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(10,124,134,.07);
+
+}
+
+
+.field-wrapper:focus-within .field-icon {
+
+    color: #0a7c86;
+
+}
+
+
+.field-wrapper input::placeholder {
+
+    color: #adb7b9;
+
+}
+
+
+/* =========================================================
+   EMAIL ICON
+========================================================= */
+
+.field-status-icon {
+
+    position: absolute;
+
+    right: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #a4afb1;
+
+    font-size: 10px;
+
+    z-index: 2;
+
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+.password-toggle {
+
+    position: absolute;
+
+    right: 8px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 31px;
+
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #9aa6a9;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+
+}
+
+
+.password-toggle:hover {
+
+    background: #edf7f7;
+
+    color: #0a7c86;
+
+}
+
+
+/* =========================================================
+   STRENGTH
+========================================================= */
+
+.password-strength {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 6px;
+
+}
+
+
+.strength-bars {
+
+    display: flex;
+
+    gap: 3px;
+
+}
+
+
+.strength-bars span {
+
+    width: 22px;
+
+    height: 3px;
+
+    border-radius: 10px;
+
+    background: #e4e9ea;
+
+    transition: .25s ease;
+
+}
+
+
+.strength-text {
+
+    color: #a1adaf;
+
+    font-size: 7px;
+
+}
+
+
+/* =========================================================
+   ERRORS
+========================================================= */
+
+.form-error {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 10px 12px;
+
+    margin-bottom: 16px;
+
+    border: 1px solid #f1d6d6;
+
+    border-radius: 9px;
+
+    background: #fff7f7;
+
+    color: #c84d4d;
+
+    font-size: 9px;
+
+    line-height: 1.5;
+
+}
+
+
+.error-icon {
+
+    color: #d14f4f;
+
+    font-size: 10px;
+
+}
+
+
+.field-error {
+
+    margin-top: 4px;
+
+    color: #d14f4f;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.terms-area {
+
+    margin: 2px 0 16px;
+
+}
+
+
+.terms-label {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+}
+
+
+.terms-label input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+.custom-check {
+
+    width: 15px;
+
+    height: 15px;
+
+    flex-shrink: 0;
+
+    margin-top: 1px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid #ccd7d8;
+
+    border-radius: 4px;
+
+    background: #ffffff;
+
+    color: transparent;
+
+    font-size: 7px;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+
+}
+
+
+.terms-label input:checked + .custom-check {
+
+    background: #0a7c86;
+
+    border-color: #0a7c86;
+
+    color: #ffffff;
+
+}
+
+
+.terms-text {
+
+    color: #899599;
+
+    font-size: 8px;
+
+    line-height: 1.6;
+
+}
+
+
+.terms-text a {
+
+    color: #0a7c86;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+}
+
+
+.terms-text a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submit-btn {
+
+    width: 100%;
+
+    height: 51px;
+
+    padding: 0 6px 0 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0a7c86,
+            #076e77
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 22px rgba(10,124,134,.16);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.submit-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(10,124,134,.22);
+
+}
+
+
+.submit-arrow {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: rgba(255,255,255,.13);
+
+}
+
+
+.submit-arrow i {
+
+    font-size: 9px;
+
+    transition: transform .2s ease;
+
+}
+
+
+.submit-btn:hover .submit-arrow i {
+
+    transform: translateX(3px);
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.login-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 21px 0 12px;
+
+}
+
+
+.login-divider span {
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #edf1f1;
+
+}
+
+
+.login-divider small {
+
+    color: #a0abad;
+
+    font-size: 7px;
+
+    white-space: nowrap;
+
+}
+
+
+.login-link {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    color: #0a7c86;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+}
+
+
+.login-link i {
+
+    font-size: 8px;
+
+    transition: transform .2s ease;
+
+}
+
+
+.login-link:hover {
+
+    color: #075f66;
+
+}
+
+
+.login-link:hover i {
+
+    transform: translateX(3px);
+
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.secure-note {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-top: 18px;
+
+    color: #a2adaf;
+
+    font-size: 7px;
+
+}
+
+
+.secure-note i {
+
+    color: #0a7c86;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .register-wrapper {
+
+        grid-template-columns: 1fr;
+
+        max-width: 650px;
+
+    }
+
+
+    
+
+    
+
+
+    .visual-content {
+
+      
+        padding: 38px;
+
+    }
+
+
+    .visual-content h2 {
+
+        font-size: 40px;
+
+    }
+
+
+    .visual-top {
+
+        top: 28px;
+
+        left: 32px;
+
+    }
+
+
+    .register-content {
+
+        padding: 45px 40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 575px) {
+
+    .register-page {
+
+        padding: 15px 9px 40px;
+
+    }
+
+
+    .register-wrapper {
+
+        border-radius: 18px;
+
+    }
+
+
+    .register-visual {
+
+   
+
+    }
+
+
+    .visual-content {
+
+   
+
+        padding: 27px;
+
+    }
+
+
+    .visual-top {
+
+        top: 20px;
+
+        left: 25px;
+
+    }
+
+
+    .visual-content h2 {
+
+        font-size: 31px;
+
+    }
+
+
+    .visual-content > p {
+
+        font-size: 10px;
+
+    }
+
+
+    .visual-features {
+
+        margin-top: 19px;
+
+        gap: 9px;
+
+    }
+
+
+    .visual-feature strong {
+
+        font-size: 9px;
+
+    }
+
+
+    .visual-feature span {
+
+        font-size: 7px;
+
+    }
+
+
+    .visual-footer {
+
+        display: none;
+
+    }
+
+
+    .register-content {
+
+        padding: 33px 20px;
+
+    }
+
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
+    }
+
+
+    .form-header h2 {
+
+        font-size: 24px;
+
+    }
+
+
+    .form-header p {
+
+        font-size: 9px;
+
+    }
+
+
+    .field-wrapper input {
+
+        height: 49px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .register-content {
+
+        padding-left: 16px;
+
+        padding-right: 16px;
+
+    }
+
+
+    .visual-content h2 {
+
+        font-size: 28px;
+
+    }
+
+
+    .form-header h2 {
+
+        font-size: 22px;
+
+    }
+
+}
+
+</style>
+
+
+
+<script>
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+function togglePassword(fieldId, button) {
+
+    const field =
+        document.getElementById(fieldId);
+
+    const icon =
+        button.querySelector('i');
+
+
+    if (!field) {
+
+        return;
+
+    }
+
+
+    if (field.type === 'password') {
+
+        field.type = 'text';
+
+        icon.classList.remove('fa-eye');
+
+        icon.classList.add('fa-eye-slash');
+
+        button.setAttribute(
+            'aria-label',
+            'Hide password'
+        );
+
+    } else {
+
+        field.type = 'password';
+
+        icon.classList.remove('fa-eye-slash');
+
+        icon.classList.add('fa-eye');
+
+        button.setAttribute(
+            'aria-label',
+            'Show password'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const passwordField =
+            document.getElementById(
+                '{{ form.password.id_for_label }}'
+            );
+
+
+        if (!passwordField) {
+
+            return;
+
+        }
+
+
+        const bars =
+            document.querySelectorAll(
+                '.strength-bars span'
+            );
+
+
+        const strengthText =
+            document.querySelector(
+                '.strength-text'
+            );
+
+
+        passwordField.addEventListener(
+            'input',
+            function () {
+
+                const value =
+                    passwordField.value;
+
+
+                let score = 0;
+
+
+                if (value.length >= 8) {
+
+                    score++;
+
+                }
+
+
+                if (/[A-Z]/.test(value)) {
+
+                    score++;
+
+                }
+
+
+                if (/[0-9]/.test(value)) {
+
+                    score++;
+
+                }
+
+
+                if (/[^A-Za-z0-9]/.test(value)) {
+
+                    score++;
+
+                }
+
+
+                bars.forEach(
+                    function (bar, index) {
+
+                        if (index < score) {
+
+                            bar.style.background =
+                                '#0a7c86';
+
+                        } else {
+
+                            bar.style.background =
+                                '#e4e9ea';
+
+                        }
+
+                    }
+                );
+
+
+                if (!value) {
+
+                    strengthText.textContent =
+                        'Password strength';
+
+                } else if (score <= 1) {
+
+                    strengthText.textContent =
+                        'Weak password';
+
+                } else if (score === 2) {
+
+                    strengthText.textContent =
+                        'Fair password';
+
+                } else if (score === 3) {
+
+                    strengthText.textContent =
+                        'Good password';
+
+                } else {
+
+                    strengthText.textContent =
+                        'Strong password';
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+{% endblock %}
+```

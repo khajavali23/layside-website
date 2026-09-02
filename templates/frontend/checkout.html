@@ -1,0 +1,2355 @@
+```html
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!-- =========================================================
+     CHECKOUT BANNER
+========================================================= -->
+
+<section class="inner-banner checkout-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}');">
+
+    <div class="banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="inner-banner-content text-center">
+
+            <span class="banner-tag">
+                Secure Checkout
+            </span>
+
+            <h1>
+                Checkout
+            </h1>
+
+            <p>
+                Complete your order securely and provide your details
+                for a smooth healthcare shopping experience.
+            </p>
+
+            <ul class="breadcrumb justify-content-center">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+
+                <li>
+                    Checkout
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CHECKOUT PAGE
+========================================================= -->
+
+<section class="premium-checkout">
+
+    <div class="container">
+
+        <div class="checkout-layout">
+
+
+            <!-- =================================================
+                 LEFT SIDE
+            ================================================== -->
+
+            <div class="checkout-left">
+
+
+                <!-- CUSTOMER INFORMATION -->
+
+                <div class="checkout-card premium-card">
+
+                    <div class="checkout-section-header">
+
+                        <div class="section-icon">
+
+                            <i class="fas fa-user"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                PERSONAL DETAILS
+                            </span>
+
+                            <h2>
+                                Customer Information
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="customer-grid">
+
+
+                        <div class="customer-info-box">
+
+                            <span>
+                                FULL NAME
+                            </span>
+
+                            <strong>
+                                {{ customer.user.get_full_name|default:customer.user.username }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="customer-info-box">
+
+                            <span>
+                                EMAIL ADDRESS
+                            </span>
+
+                            <strong>
+                                {{ customer.user.email }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="customer-info-box full">
+
+                            <span>
+                                PHONE NUMBER
+                            </span>
+
+                            <strong>
+                                {{ customer.phone|default:"Not Added" }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DELIVERY ADDRESS -->
+
+                <div class="checkout-card premium-card">
+
+                    <div class="checkout-section-header">
+
+                        <div class="section-icon">
+
+                            <i class="fas fa-location-dot"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                DELIVERY
+                            </span>
+
+                            <h2>
+                                Delivery Address
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if addresses %}
+
+
+                    <div class="address-heading">
+
+                        <div>
+
+                            <span>
+                                SELECT DELIVERY ADDRESS
+                            </span>
+
+                            <p>
+                                Choose where you want your order delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="saved-addresses">
+
+
+                        {% for address in addresses %}
+
+
+                        <label class="premium-address-card">
+
+
+                            <input
+                                type="radio"
+                                name="address_id"
+                                value="{{ address.id }}"
+                                {% if address.is_default %}checked{% endif %}
+                            >
+
+
+                            <div class="custom-radio">
+
+                                <i class="fas fa-check"></i>
+
+                            </div>
+
+
+                            <div class="address-details">
+
+
+                                <div class="address-name-row">
+
+                                    <strong>
+                                        {{ address.full_name }}
+                                    </strong>
+
+
+                                    {% if address.is_default %}
+
+                                    <span class="default-badge">
+                                        DEFAULT
+                                    </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <p>
+                                    {{ address.full_address }}
+                                </p>
+
+
+                                <div class="address-phone">
+
+                                    <i class="fas fa-phone"></i>
+
+                                    {{ address.phone }}
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="address-arrow">
+
+                                <i class="fas fa-chevron-right"></i>
+
+                            </div>
+
+
+                        </label>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    {% else %}
+
+
+                    <div class="empty-address">
+
+                        <div class="empty-address-icon">
+
+                            <i class="fas fa-location-dot"></i>
+
+                        </div>
+
+                        <h3>
+                            No Delivery Address
+                        </h3>
+
+                        <p>
+                            Please add a delivery address before
+                            proceeding to payment.
+                        </p>
+
+                    </div>
+
+
+                    {% endif %}
+
+
+
+                    <!-- ADD NEW ADDRESS -->
+
+                    <button
+                        type="button"
+                        class="new-address-button"
+                        onclick="openAddressForm()"
+                    >
+
+                        <span class="plus-icon">
+                            <i class="fas fa-plus"></i>
+                        </span>
+
+                        <span>
+                            Add New Address
+                        </span>
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </button>
+
+
+
+                    <!-- NEW ADDRESS FORM -->
+
+                    <div
+                        id="newAddressForm"
+                        class="new-address-form"
+                        style="display:none;"
+                    >
+
+                        <div class="new-address-title">
+
+                            <span>
+                                NEW ADDRESS
+                            </span>
+
+                            <h3>
+                                Add Delivery Address
+                            </h3>
+
+                        </div>
+
+
+                        <form
+                            method="POST"
+                            action="{% url 'save_address' %}"
+                        >
+
+                            {% csrf_token %}
+
+
+                            <div class="address-form-grid">
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        Full Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="full_name"
+                                        placeholder="Enter full name"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        Phone Number
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        placeholder="Enter phone number"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group full-width">
+
+                                    <label>
+                                        Address Line 1
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="address_line_1"
+                                        placeholder="House / Flat / Street"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group full-width">
+
+                                    <label>
+                                        Address Line 2
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="address_line_2"
+                                        placeholder="Apartment, Area, etc. (Optional)"
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        City
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        placeholder="City"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        State
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="state"
+                                        placeholder="State"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        Pincode
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="pincode"
+                                        placeholder="Pincode"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="premium-form-group">
+
+                                    <label>
+                                        Landmark
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="landmark"
+                                        placeholder="Nearby landmark (Optional)"
+                                    >
+
+                                </div>
+
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="save-address-button"
+                            >
+
+                                <i class="fas fa-location-dot"></i>
+
+                                Save Address
+
+                            </button>
+
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE - ORDER SUMMARY
+            ================================================== -->
+
+            <aside class="checkout-right">
+
+
+                <div class="order-summary premium-summary">
+
+
+                    <!-- SUMMARY HEADER -->
+
+                    <div class="summary-top">
+
+                        <div>
+
+                            <span>
+                                ORDER SUMMARY
+                            </span>
+
+                            <h2>
+                                Your Order
+                            </h2>
+
+                        </div>
+
+
+                        <div class="summary-bag">
+
+                            <i class="fas fa-shopping-bag"></i>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRODUCTS -->
+
+                    <div class="summary-products">
+
+
+                        {% for item in cart_items %}
+
+
+                        <div class="summary-product">
+
+
+                            <div class="summary-product-image">
+
+                                {% if item.product.main_image %}
+
+                                <img
+                                    src="{{ item.product.main_image.url }}"
+                                    alt="{{ item.product.name }}"
+                                >
+
+                                {% else %}
+
+                                <i class="fas fa-image"></i>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="summary-product-info">
+
+                                <h4>
+                                    {{ item.product.name }}
+                                </h4>
+
+                                <span>
+                                    Quantity: {{ item.quantity }}
+                                </span>
+
+                            </div>
+
+
+                            <strong>
+                                ₹{{ item.total_price }}
+                            </strong>
+
+
+                        </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+
+                    <!-- PRICE BREAKDOWN -->
+
+                    <div class="price-breakdown">
+
+
+                        <div>
+
+                            <span>
+                                Items
+                            </span>
+
+                            <strong>
+                                {{ cart.total_items }}
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹{{ cart.total_price }}
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <strong class="free">
+                                Free
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- GRAND TOTAL -->
+
+                    <div class="grand-total-box">
+
+                        <div>
+
+                            <span>
+                                TOTAL AMOUNT
+                            </span>
+
+                            <p>
+                                Including all applicable charges
+                            </p>
+
+                        </div>
+
+
+                        <strong>
+                            ₹{{ cart.total_price }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="payment-section">
+
+                        <span class="payment-heading">
+                            PAYMENT METHOD
+                        </span>
+
+
+                        <div class="payment-card active">
+
+                            <div class="payment-check">
+
+                                <i class="fas fa-check"></i>
+
+                            </div>
+
+
+                            <div class="payment-content">
+
+                                <strong>
+                                    Pay Online
+                                </strong>
+
+                                <span>
+                                    Secure payment gateway
+                                </span>
+
+                            </div>
+
+
+                            <i class="fas fa-credit-card payment-icon"></i>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PAYMENT FORM -->
+
+                    {% if addresses %}
+
+                    <form
+                        method="POST"
+                        action="{% url 'proceed_to_payment' %}"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <input
+                            type="hidden"
+                            name="address_id"
+                            id="selectedAddress"
+                            value="{% for address in addresses %}{% if address.is_default %}{{ address.id }}{% endif %}{% endfor %}"
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="proceed-payment-button"
+                        >
+
+                            <span>
+
+                                <i class="fas fa-lock"></i>
+
+                                Proceed to Payment
+
+                            </span>
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </button>
+
+
+                    </form>
+
+                    {% else %}
+
+                    <button
+                        type="button"
+                        class="proceed-payment-button disabled"
+                        disabled
+                    >
+
+                        <span>
+
+                            <i class="fas fa-lock"></i>
+
+                            Add Address to Continue
+
+                        </span>
+
+                    </button>
+
+                    {% endif %}
+
+
+
+                    <!-- SECURITY -->
+
+                    <div class="payment-security">
+
+                        <div class="security-icon">
+
+                            <i class="fas fa-shield-heart"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Secure Checkout
+                            </strong>
+
+                            <span>
+                                Your payment information is encrypted
+                                and protected.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<style>
+
+/* =========================================================
+   PREMIUM CHECKOUT
+========================================================= */
+
+.premium-checkout {
+
+    padding: 65px 0 90px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f5fafa 0%,
+            #f8fbfb 100%
+        );
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.checkout-layout {
+
+    max-width: 1180px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.45fr) minmax(350px, .75fr);
+
+    gap: 30px;
+
+    align-items: start;
+}
+
+
+.checkout-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.premium-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e7eeee;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 12px 35px rgba(25, 70, 75, .055);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.checkout-section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 24px;
+
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #edf2f2;
+}
+
+
+.section-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #e8f6f6;
+
+    color: #0A7C86;
+
+    font-size: 19px;
+}
+
+
+.checkout-section-header span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #0A7C86;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+}
+
+
+.checkout-section-header h2 {
+
+    margin: 0;
+
+    color: #1e2c31;
+
+    font-size: 21px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CUSTOMER
+========================================================= */
+
+.customer-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+
+.customer-info-box {
+
+    padding: 18px 20px;
+
+    background: #f8fbfb;
+
+    border: 1px solid #edf2f2;
+
+    border-radius: 13px;
+
+    transition: .25s ease;
+}
+
+
+.customer-info-box:hover {
+
+    border-color: #cde4e4;
+
+    background: #f5fbfb;
+}
+
+
+.customer-info-box.full {
+
+    grid-column: 1 / -1;
+}
+
+
+.customer-info-box span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8c999d;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.1px;
+}
+
+
+.customer-info-box strong {
+
+    display: block;
+
+    color: #27373c;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ADDRESS HEADER
+========================================================= */
+
+.address-heading {
+
+    margin-bottom: 15px;
+}
+
+
+.address-heading span {
+
+    display: block;
+
+    color: #27373c;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+.address-heading p {
+
+    margin: 5px 0 0;
+
+    color: #8c999d;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SAVED ADDRESS
+========================================================= */
+
+.saved-addresses {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.premium-address-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    border: 1.5px solid #e7eeee;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+}
+
+
+.premium-address-card:hover {
+
+    border-color: #b9dcdc;
+
+    transform: translateY(-1px);
+
+}
+
+
+.premium-address-card input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.custom-radio {
+
+    width: 22px;
+
+    height: 22px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 2px solid #cbd7d8;
+
+    color: transparent;
+
+    font-size: 9px;
+
+    transition: .25s ease;
+}
+
+
+.premium-address-card:has(input:checked) {
+
+    border-color: #0A7C86;
+
+    background: #f2fbfb;
+
+    box-shadow:
+        0 7px 22px rgba(10,124,134,.08);
+}
+
+
+.premium-address-card:has(input:checked)
+.custom-radio {
+
+    border-color: #0A7C86;
+
+    background: #0A7C86;
+
+    color: #ffffff;
+}
+
+
+.address-details {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.address-name-row {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-bottom: 7px;
+}
+
+
+.address-name-row strong {
+
+    color: #26363b;
+
+    font-size: 14px;
+}
+
+
+.default-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 4px 8px;
+
+    border-radius: 20px;
+
+    background: #dff4f4;
+
+    color: #0A7C86;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .8px;
+}
+
+
+.address-details p {
+
+    margin: 0 0 9px;
+
+    color: #77868b;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+
+.address-phone {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #647378;
+
+    font-size: 11px;
+}
+
+
+.address-phone i {
+
+    color: #0A7C86;
+
+}
+
+
+.address-arrow {
+
+    color: #b6c2c4;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ADD ADDRESS
+========================================================= */
+
+.new-address-button {
+
+    width: 100%;
+
+    margin-top: 16px;
+
+    padding: 14px 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px dashed #b8d8d9;
+
+    border-radius: 13px;
+
+    background: #f8fcfc;
+
+    color: #0A7C86;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+
+.new-address-button:hover {
+
+    border-color: #0A7C86;
+
+    background: #eef9f9;
+}
+
+
+.new-address-button > i {
+
+    margin-left: auto;
+
+    font-size: 11px;
+}
+
+
+.plus-icon {
+
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #dff3f3;
+
+}
+
+
+/* =========================================================
+   NEW ADDRESS FORM
+========================================================= */
+
+.new-address-form {
+
+    margin-top: 20px;
+
+    padding: 22px;
+
+    border-radius: 15px;
+
+    background: #f8fbfb;
+
+    border: 1px solid #e5eeee;
+}
+
+
+.new-address-title {
+
+    margin-bottom: 20px;
+}
+
+
+.new-address-title span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #0A7C86;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.4px;
+}
+
+
+.new-address-title h3 {
+
+    margin: 0;
+
+    color: #25353a;
+
+    font-size: 17px;
+}
+
+
+.address-form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+
+.premium-form-group.full-width {
+
+    grid-column: 1 / -1;
+}
+
+
+.premium-form-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #536267;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.premium-form-group input {
+
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 14px;
+
+    border: 1px solid #dfe8e8;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #29383d;
+
+    outline: none;
+
+    font-size: 12px;
+
+    transition: .2s ease;
+}
+
+
+.premium-form-group input:focus {
+
+    border-color: #0A7C86;
+
+    box-shadow:
+        0 0 0 3px rgba(10,124,134,.08);
+}
+
+
+.premium-form-group input::placeholder {
+
+    color: #aab4b6;
+}
+
+
+.save-address-button {
+
+    margin-top: 18px;
+
+    height: 45px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #0A7C86;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+
+.save-address-button:hover {
+
+    background: #076b74;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY ADDRESS
+========================================================= */
+
+.empty-address {
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    border-radius: 15px;
+
+    background: #f8fbfb;
+
+    border: 1px dashed #d9e6e6;
+}
+
+
+.empty-address-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    margin: 0 auto 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f6f6;
+
+    color: #0A7C86;
+
+    font-size: 20px;
+}
+
+
+.empty-address h3 {
+
+    margin: 0 0 7px;
+
+    color: #2b3a3f;
+
+    font-size: 16px;
+}
+
+
+.empty-address p {
+
+    margin: 0;
+
+    color: #89979b;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RIGHT SUMMARY
+========================================================= */
+
+.checkout-right {
+
+    position: sticky;
+
+    top: 100px;
+}
+
+
+.premium-summary {
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 18px 45px rgba(25,70,75,.09);
+}
+
+
+.summary-top {
+
+    padding: 27px 27px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #edf2f2;
+}
+
+
+.summary-top > div:first-child span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #0A7C86;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.6px;
+}
+
+
+.summary-top h2 {
+
+    margin: 0;
+
+    color: #202f34;
+
+    font-size: 21px;
+}
+
+
+.summary-bag {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #e8f6f6;
+
+    color: #0A7C86;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.summary-products {
+
+    padding: 8px 27px;
+}
+
+
+.summary-product {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f0f3f3;
+}
+
+
+.summary-product:last-child {
+
+    border-bottom: none;
+}
+
+
+.summary-product-image {
+
+    width: 55px;
+
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 11px;
+
+    background: #f5f9f9;
+
+    color: #a5b2b4;
+}
+
+
+.summary-product-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+.summary-product-info {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.summary-product-info h4 {
+
+    margin: 0 0 5px;
+
+    color: #2e3d42;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.summary-product-info span {
+
+    color: #929da0;
+
+    font-size: 10px;
+}
+
+
+.summary-product > strong {
+
+    color: #27383d;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.price-breakdown {
+
+    margin: 0 27px;
+
+    padding: 15px 0;
+
+    border-top: 1px solid #edf2f2;
+
+    border-bottom: 1px dashed #dce5e5;
+}
+
+
+.price-breakdown > div {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 6px 0;
+
+    color: #7e8b8f;
+
+    font-size: 12px;
+}
+
+
+.price-breakdown strong {
+
+    color: #3a484c;
+
+    font-weight: 600;
+}
+
+
+.price-breakdown .free {
+
+    color: #18826e;
+}
+
+
+/* =========================================================
+   GRAND TOTAL
+========================================================= */
+
+.grand-total-box {
+
+    margin: 0 27px;
+
+    padding: 19px 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.grand-total-box span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #2c3a3f;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+}
+
+
+.grand-total-box p {
+
+    margin: 0;
+
+    color: #9aa5a8;
+
+    font-size: 9px;
+}
+
+
+.grand-total-box > strong {
+
+    color: #0A7C86;
+
+    font-size: 23px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-section {
+
+    padding: 0 27px 20px;
+}
+
+
+.payment-heading {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #8a979a;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+}
+
+
+.payment-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px;
+
+    border: 1px solid #0A7C86;
+
+    border-radius: 12px;
+
+    background: #f4fbfb;
+}
+
+
+.payment-check {
+
+    width: 25px;
+
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #0A7C86;
+
+    color: #ffffff;
+
+    font-size: 9px;
+}
+
+
+.payment-content {
+
+    flex: 1;
+}
+
+
+.payment-content strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #29383d;
+
+    font-size: 12px;
+}
+
+
+.payment-content span {
+
+    color: #8b989b;
+
+    font-size: 9px;
+}
+
+
+.payment-icon {
+
+    color: #0A7C86;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   PAYMENT BUTTON
+========================================================= */
+
+.proceed-payment-button {
+
+    width: calc(100% - 54px);
+
+    height: 54px;
+
+    margin: 0 27px;
+
+    padding: 0 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #0A7C86;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        background .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.proceed-payment-button:hover {
+
+    background: #076b74;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(10,124,134,.22);
+}
+
+
+.proceed-payment-button span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.proceed-payment-button > i {
+
+    font-size: 11px;
+
+    transition: transform .25s ease;
+}
+
+
+.proceed-payment-button:hover > i {
+
+    transform: translateX(3px);
+}
+
+
+.proceed-payment-button.disabled {
+
+    background: #aababc;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.payment-security {
+
+    margin: 18px 27px 24px;
+
+    padding: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 11px;
+
+    background: #f7faf9;
+}
+
+
+.security-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #e5f4f1;
+
+    color: #16806f;
+
+    font-size: 13px;
+}
+
+
+.payment-security strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #415054;
+
+    font-size: 10px;
+}
+
+
+.payment-security span {
+
+    display: block;
+
+    color: #8d999c;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .checkout-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .checkout-right {
+
+        position: static;
+
+    }
+
+
+    .premium-summary {
+
+        max-width: 100%;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .premium-checkout {
+
+        padding: 40px 0 60px;
+
+    }
+
+
+    .premium-card {
+
+        padding: 22px;
+
+        border-radius: 17px;
+
+    }
+
+
+    .customer-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .customer-info-box.full {
+
+        grid-column: auto;
+
+    }
+
+
+    .address-form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .premium-form-group.full-width {
+
+        grid-column: auto;
+
+    }
+
+
+    .summary-top,
+    .summary-products,
+    .payment-section {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+    }
+
+
+    .price-breakdown,
+    .grand-total-box {
+
+        margin-left: 20px;
+
+        margin-right: 20px;
+
+    }
+
+
+    .proceed-payment-button {
+
+        width: calc(100% - 40px);
+
+        margin-left: 20px;
+
+        margin-right: 20px;
+
+    }
+
+
+    .payment-security {
+
+        margin-left: 20px;
+
+        margin-right: 20px;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .checkout-section-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .section-icon {
+
+        width: 44px;
+
+        height: 44px;
+
+        border-radius: 12px;
+
+        font-size: 16px;
+
+    }
+
+
+    .checkout-section-header h2 {
+
+        font-size: 18px;
+
+    }
+
+
+    .premium-address-card {
+
+        padding: 14px;
+
+    }
+
+
+    .address-arrow {
+
+        display: none;
+
+    }
+
+
+    .summary-top h2 {
+
+        font-size: 19px;
+
+    }
+
+
+    .grand-total-box > strong {
+
+        font-size: 20px;
+
+    }
+
+}
+
+</style>
+
+
+
+<script>
+
+function openAddressForm() {
+
+    const form = document.getElementById("newAddressForm");
+
+    if (form.style.display === "none" || form.style.display === "") {
+
+        form.style.display = "block";
+
+    } else {
+
+        form.style.display = "none";
+
+    }
+
+}
+
+
+/*
+=========================================================
+ADDRESS SELECTION
+Keeps selected address synced with payment form.
+=========================================================
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addressInputs =
+        document.querySelectorAll(
+            '.premium-address-card input[name="address_id"]'
+        );
+
+    const selectedAddress =
+        document.getElementById("selectedAddress");
+
+
+    addressInputs.forEach(function (input) {
+
+        input.addEventListener("change", function () {
+
+            if (selectedAddress) {
+
+                selectedAddress.value = this.value;
+
+            }
+
+        });
+
+    });
+
+});
+
+</script>
+
+
+{% endblock %}
+```

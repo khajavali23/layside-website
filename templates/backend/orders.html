@@ -1,0 +1,194 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Orders</h2>
+            <p class="text-muted mb-0">
+                Manage customer orders and payments
+            </p>
+        </div>
+
+        <span class="badge bg-primary">
+            {{ orders|length }} Orders
+        </span>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Products</th>
+                            <th>Amount</th>
+                            <th>Payment</th>
+                            <th>Order Date</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for order in orders %}
+
+                        <tr>
+
+                            <!-- ORDER NUMBER -->
+
+                            <td>
+
+                                <strong>
+                                    #{{ order.order_number }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <strong>
+                                    {{ order.user.get_full_name|default:order.user.username }}
+                                </strong>
+
+                                <small class="d-block text-muted">
+                                    {{ order.email }}
+                                </small>
+
+                                <small class="d-block text-muted">
+                                    {{ order.phone }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- PRODUCTS -->
+
+                            <td>
+
+                                {% for item in order.items.all %}
+
+                                <div>
+
+                                    {{ item.product_name }}
+
+                                    <span class="text-muted">
+                                        × {{ item.quantity }}
+                                    </span>
+
+                                </div>
+
+                                {% empty %}
+
+                                <span class="text-muted">
+                                    No products
+                                </span>
+
+                                {% endfor %}
+
+                            </td>
+
+
+                            <!-- AMOUNT -->
+
+                            <td>
+
+                                <strong>
+                                    ₹{{ order.total_amount }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- PAYMENT STATUS -->
+
+                            <td>
+
+                                {% if order.payment_status == 'Paid' %}
+
+                                    <span class="badge bg-success">
+                                        Paid
+                                    </span>
+
+                                {% elif order.payment_status == 'Failed' %}
+
+                                    <span class="badge bg-danger">
+                                        Failed
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                {{ order.created_at|date:"d M Y" }}
+
+                                <small class="d-block text-muted">
+                                    {{ order.created_at|date:"h:i A" }}
+                                </small>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="text-center py-5"
+                            >
+
+                                <i class="fa-solid fa-cart-shopping fa-2x text-muted mb-3"></i>
+
+                                <p class="mb-0">
+                                    No orders found.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

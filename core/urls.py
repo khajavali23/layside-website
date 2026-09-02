@@ -5,24 +5,12 @@ from .views import *
 urlpatterns = [
     path('', home, name='home'),
     path('about/', about, name='about'),
-
     path('doctors/', doctors_frontend, name='frontend_doctors'),
     path('doctor/<slug:slug>/', doctor_detail, name='doctor_detail'),
-
     path('departments/', services, name='services'),
-
     # Main Department
-    path(
-        'departments/<slug:slug>/',
-        department_detail,
-        name='department_detail'
-    ),
-
-    path(
-    'departments/<slug:department_slug>/<slug:sub_slug>/',
-    sub_department_detail,
-    name='sub_department_detail'
-),
+    path('departments/<slug:slug>/',department_detail,name='department_detail'),
+    path('departments/<slug:department_slug>/<slug:sub_slug>/',sub_department_detail,name='sub_department_detail'),
     path('contact/', contact, name='contact'),
     path('contact/create/', create_message, name='create_message'),
 
@@ -62,35 +50,15 @@ urlpatterns = [
 
     # urls.py
     path('no-permission/', no_permission, name='no_permission'),
-    path('account/login/', login, name='login'), 
+    path('account/login/', admin_login, name='login'), 
     path('account/logout/', logout_user, name='logout_user'), 
 
     path('account/', dashboard, name='dashboard'), 
     path('account/departments/', departments, name='departments'), 
-    # Sub Departments
-path(
-    'account/sub-departments/',
-    sub_departments,
-    name='sub_departments'
-),
-
-path(
-    'account/sub-departments/create/',
-    create_sub_department,
-    name='create_sub_department'
-),
-
-path(
-    'account/sub-departments/edit/<slug:slug>/',
-    edit_sub_department,
-    name='edit_sub_department'
-),
-
-path(
-    'account/sub-departments/delete/<slug:slug>/',
-    delete_sub_department,
-    name='delete_sub_department'
-),
+    path('account/sub-departments/',sub_departments,name='sub_departments'),
+    path('account/sub-departments/create/',create_sub_department,name='create_sub_department'),
+    path('account/sub-departments/edit/<slug:slug>/',edit_sub_department,name='edit_sub_department'),
+    path('account/sub-departments/delete/<slug:slug>/',delete_sub_department,name='delete_sub_department'),
     path('account/users/', user_list, name='user-list'),
     path('account/users/create/', user_create, name='user-create'),
     path('account/users/edit/<int:id>/', user_edit, name='user-edit'),
@@ -177,5 +145,36 @@ path(
     path("api/notifications/", api_notifications_list, name="api_notifications"),
     path("api/notifications/read/<int:pk>/", api_mark_notification_read, name="api_mark_notification_read"),
     path("api/notifications/read-all/", api_mark_all_notifications_read, name="api_mark_all_notifications_read"),
+
+
+
+
+
+
+
+    path('account/products/',product_list,name='product_list'),
+    path('account/products/create/',create_product,name='create_product'),
+    path('account/products/edit/<int:product_id>/',edit_product,name='edit_product'),
+    path('account/products/delete/<int:product_id>/',delete_product,name='delete_product'),
+    path('products/',product_frontend_list,name='product_frontend_list'),
+    path('product/<slug:slug>/',product_detail,name='product_detail'),
+    path('register/',customer_register,name='customer_register'),
+    path('login/',customer_login,name='customer_login'),
+    path('logout/',customer_logout,name='customer_logout'),
+    path('profile/',customer_profile,name='customer_profile'),
+    path('cart/',cart_view,name='cart'),
+    path('cart/add/<slug:slug>/',add_to_cart,name='add_to_cart'),
+    path('cart/increase/<int:item_id>/',increase_cart_quantity,name='increase_cart_quantity'),
+    path('cart/decrease/<int:item_id>/',decrease_cart_quantity,name='decrease_cart_quantity'),
+    path('cart/remove/<int:item_id>/',remove_from_cart,name='remove_from_cart'),
+    path('wishlist/',wishlist,name='wishlist'),
+    path('wishlist/add/<slug:slug>/',add_to_wishlist,name='add_to_wishlist'),
+    path('wishlist/remove/<int:item_id>/',remove_from_wishlist,name='remove_from_wishlist'),path('checkout/',checkout,name='checkout'),
+    path("address/add/",add_address,name="add_address"),
+    path('address/save/',save_address,name='save_address'),
+    path('payment/',proceed_to_payment,name='proceed_to_payment'),
+    path('payment/create/',create_razorpay_order,name='create_razorpay_order'),
+    path('account/customers/',customers,name='customers'),
+    path('account/orders/',order_list,name='order_list'),
 
 ]

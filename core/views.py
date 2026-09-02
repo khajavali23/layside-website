@@ -29,6 +29,11 @@ from django.utils.timezone import now
 from .forms import BlogCommentForm
 from datetime import datetime
 from datetime import date
+from django.shortcuts import render, redirect, get_object_or_404
+import razorpay
+
+from django.conf import settings
+
 
 
 
@@ -98,7 +103,7 @@ def homepage(request):
     return render(request, 'frontend/homepage.html')
 
 
-def login(request):
+def admin_login(request):
 
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -3227,3 +3232,983 @@ def delete_sub_department(request, slug):
     )
 
     return redirect("sub_departments")
+
+
+
+
+
+
+
+
+
+def create_product(request):
+
+    if request.method == 'POST':
+        form = ProductForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    else:
+        form = ProductForm()
+
+    return render(
+        request,
+        'backend/create-product.html',
+        {'form': form}
+    )
+
+def product_list(request):
+
+    products = Product.objects.all()
+
+    return render(
+        request,
+        'backend/products.html',
+        {'products': products}
+    )
+
+def edit_product(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    if request.method == 'POST':
+
+        form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    else:
+        form = ProductForm(instance=product)
+
+    return render(
+        request,
+        'backend/create-product.html',
+        {
+            'form': form,
+            'product': product
+        }
+    )
+
+def delete_product(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    if request.method == 'POST':
+        product.delete()
+
+    return redirect('product_list')
+
+
+def product_frontend_list(request):
+
+    products = Product.objects.filter(
+        is_active=True
+    )
+
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('title')
+
+    # Department filter
+    department_ids = request.GET.getlist('department')
+
+    if department_ids:
+        products = products.filter(
+            department_id__in=department_ids
+        )
+
+    # Sorting
+    sort = request.GET.get('sort')
+
+    if sort == 'newest':
+        products = products.order_by('-created_at')
+
+    elif sort == 'price-low':
+        products = products.order_by('discount_price', 'price')
+
+    elif sort == 'price-high':
+        products = products.order_by('-discount_price', '-price')
+
+    elif sort == 'name':
+        products = products.order_by('name')
+
+    else:
+        products = products.order_by('-created_at')
+
+    return render(
+        request,
+        'frontend/products.html',
+        {
+            'products': products,
+            'departments': departments,
+        }
+    )
+
+def product_detail(request, slug):
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True
+    )
+
+    # All active departments
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('title')
+
+    # Related products from same department
+    related_products = Product.objects.filter(
+        department=product.department,
+        is_active=True
+    ).exclude(
+        id=product.id
+    ).order_by('-created_at')[:4]
+
+    return render(
+        request,
+        'frontend/product-details.html',
+        {
+            'product': product,
+            'related_products': related_products,
+            'departments': departments,
+        }
+    )
+
+
+def customer_register(request):
+
+    if request.method == 'POST':
+
+        form = CustomerRegisterForm(request.POST)
+
+        if form.is_valid():
+
+            email = form.cleaned_data['email']
+
+            # Check if email already exists
+            if User.objects.filter(username=email).exists():
+                form.add_error(
+                    'email',
+                    'An account with this email already exists.'
+                )
+
+            else:
+
+                user = User.objects.create_user(
+                    username=email,
+                    email=email,
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    password=form.cleaned_data['password']
+                )
+
+                CustomerProfile.objects.create(
+                    user=user
+                )
+
+                auth_login(request, user)
+
+                return redirect('product_frontend_list')
+
+    else:
+
+        form = CustomerRegisterForm()
+
+    return render(
+        request,
+        'frontend/register.html',
+        {
+            'form': form
+        }
+    )
+
+
+def customer_login(request):
+
+    if request.user.is_authenticated:
+        return redirect('product_frontend_list')
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(
+            request,
+            username=email,
+            password=password
+        )
+
+        if user is not None:
+
+            django_login(request, user)
+
+            return redirect('product_frontend_list')
+
+        else:
+
+            return render(
+                request,
+                'frontend/login.html',
+                {
+                    'error': 'Invalid email or password.'
+                }
+            )
+
+    return render(
+        request,
+        'frontend/login.html'
+    )
+
+def customer_login(request):
+
+    if request.user.is_authenticated:
+        return redirect('product_frontend_list')
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(
+            request,
+            username=email,
+            password=password
+        )
+
+        if user is not None:
+
+            auth_login(request, user)
+
+            return redirect('product_frontend_list')
+
+        else:
+
+            return render(
+                request,
+                'frontend/login.html',
+                {
+                    'error': 'Invalid email or password.'
+                }
+            )
+
+    return render(
+        request,
+        'frontend/login.html'
+    ) 
+
+@login_required
+def customer_profile(request):
+
+    profile, created = CustomerProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    return render(
+        request,
+        'frontend/customer_profile.html',
+        {
+            'profile': profile,
+        }
+    )
+
+def customer_logout(request):
+    logout(request)
+    return redirect('customer_login')
+
+
+
+@login_required
+def add_to_cart(request, slug):
+
+    # -------------------------------------------------
+    # PRODUCT
+    # -------------------------------------------------
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True
+    )
+
+    # -------------------------------------------------
+    # STOCK
+    # -------------------------------------------------
+    if product.stock <= 0:
+
+        messages.error(
+            request,
+            "This product is currently out of stock."
+        )
+
+        return redirect(
+            request.META.get(
+                'HTTP_REFERER',
+                reverse('product_frontend_list')
+            )
+        )
+
+    # -------------------------------------------------
+    # QUANTITY
+    # -------------------------------------------------
+    try:
+        quantity = int(
+            request.POST.get('quantity', 1)
+        )
+    except (TypeError, ValueError):
+        quantity = 1
+
+    if quantity < 1:
+        quantity = 1
+
+    if quantity > product.stock:
+
+        messages.warning(
+            request,
+            f"Only {product.stock} items are available in stock."
+        )
+
+        return redirect(
+            request.META.get(
+                'HTTP_REFERER',
+                reverse('product_frontend_list')
+            )
+        )
+
+    # -------------------------------------------------
+    # CUSTOMER PROFILE
+    # -------------------------------------------------
+    profile, created = CustomerProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    # -------------------------------------------------
+    # CART
+    # -------------------------------------------------
+    cart, created = Cart.objects.get_or_create(
+        customer=profile
+    )
+
+    # -------------------------------------------------
+    # CHECK EXISTING CART ITEM
+    # -------------------------------------------------
+    cart_item = CartItem.objects.filter(
+        cart=cart,
+        product=product
+    ).first()
+
+    if cart_item:
+
+        messages.warning(
+            request,
+            f"{product.name} is already in your cart."
+        )
+
+        return redirect(
+            request.META.get(
+                'HTTP_REFERER',
+                reverse('product_frontend_list')
+            )
+        )
+
+    # -------------------------------------------------
+    # CREATE CART ITEM
+    # -------------------------------------------------
+    CartItem.objects.create(
+        cart=cart,
+        product=product,
+        quantity=quantity
+    )
+
+    messages.success(
+        request,
+        f"{product.name} added to your cart."
+    )
+
+    # -------------------------------------------------
+    # STAY ON SAME PAGE
+    # -------------------------------------------------
+    return redirect(
+        request.META.get(
+            'HTTP_REFERER',
+            reverse('product_frontend_list')
+        )
+    )
+
+@login_required
+def cart_view(request):
+
+    profile, created = CustomerProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    cart, created = Cart.objects.get_or_create(
+        customer=profile
+    )
+
+    cart_items = cart.items.select_related('product')
+
+    return render(
+        request,
+        'frontend/cart.html',
+        {
+            'cart': cart,
+            'cart_items': cart_items,
+        }
+    )
+
+@login_required
+def increase_cart_quantity(request, item_id):
+
+    cart_item = get_object_or_404(
+        CartItem,
+        id=item_id,
+        cart__customer__user=request.user
+    )
+
+    if cart_item.quantity < cart_item.product.stock:
+
+        cart_item.quantity += 1
+        cart_item.save()
+
+    else:
+
+        messages.warning(
+            request,
+            "You have reached the available stock limit."
+        )
+
+    return redirect('cart')
+
+@login_required
+def decrease_cart_quantity(request, item_id):
+
+    cart_item = get_object_or_404(
+        CartItem,
+        id=item_id,
+        cart__customer__user=request.user
+    )
+
+    if cart_item.quantity > 1:
+
+        cart_item.quantity -= 1
+        cart_item.save()
+
+    else:
+
+        cart_item.delete()
+
+    return redirect('cart')
+
+@login_required
+def remove_from_cart(request, item_id):
+
+    cart_item = get_object_or_404(
+        CartItem,
+        id=item_id,
+        cart__customer__user=request.user
+    )
+
+    cart_item.delete()
+
+    messages.success(
+        request,
+        "Product removed from your cart."
+    )
+
+    return redirect('cart')
+
+
+@login_required
+def add_to_wishlist(request, slug):
+
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True
+    )
+
+    wishlist_item, created = Wishlist.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
+
+    return redirect(
+        request.META.get('HTTP_REFERER', 'product_frontend_list')
+    )
+
+@login_required
+def remove_from_wishlist(request, item_id):
+
+    wishlist_item = get_object_or_404(
+        Wishlist,
+        id=item_id,
+        user=request.user
+    )
+
+    wishlist_item.delete()
+
+    return redirect('wishlist')
+
+@login_required
+def wishlist(request):
+
+    wishlist_items = Wishlist.objects.filter(
+        user=request.user
+    ).select_related('product')
+
+    return render(
+        request,
+        'frontend/wishlist.html',
+        {
+            'wishlist_items': wishlist_items,
+        }
+    )
+
+
+@login_required
+def checkout(request):
+
+    customer = request.user.customer_profile
+
+    cart, created = Cart.objects.get_or_create(
+        customer=customer
+    )
+
+    cart_items = cart.items.select_related(
+        'product'
+    ).all()
+
+    addresses = Address.objects.filter(
+        customer=customer
+    ).order_by('-is_default', '-created_at')
+
+    if not cart_items.exists():
+        return redirect('cart')
+
+    return render(
+        request,
+        'frontend/checkout.html',
+        {
+            'customer': customer,
+            'cart': cart,
+            'cart_items': cart_items,
+            'addresses': addresses,
+        }
+    ) 
+
+@login_required
+def add_address(request):
+
+    customer, created = CustomerProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    if request.method == "POST":
+
+        full_name = request.POST.get("full_name")
+        phone = request.POST.get("phone")
+        address_line_1 = request.POST.get("address_line_1")
+        address_line_2 = request.POST.get("address_line_2")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        pincode = request.POST.get("pincode")
+        landmark = request.POST.get("landmark")
+
+        is_default = request.POST.get("is_default") == "on"
+
+
+        # If this is the first address,
+        # automatically make it default
+        if not customer.addresses.exists():
+
+            is_default = True
+
+
+        # If user selects default,
+        # remove default from other addresses
+        if is_default:
+
+            customer.addresses.update(
+                is_default=False
+            )
+
+
+        Address.objects.create(
+
+            customer=customer,
+
+            full_name=full_name,
+
+            phone=phone,
+
+            address_line_1=address_line_1,
+
+            address_line_2=address_line_2,
+
+            city=city,
+
+            state=state,
+
+            pincode=pincode,
+
+            landmark=landmark,
+
+            is_default=is_default
+
+        )
+
+
+        return redirect("checkout")
+
+
+    return render(
+        request,
+        "frontend/add_address.html"
+    )
+
+@login_required
+def save_address(request):
+
+    if request.method == "POST":
+
+        customer = request.user.customer_profile
+
+        Address.objects.create(
+            customer=customer,
+            full_name=request.POST.get("full_name"),
+            phone=request.POST.get("phone"),
+            address_line_1=request.POST.get("address_line_1"),
+            address_line_2=request.POST.get("address_line_2", ""),
+            city=request.POST.get("city"),
+            state=request.POST.get("state"),
+            pincode=request.POST.get("pincode"),
+            landmark=request.POST.get("landmark", ""),
+        )
+
+        return redirect("checkout")
+
+    return redirect("checkout")
+
+
+@login_required
+def proceed_to_payment(request):
+
+    customer = request.user.customer_profile
+
+    if request.method != "POST":
+        return redirect('checkout')
+
+
+    # =========================================
+    # CART
+    # =========================================
+
+    try:
+        cart = Cart.objects.get(
+            customer=customer
+        )
+
+    except Cart.DoesNotExist:
+
+        messages.error(
+            request,
+            "Your cart is empty."
+        )
+
+        return redirect('cart')
+
+
+    cart_items = cart.items.select_related(
+        'product'
+    )
+
+
+    if not cart_items.exists():
+
+        messages.error(
+            request,
+            "Your cart is empty."
+        )
+
+        return redirect('cart')
+
+
+    # =========================================
+    # ADDRESS
+    # =========================================
+
+    address_id = request.POST.get(
+        'address_id'
+    )
+
+
+    if address_id:
+
+        try:
+
+            delivery_address = Address.objects.get(
+                id=address_id,
+                customer=customer
+            )
+
+        except Address.DoesNotExist:
+
+            messages.error(
+                request,
+                "Selected address is not valid."
+            )
+
+            return redirect('checkout')
+
+
+    else:
+
+        full_name = request.POST.get(
+            'full_name'
+        )
+
+        phone = request.POST.get(
+            'phone'
+        )
+
+        address_line_1 = request.POST.get(
+            'address_line_1'
+        )
+
+        address_line_2 = request.POST.get(
+            'address_line_2'
+        )
+
+        city = request.POST.get(
+            'city'
+        )
+
+        state = request.POST.get(
+            'state'
+        )
+
+        pincode = request.POST.get(
+            'pincode'
+        )
+
+        landmark = request.POST.get(
+            'landmark'
+        )
+
+
+        if not all([
+            full_name,
+            phone,
+            address_line_1,
+            city,
+            state,
+            pincode
+        ]):
+
+            messages.error(
+                request,
+                "Please select or add a delivery address."
+            )
+
+            return redirect('checkout')
+
+
+        delivery_address = Address.objects.create(
+
+            customer=customer,
+
+            full_name=full_name,
+
+            phone=phone,
+
+            address_line_1=address_line_1,
+
+            address_line_2=address_line_2 or "",
+
+            city=city,
+
+            state=state,
+
+            pincode=pincode,
+
+            landmark=landmark or "",
+
+        )
+
+
+    # =========================================
+    # PAYMENT PAGE
+    # =========================================
+
+    return render(
+        request,
+        'frontend/payment.html',
+        {
+            'cart': cart,
+            'cart_items': cart_items,
+            'total_amount': cart.total_price,
+            'delivery_address': delivery_address,
+        }
+    )
+
+@login_required
+def create_razorpay_order(request):
+
+    if request.method != "POST":
+        return redirect('checkout')
+
+    # =========================================
+    # CUSTOMER
+    # =========================================
+
+    try:
+        customer = request.user.customer_profile
+
+    except CustomerProfile.DoesNotExist:
+
+        messages.error(
+            request,
+            "Customer profile not found."
+        )
+
+        return redirect('checkout')
+
+
+    # =========================================
+    # ADDRESS
+    # =========================================
+
+    address_id = request.POST.get('address_id')
+
+    if not address_id:
+
+        messages.error(
+            request,
+            "Please select a delivery address."
+        )
+
+        return redirect('checkout')
+
+
+    try:
+
+        delivery_address = Address.objects.get(
+            id=address_id,
+            customer=customer
+        )
+
+    except Address.DoesNotExist:
+
+        messages.error(
+            request,
+            "Invalid delivery address."
+        )
+
+        return redirect('checkout')
+
+
+    # =========================================
+    # CART
+    # =========================================
+
+    try:
+
+        cart = Cart.objects.get(
+            customer=customer
+        )
+
+    except Cart.DoesNotExist:
+
+        messages.error(
+            request,
+            "Your cart is empty."
+        )
+
+        return redirect('cart')
+
+
+    cart_items = cart.items.select_related(
+        'product'
+    )
+
+
+    if not cart_items.exists():
+
+        messages.error(
+            request,
+            "Your cart is empty."
+        )
+
+        return redirect('cart')
+
+
+    # =========================================
+    # TOTAL
+    # =========================================
+
+    total_amount = cart.total_price
+
+
+    # =========================================
+    # TEMPORARY
+    # =========================================
+
+    return render(
+        request,
+        'frontend/payment.html',
+        {
+            'cart': cart,
+            'cart_items': cart_items,
+            'total_amount': total_amount,
+            'delivery_address': delivery_address,
+        }
+    )
+
+@login_required
+def customers(request):
+
+    customers = CustomerProfile.objects.select_related(
+        'user'
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'backend/customers.html',
+        {
+            'customers': customers
+        }
+    )
+
+@login_required
+def order_list(request):
+
+    orders = Order.objects.select_related(
+        'user'
+    ).prefetch_related(
+        'items'
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'backend/orders.html',
+        {
+            'orders': orders
+        }
+    )

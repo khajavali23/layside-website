@@ -722,3 +722,410 @@ class CareerApplication(models.Model):
         super().save(*args, **kwargs)
 
 
+
+
+
+class Product(models.Model):
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+
+    sub_department = models.ForeignKey(
+        SubDepartment,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='products'
+    )
+
+    name = models.CharField(max_length=200)
+
+    slug = models.SlugField(
+        max_length=220,
+        unique=True,
+        blank=True
+    )
+
+    brand = models.CharField(
+        max_length=150,
+        blank=True
+    )
+
+    short_description = models.CharField(
+        max_length=300,
+        blank=True
+    )
+
+    description = models.TextField(
+        blank=True
+    )
+
+    main_image = models.ImageField(
+        upload_to='products/',
+        blank=True,
+        null=True
+    )
+
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    discount_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+
+    stock = models.PositiveIntegerField(
+        default=0
+    )
+
+    product_size = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    ingredients = models.TextField(
+        blank=True
+    )
+
+    specifications = models.TextField(
+        blank=True
+    )
+
+    benefits = models.TextField(
+        blank=True
+    )
+
+    usage = models.TextField(
+        blank=True
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+
+        super().save(*args, **kwargs)
+
+
+class CustomerProfile(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='customer_profile'
+    )
+
+    phone = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True
+    )
+
+    profile_image = models.ImageField(
+        upload_to='customers/',
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        verbose_name = "Patient"
+        verbose_name_plural = "Patients"
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+
+
+class Cart(models.Model):
+
+    customer = models.OneToOneField(
+        CustomerProfile,
+        on_delete=models.CASCADE,
+        related_name='cart'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart - {self.customer.user.get_full_name() or self.customer.user.username}"
+
+    @property
+    def total_items(self):
+        return sum(item.quantity for item in self.items.all())
+
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.items.all())
+
+
+class CartItem(models.Model):
+
+    cart = models.ForeignKey(
+        Cart,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='cart_items'
+    )
+
+    quantity = models.PositiveIntegerField(default=1)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['cart', 'product'],
+                name='unique_cart_product'
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.product.name} × {self.quantity}"
+
+    @property
+    def unit_price(self):
+        return (
+            self.product.discount_price
+            if self.product.discount_price is not None
+            else self.product.price
+        )
+
+    @property
+    def total_price(self):
+        return self.unit_price * self.quantity
+
+
+class Wishlist(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='wishlist_items'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='wishlist_items'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'product'],
+                name='unique_user_product_wishlist'
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name}"
+
+
+class Order(models.Model):
+
+    PAYMENT_STATUS_CHOICES = (
+        ('Pending', 'Pending'),
+        ('Paid', 'Paid'),
+        ('Failed', 'Failed'),
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='orders'
+    )
+
+    order_number = models.CharField(
+        max_length=30,
+        unique=True
+    )
+
+    full_name = models.CharField(max_length=150)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+
+    address = models.TextField()
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=10)
+
+    total_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    payment_status = models.CharField(
+        max_length=20,
+        choices=PAYMENT_STATUS_CHOICES,
+        default='Pending'
+    )
+
+    razorpay_order_id = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    razorpay_payment_id = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    razorpay_signature = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.order_number
+
+class OrderItem(models.Model):
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    product_name = models.CharField(max_length=255)
+
+    quantity = models.PositiveIntegerField()
+
+    unit_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    def __str__(self):
+        return f"{self.order.order_number} - {self.product_name}"
+
+
+class Address(models.Model):
+
+    customer = models.ForeignKey(
+        CustomerProfile,
+        on_delete=models.CASCADE,
+        related_name='addresses'
+    )
+
+    full_name = models.CharField(
+        max_length=150
+    )
+
+    phone = models.CharField(
+        max_length=20
+    )
+
+    address_line_1 = models.CharField(
+        max_length=255
+    )
+
+    address_line_2 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    city = models.CharField(
+        max_length=100
+    )
+
+    state = models.CharField(
+        max_length=100
+    )
+
+    pincode = models.CharField(
+        max_length=10
+    )
+
+    landmark = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    is_default = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+
+    def __str__(self):
+
+        return f"{self.full_name} - {self.city}"
+
+
+    @property
+    def full_address(self):
+
+        address = f"{self.address_line_1}"
+
+        if self.address_line_2:
+            address += f", {self.address_line_2}"
+
+        if self.landmark:
+            address += f", Near {self.landmark}"
+
+        address += f", {self.city}, {self.state} - {self.pincode}"
+
+        return address
