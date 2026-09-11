@@ -50,14 +50,11 @@
 
 </section>
 
-<section class="profile-page">
+<section class="profile-page"> 
 
     <div class="profile-container">
 
-        <!-- =========================================
-             LEFT : PROFILE CARD
-        ========================================== -->
-
+       
         <div class="profile-card">
 
             <!-- PROFILE TOP -->
@@ -153,26 +150,7 @@
                 </div>
 
 
-                <!-- PHONE -->
-
-                <div class="profile-field">
-
-                    <div class="field-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-
-                    <div class="field-content">
-
-                        <span>PHONE NUMBER</span>
-
-                        <strong>
-                            {{ profile.phone|default:"Not Added" }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
+              
 
                 <!-- REGISTERED -->
 
@@ -229,12 +207,7 @@
 
             <div class="account-menu-header">
 
-                <div class="account-menu-icon">
-
-                    <i class="fas fa-user-circle"></i>
-
-                </div>
-
+              
                 <div>
 
                     <span>
@@ -272,7 +245,7 @@
                             My Profile
                         </strong>
 
-                        <span>
+                        <span class="menu-text-sub_span">
                             Personal information
                         </span>
 
@@ -287,33 +260,34 @@
 
                 <!-- ORDERS -->
 
-                <a
-                    href="#"
-                    class="account-menu-item"
-                >
+               <!-- MY ORDERS -->
 
-                    <div class="menu-icon">
-                        <i class="fas fa-box"></i>
-                    </div>
+        <a
+       href="{% url 'my_orders' %}"
+     class="account-menu-item"
+    >
 
-                    <div class="menu-text">
+    <div class="menu-icon">
+        <i class="fas fa-box"></i>
+    </div>
 
-                        <strong>
-                            My Orders
-                        </strong>
+    <div class="menu-text">
 
-                        <span>
-                            View your orders
-                        </span>
+        <strong>
+            My Orders
+        </strong>
 
-                    </div>
+        <span>
+            View your orders
+        </span>
 
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
+    </div>
 
-                </a>
+    <div class="menu-arrow-box">
+        <i class="fas fa-chevron-right"></i>
+    </div>
 
+ </a>
 
                 <!-- CART -->
 
@@ -620,7 +594,9 @@
     box-shadow:
         0 3px 8px rgba(0,0,0,0.12);
 }
-
+.menu-text-sub_span{
+    color: #ffffff !important;
+}
 
 /* =====================================================
    PROFILE TITLE
@@ -1057,7 +1033,7 @@
 
 .account-menu-item.active {
 
-   background: linear-gradient(100deg, #eaf7f7, #009eaa);
+   background: linear-gradient(186deg, #009eaa, #009eaa);
     border-color: #d9eeee;
 
    
@@ -1086,9 +1062,9 @@
 
     border-radius: 11px;
 
-    background: #f5f9f9;
+    background: #009eaa;
 
-    color: #718083;
+    color: #ffffff;
 
     font-size: 14px;
 
@@ -1142,7 +1118,7 @@
 
 .menu-text span {
 
-    color: #9aa5a8;
+    color: #0d1214b8;
 
     font-size: 9px;
 
@@ -1152,7 +1128,7 @@
 
 .account-menu-item.active .menu-text strong {
 
-    color: #0a7c86;
+    color: #ffffff;
 }
 
 

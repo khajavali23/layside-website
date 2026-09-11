@@ -31,8 +31,27 @@ admin.site.register(Address)
 # PRODUCTS
 # =========================================================
 
-admin.site.register(Product)
+# =========================================================
+# PRODUCTS
+# =========================================================
 
+class ProductImageInline(admin.TabularInline):
+
+    model = ProductImage
+
+    extra = 1
+
+    fields = (
+        'image',
+    )
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+
+    inlines = [
+        ProductImageInline,
+    ]
 # =========================================================
 # CUSTOMERS
 # =========================================================

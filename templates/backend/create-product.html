@@ -101,26 +101,50 @@
 
 
                 <!-- Product Image -->
-                <h5 class="mb-3">Product Image</h5>
+               <!-- Product Image -->
 
-                <div class="row">
+<h5 class="mb-3">Product Images</h5>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Main Image
-                        </label>
+<div class="row">
 
-                        {{ form.main_image }}
+    <div class="col-md-6 mb-3">
 
-                        {% if form.main_image.errors %}
-                            <div class="text-danger">
-                                {{ form.main_image.errors }}
-                            </div>
-                        {% endif %}
-                    </div>
+        <label class="form-label">
+            Main Image
+        </label>
 
-                </div>
+        {{ form.main_image }}
 
+        {% if form.main_image.errors %}
+            <div class="text-danger">
+                {{ form.main_image.errors }}
+            </div>
+        {% endif %}
+
+    </div>
+
+
+    <div class="col-md-12 mb-3">
+
+        <label class="form-label">
+            Additional Product Images
+        </label>
+
+        <input
+            type="file"
+            name="additional_images"
+            class="form-control"
+            accept="image/*"
+            multiple
+        >
+
+        <small class="text-muted">
+            You can select multiple product images.
+        </small>
+
+    </div>
+
+</div>
 
                 <hr class="my-4">
 

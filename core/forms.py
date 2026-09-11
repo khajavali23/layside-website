@@ -586,7 +586,6 @@ class ProductForm(forms.ModelForm):
 
 
 
-
 class RegisterForm(forms.ModelForm):
 
     password = forms.CharField(
@@ -666,8 +665,6 @@ class RegisterForm(forms.ModelForm):
 
         return user
 
-from django import forms
-from django.contrib.auth.models import User
 
 
 class CustomerRegisterForm(forms.Form):

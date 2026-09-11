@@ -1,0 +1,560 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="order-confirmed-area">
+
+    <div class="container">
+
+        <div class="order-confirmed-wrapper">
+
+            <!-- SUCCESS ICON -->
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <!-- TITLE -->
+            <span class="success-label">
+                ORDER CONFIRMED
+            </span>
+
+            <h1>
+                Your Order Has Been Successfully Placed!
+            </h1>
+
+            <p class="success-message">
+                Thank you for your order. Your healthcare products have been
+                successfully ordered and will be processed shortly.
+            </p>
+
+
+            <!-- ORDER DETAILS -->
+            <div class="order-info">
+
+                <div class="order-info-item">
+                    <span>ORDER NUMBER</span>
+                    <strong>{{ order.order_number }}</strong>
+                </div>
+
+                <div class="order-info-item">
+                    <span>ORDER DATE</span>
+                    <strong>{{ order.created_at|date:"d M Y" }}</strong>
+                </div>
+
+                <div class="order-info-item">
+                    <span>PAYMENT STATUS</span>
+                    <strong>{{ order.payment_status }}</strong>
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+            <div class="ordered-products">
+
+                <div class="section-title">
+                    <h3>Ordered Products</h3>
+                </div>
+
+                {% for item in order.items.all %}
+
+                <div class="product-row">
+
+                    <div class="product-info">
+
+                        {% if item.product %}
+                            {% if item.product.image %}
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product_name }}"
+                                >
+                            {% endif %}
+                        {% endif %}
+
+                        <div>
+                            <h4>{{ item.product_name }}</h4>
+                            <span>
+                                Quantity: {{ item.quantity }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="product-price">
+                        ₹{{ item.total_price }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- TOTAL -->
+            <div class="order-total">
+
+                <span>Total Amount</span>
+
+                <strong>
+                    ₹{{ order.total_amount }}
+                </strong>
+
+            </div>
+
+
+            <!-- DELIVERY ADDRESS -->
+            <div class="delivery-details">
+
+                <div class="section-title">
+                    <h3>Delivery Address</h3>
+                </div>
+
+                <p>
+                    <strong>{{ order.full_name }}</strong>
+                </p>
+
+                <p>
+                    {{ order.address }}
+                </p>
+
+                <p>
+                    {{ order.city }},
+                    {{ order.state }} -
+                    {{ order.pincode }}
+                </p>
+
+                <p>
+                    Phone: {{ order.phone }}
+                </p>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="confirmation-buttons">
+
+                <a
+                    href="{% url 'product_frontend_list' %}"
+                    class="continue-btn"
+                >
+                    <i class="fas fa-shopping-bag"></i>
+                    Continue Shopping
+                </a>
+
+                <a
+                    href="{% url 'home' %}"
+                    class="home-btn"
+                >
+                    <i class="fas fa-home"></i>
+                    Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<style>
+
+.order-confirmed-area {
+    padding: 70px 0;
+    background: #f7fbfb;
+}
+
+.order-confirmed-wrapper {
+   
+  margin: 0 auto;
+    padding: 55px 45px;
+    background: #0a7c851f;
+    border-radius: 24px;
+    text-align: center;
+   
+}
+
+
+/* SUCCESS ICON */
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #0a7c86;
+    color: #ffffff;
+
+    font-size: 32px;
+}
+
+
+.success-label {
+    display: block;
+
+    color: #0a7c86;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+.order-confirmed-wrapper h1 {
+    margin: 12px 0 12px;
+
+    color: #1d3035;
+
+    font-size: 30px;
+    font-weight: 800;
+}
+
+
+.success-message {
+    max-width: 600px;
+
+    margin: 0 auto 30px;
+
+    color: #1d3036;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* ORDER INFO */
+
+.order-info {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+
+    padding: 20px;
+
+    background: #f4f9f9;
+
+    border-radius: 15px;
+}
+
+
+.order-info-item {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.order-info-item span {
+    color: #89979a;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.order-info-item strong {
+    color: #0a7c86;
+
+    font-size: 13px;
+}
+
+
+/* PRODUCTS */
+
+.ordered-products {
+    margin-top: 25px;
+
+    text-align: left;
+
+    border: 1px solid #e7eeee;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+
+.section-title {
+    padding: 18px 20px;
+
+    background: #f7fbfb;
+
+    border-bottom: 1px solid #e7eeee;
+}
+
+
+.section-title h3 {
+    margin: 0;
+
+    color: #24363b;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+.product-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.product-row:last-child {
+    border-bottom: none;
+}
+
+
+.product-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.product-info img {
+    width: 65px;
+    height: 65px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #eeeeee;
+}
+
+
+.product-info h4 {
+    margin: 0 0 6px;
+
+    color: #26383d;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.product-info span {
+    color: #899598;
+
+    font-size: 12px;
+}
+
+
+.product-price {
+    color: #0a7c86;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* TOTAL */
+
+.order-total {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: #0a7c86;
+
+    color: #ffffff;
+
+    border-radius: 14px;
+}
+
+
+.order-total span {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.order-total strong {
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+
+/* DELIVERY */
+
+.delivery-details {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    text-align: left;
+
+    border: 1px solid #e7eeee;
+
+    border-radius: 15px;
+}
+
+
+.delivery-details .section-title {
+    margin: -20px -20px 18px;
+}
+
+
+.delivery-details p {
+    margin: 5px 0;
+
+    color: #718084;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+.delivery-details strong {
+    color: #26383d;
+}
+
+
+/* BUTTONS */
+
+.confirmation-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+.confirmation-buttons a {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 13px 22px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: 0.3s;
+}
+
+
+.continue-btn {
+    background: #0a7c86;
+
+    color: #ffffff;
+}
+
+
+.continue-btn:hover {
+    background: #086b73;
+
+    color: #ffffff;
+}
+
+
+.home-btn {
+    background: #edf5f5;
+
+    color: #0a7c86;
+}
+
+
+.home-btn:hover {
+    background: #dceeee;
+
+    color: #0a7c86;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .order-confirmed-area {
+        padding: 35px 15px;
+    }
+
+    .order-confirmed-wrapper {
+        padding: 40px 18px;
+    }
+
+    .order-confirmed-wrapper h1 {
+        font-size: 23px;
+    }
+
+    .order-info {
+        grid-template-columns: 1fr;
+    }
+
+    .product-row {
+        align-items: flex-start;
+    }
+
+    .product-info img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .confirmation-buttons {
+        flex-direction: column;
+    }
+
+    .confirmation-buttons a {
+        justify-content: center;
+    }
+
+}
+
+</style>
+
+{% endblock %}

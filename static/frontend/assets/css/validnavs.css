@@ -486,9 +486,7 @@ nav.navbar.validnavs.bg-dark .collapse-header .navbar-toggle i {
 	color: var(--color-heading);
 }
 
-nav.navbar.validnavs .navbar-toggle i {
-	font-weight: 300;
-}
+
 
 .bg-dark nav.navbar.validnavs .navbar-toggle i {
 	color: var(--white);
@@ -2811,7 +2809,7 @@ nav.navbar.validnavs .navbar-collapse.collapse button {
 }
 
 nav.navbar.validnavs .navbar-collapse.collapse button i {
-	font-weight: 400;
+	
 	font-size: 15px;
 	color: #006e78;
 }

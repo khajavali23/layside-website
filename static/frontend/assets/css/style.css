@@ -14502,7 +14502,7 @@ color: #0a7c86;
 .products-count span {
     margin-top: 6px;
     color: #232323;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 
@@ -14531,7 +14531,7 @@ color: #0a7c86;
 .search-box input {
     width: 100%;
     height: 50px;
-    padding: 0 45px;
+    padding: 0 20px;
     border: 1.5px solid #7ec5cbe8;;
     border-radius: 10px;
     outline: none;
@@ -14577,7 +14577,7 @@ color: #0a7c86;
 
 .sort-box label {
     white-space: nowrap;
-    font-size: 13px;
+    font-size: 15px;
     color: #232323;
 }
 
@@ -14600,7 +14600,7 @@ color: #0a7c86;
 .products-layout {
     display: grid;
     grid-template-columns: 255px 1fr;
-    gap: 40px;
+    gap: 30px;
 }
 
 
@@ -14610,10 +14610,10 @@ color: #0a7c86;
 
 .products-sidebar {
     height: fit-content;
-    padding: 25px;
-    border: 1px solid #0a7c85;
-    border-radius: 16px;
-    background: #fff;
+    padding: 10px;
+    border: 1px solid #009eaa;
+    border-radius: 15px;
+    background: #009eaa;
     position: sticky;
     top: 30px;
 }
@@ -14622,14 +14622,14 @@ color: #0a7c86;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 22px;
+    padding-bottom: 17px;
     border-bottom: 1px solid #edf1f1;
 }
 
 .filter-small {
     display: block;
     margin-bottom: 5px;
-    color: #0a7c86;
+    color: #ffffff;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.4px;
@@ -14638,7 +14638,7 @@ color: #0a7c86;
 .filter-header h3 {
     margin: 0;
     font-size: 18px;
-    color: #172b2d;
+    color: #ffffff;
 }
 
 .filter-header > i {
@@ -14653,7 +14653,7 @@ color: #0a7c86;
 }
 
 .filter-group {
-    padding: 24px 0;
+    padding: 18px 0;
     border-bottom: 1px solid #edf1f1;
 }
 
@@ -14663,12 +14663,12 @@ color: #0a7c86;
     align-items: center;
     margin: 0 0 18px;
     font-size: 14px;
-    color: #263a3c;
+    color: #ffffff;
 }
 
 .filter-group h4 i {
     font-size: 10px;
-    color: #899799;
+    color: #ffffff;
 }
 
 .filter-option {
@@ -14687,25 +14687,25 @@ color: #0a7c86;
 .custom-checkbox {
     width: 17px;
     height: 17px;
-    border: 1px solid #ccd7d8;
+    border: 1px solid #ffffff;
     border-radius: 4px;
     transition: .2s;
 }
 
 .filter-option input:checked + .custom-checkbox {
-    border-color: #0a7c86;
-    background: #0a7c86;
+    border-color: #009eaa;
+    background: #f4891d;
 }
 
 .filter-name {
     flex: 1;
     font-size: 13px;
-    color: #657476;
+    color: #ffffff;
 }
 
 .filter-count {
     font-size: 11px;
-    color: #a0aaab;
+    color: #ffffff;
 }
 
 .filter-empty {
@@ -14739,17 +14739,18 @@ color: #0a7c86;
 }
 
 .price-input input {
-    width: 100%;
-    height: 38px;
+        width: 100%;
+    
     padding-left: 22px;
-    border: 1px solid #e0e7e7;
-    border-radius: 7px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
     outline: none;
     font-size: 12px;
+    min-height: 35px !important;
 }
 
 .price-divider {
-    color: #b1bbbc;
+    color: #ffffff;
 }
 
 
@@ -14758,43 +14759,57 @@ color: #0a7c86;
 ========================================================= */
 
 .filter-apply-btn {
-    width: 100%;
+       width: 100%;
     height: 45px;
     margin-top: 23px;
     border: 0;
     border-radius: 8px;
-    background: #009eaa;
-    color: #fff;
-    font-weight: 600;
+    background: #e9f4f5;
+    color: #010708;
+    font-weight: 400;
     cursor: pointer;
 }
 
 .clear-filter {
     display: block;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    background: #f5941f;
+    padding: 10px;
+    border-radius: 8px;
+}
+.clear-filter:hover{
+    display: block;
     margin-top: 13px;
     text-align: center;
     font-size: 12px;
-    color: #7a8789;
+    color: #ffffff;
     text-decoration: none;
+    background: #f5941f;
+    padding: 10px;
+    border-radius: 8px;
 }
+
 
 
 /* =========================================================
    PRODUCTS TOP
 ========================================================= */
 
-.products-top {
-    margin-bottom: 20px;
-}
+
 
 .products-top p {
-    margin: 0;
-    color: #849092;
+        margin: 0;
+    color: #303638;
     font-size: 14px;
+    padding: 10px;
 }
 
 .products-top strong {
-    color: #253638;
+    color: #f37b1f;
 }
 
 
@@ -15021,12 +15036,13 @@ color: #0a7c86;
 .product-title a {
     color: #232323;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .product-description {
    
     margin: 0 0 12px;
-    color: #7a8789;
+    color: #232323;
     font-size: 12px;
     line-height: 1.6;
 }
@@ -15057,9 +15073,9 @@ color: #0a7c86;
 }
 
 .sale-price {
-    color: #182c2e;
+       color: #232323;
     font-size: 21px;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .regular-price {
@@ -15298,6 +15314,982 @@ color: #0a7c86;
     border-color: #f0cfd2 !important;
 }
 
+
+.khaja-main-department-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-track {
+    background: #f1f5f5;
+    border-radius: 10px;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-thumb {
+    background: #0A7C86;
+    border-radius: 10px;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-thumb:hover {
+    background: #075f67;
+}
+.khaja-main-department-list {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+.khaja-main-department-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-thumb {
+    background: rgba(10, 124, 134, 0.35);
+    border-radius: 20px;
+}
+
+.khaja-main-department-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(10, 124, 134, 0.7);
+}
+.blog_heading_h4{
+  font-weight: 500;
+}
+.blog_heading_h4:hover{
+  color: black !important;
+}
+
+   /* =========================================================
+   WORLD-CLASS PRODUCTS PAGINATION
+========================================================= */
+
+.products-pagination {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+    padding: 10px 0;
+}
+
+
+/* ---------------------------------------------------------
+   Previous / Next Buttons
+--------------------------------------------------------- */
+
+.products-pagination > a:not(.pagination-number) {
+    width: 46px;
+    height: 46px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e4e9e8;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #536567;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    box-shadow:
+        0 4px 12px rgba(30, 55, 60, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Arrow Hover */
+
+.products-pagination > a:not(.pagination-number):hover {
+    background: #009eaa;
+    border-color: #009eaa;
+    color: #ffffff;
+    
+    
+}
+
+
+/* Arrow Icon */
+
+.products-pagination > a:not(.pagination-number) i {
+    transition: transform 0.25s ease;
+}
+
+
+/* Left Arrow */
+
+.products-pagination > a:not(.pagination-number):first-child:hover i {
+    transform: translateX(-2px);
+}
+
+
+/* Right Arrow */
+
+.products-pagination > a:not(.pagination-number):last-child:hover i {
+    transform: translateX(2px);
+}
+
+
+/* ---------------------------------------------------------
+   Page Numbers
+--------------------------------------------------------- */
+
+.products-pagination .pagination-number {
+    min-width: 46px;
+    height: 46px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e4e9e8;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #536567;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1;
+
+
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Number Hover */
+
+.products-pagination a.pagination-number:hover {
+        background: #e9f4f5;
+    border-color: #009eaa;
+    color: #009eaa;
+}
+
+
+/* ---------------------------------------------------------
+   Active Page
+--------------------------------------------------------- */
+
+.products-pagination .pagination-number.active {
+       background: #009eaa;
+    border-color: #009eaa;
+    color: #ffffff;
+
+   
+
+    position: relative;
+}
+
+
+/* Active Page Top Accent */
+
+
+/* ---------------------------------------------------------
+   Focus Accessibility
+--------------------------------------------------------- */
+
+.products-pagination a:focus-visible {
+    outline: none;
+
+    border-color: #1f5f5b;
+
+    box-shadow:
+        0 0 0 4px rgba(31, 95, 91, 0.12);
+}
+
+
+/* ---------------------------------------------------------
+   Pagination Spacing
+--------------------------------------------------------- */
+
+.products-pagination a,
+.products-pagination span {
+    flex-shrink: 0;
+}
+
+
+/* ---------------------------------------------------------
+   Mobile
+--------------------------------------------------------- */
+
+@media (max-width: 767px) {
+
+    .products-pagination {
+        gap: 7px;
+        margin-top: 40px;
+    }
+
+
+    .products-pagination .pagination-number,
+    .products-pagination > a:not(.pagination-number) {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+
+        border-radius: 11px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   Small Mobile
+--------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .products-pagination {
+        gap: 5px;
+        margin-top: 35px;
+    }
+
+
+    .products-pagination .pagination-number,
+    .products-pagination > a:not(.pagination-number) {
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+
+        border-radius: 10px;
+
+        font-size: 12px;
+    }
+
+
+    .products-pagination .pagination-number.active::before {
+        width: 14px;
+        height: 2px;
+    }
+
+}
+/* =========================================================
+   LIVE PRODUCT SEARCH
+========================================================= */
+
+.search-box {
+    position: relative;
+}
+
+
+/* ---------------------------------------------------------
+   Search Results Container
+--------------------------------------------------------- */
+
+.product-search-results {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    background: #ffffff;
+
+    border: 1px solid #e7eceb;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+
+
+    
+    overflow-y: auto;
+}
+
+
+/* ---------------------------------------------------------
+   Individual Product Result
+--------------------------------------------------------- */
+
+.product-search-result {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 13px 16px;
+
+    text-decoration: none;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #f0f3f2;
+
+    transition:
+        background 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+
+.product-search-result:last-child {
+    border-bottom: none;
+}
+
+
+.product-search-result:hover {
+    background: #f6faf9;
+
+    padding-left: 20px;
+}
+
+
+/* ---------------------------------------------------------
+   Product Image
+--------------------------------------------------------- */
+
+.product-search-result-image {
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f7f9f8;
+
+    border: 1px solid #edf1f0;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+
+.product-search-result-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    padding: 5px;
+}
+
+
+.product-search-result-image i {
+    color: #8a9a9a;
+
+    font-size: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   Product Information
+--------------------------------------------------------- */
+
+.product-search-result-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.product-search-result-name {
+    margin: 0 0 4px;
+
+    color: #263b3d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.product-search-result-brand {
+    margin: 0;
+
+    color: #7b8b8b;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+
+/* ---------------------------------------------------------
+   Arrow
+--------------------------------------------------------- */
+
+.product-search-result-arrow {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #718181;
+
+    background: #f5f8f7;
+
+    border-radius: 50%;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.product-search-result:hover
+.product-search-result-arrow {
+
+    background: #009eaa;
+
+    color: #ffffff;
+
+    transform: translateX(3px);
+}
+
+
+/* ---------------------------------------------------------
+   Search Header
+--------------------------------------------------------- */
+
+.product-search-result-header {
+
+    padding: 11px 16px;
+
+    color: #829090;
+
+    background: #fafcfc;
+
+    border-bottom: 1px solid #edf1f0;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   No Results
+--------------------------------------------------------- */
+
+.product-search-no-results {
+
+    padding: 24px 18px;
+
+    text-align: center;
+
+    color: #7d8b8b;
+
+    font-size: 13px;
+}
+
+
+.product-search-no-results i {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #a0adad;
+
+    font-size: 20px;
+}
+
+
+/* ---------------------------------------------------------
+   Loading
+--------------------------------------------------------- */
+
+.product-search-loading {
+
+    padding: 20px;
+
+    text-align: center;
+
+    color: #7d8b8b;
+
+    font-size: 13px;
+}
+
+
+.product-search-loading i {
+    margin-right: 6px;
+}
+
+
+/* ---------------------------------------------------------
+   Scrollbar
+--------------------------------------------------------- */
+
+.product-search-results::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.product-search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.product-search-results::-webkit-scrollbar-thumb {
+    background: #ccd8d6;
+
+    border-radius: 10px;
+}
+
+
+/* ---------------------------------------------------------
+   Mobile
+--------------------------------------------------------- */
+
+@media (max-width: 767px) {
+
+    .product-search-results {
+        top: calc(100% + 7px);
+
+        border-radius: 13px;
+
+        max-height: 360px;
+    }
+
+
+    .product-search-result {
+        padding: 12px;
+    }
+
+
+    .product-search-result-image {
+        width: 46px;
+        height: 46px;
+
+        flex-basis: 46px;
+    }
+
+
+    .product-search-result-name {
+        font-size: 13px;
+    }
+
+
+    .product-search-result-brand {
+        font-size: 11px;
+    }
+
+}
+.search-match {
+    color: #009eaa;
+    font-weight: 700;
+}
+.wishlist-btn.active {
+    color: #009eaa !important;
+    background: #fff5f6 !important;
+    border-color: #f0cfd2 !important;
+}
+
 .wishlist-btn.active i {
-    color: #e35d68 !important;
+    color: #009eaa !important;
+}
+/* =========================================================
+   PREMIUM HEALTHCARE PROMO
+========================================================= */
+
+.healthcare-promo {
+    position: relative;
+    width: 100%;
+    margin: 70px 0;
+    overflow: hidden;
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #F4FBFC 0%,
+            #FFFFFF 52%,
+            #EAF8FA 100%
+        );
+
+    box-shadow:
+        0 20px 60px rgba(19, 71, 91, 0.08);
+}
+
+
+.healthcare-promo-content {
+    position: relative;
+    min-height: 390px;
+
+    display: grid;
+    grid-template-columns: 48% 52%;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+.healthcare-promo-copy {
+    position: relative;
+    z-index: 5;
+
+    padding: 55px 20px 55px 60px;
+}
+
+
+.healthcare-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+    color: #0A7C86;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 3px;
+}
+
+
+.healthcare-eyebrow i {
+    display: block;
+
+    width: 42px;
+    height: 2px;
+
+    background: #0A7C86;
+}
+
+
+.healthcare-promo-copy h2 {
+    margin: 0;
+
+   
+
+    color: #009eaa;
+
+    
+    font-size: 38px;
+    font-weight: 700;
+
+    line-height: 0.98;
+    letter-spacing: -1.5px;
+}
+
+
+.healthcare-promo-copy h2 span {
+    display: block;
+    color: #091214c7;
+}
+
+
+.healthcare-promo-copy p {
+        margin: 20px 0 20px;
+    color: #2e3d40;
+   
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+
+.healthcare-promo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 13px 22px;
+
+    border-radius: 20px;
+
+    background: #009eaa;
+    color: #FFFFFF;
+
+   
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+  
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.healthcare-promo-btn:hover {
+    color: #FFFFFF;
+
+    transform: translateY(-2px);
+
+   
+}
+
+
+.healthcare-trust {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #466575;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+.trust-icon {
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(10, 124, 134, 0.08);
+
+    color: #0A7C86;
+
+    font-size: 11px;
+}
+
+
+.trust-divider {
+    width: 1px;
+    height: 24px;
+
+    background: rgba(10, 124, 134, 0.15);
+}
+
+
+.healthcare-promo-visual {
+    position: relative;
+    height: 100%;
+
+    min-height: 390px;
+
+    overflow: hidden;
+}
+.healthcare-promo {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(245, 251, 252, 0.98) 0%,
+            rgba(245, 251, 252, 0.82) 22%,
+            rgba(245, 251, 252, 0.25) 52%,
+            rgba(245, 251, 252, 0.05) 100%
+        ),
+        url('/static/frontend/assets/img/banner/banner_product.png');
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    border-radius: 28px;
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px rgba(20, 100, 110, 0.14),
+        0 8px 25px rgba(20, 100, 110, 0.08);
+
+    isolation: isolate;
+}
+
+
+/* Premium glass highlight */
+.healthcare-promo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+   background: radial-gradient(circle at 82% 45%, rgb(255 255 255 / 0%), #009eaa57 32%);
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+
+/* Soft bottom fade */
+.healthcare-promo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+
+    background: linear-gradient(
+        to top,
+        rgba(235, 248, 249, 0.28),
+        transparent
+    );
+
+    pointer-events: none;
+}
+
+
+.healthcare-promo-visual::before {
+    content: "";
+
+    position: absolute;
+
+    width: 570px;
+    height: 570px;
+
+    right: -90px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(184, 235, 238, 0.65) 0%,
+            rgba(234, 248, 250, 0.35) 55%,
+            transparent 72%
+        );
+}
+
+
+.healthcare-image-wrap {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    z-index: 2;
+}
+
+
+.healthcare-image-wrap img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    mix-blend-mode: multiply;
+}
+
+
+.healthcare-glow {
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    right: 100px;
+    bottom: -80px;
+
+    border-radius: 50%;
+
+    background: rgba(53, 183, 188, 0.18);
+
+    filter: blur(45px);
+
+    z-index: 1;
+}
+
+
+.healthcare-floating-badge {
+    position: absolute;
+
+    right: 35px;
+    bottom: 25px;
+
+    z-index: 5;
+
+    padding: 8px 14px;
+
+    border: 1px solid rgba(255,255,255,0.7);
+
+    border-radius: 50px;
+
+    background: rgba(255,255,255,0.78);
+
+    backdrop-filter: blur(12px);
+
+    color: #31596B;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+
+    box-shadow:
+        0 10px 25px rgba(24, 83, 101, 0.10);
+}
+
+
+.healthcare-floating-badge span {
+    margin: 0 5px;
+    color: #0A7C86;
+}
+
+
+/* Hide floating buttons when cart drawer is open */
+
+body.cart-drawer-open .department-search-widget,
+body.cart-drawer-open .whatsapp-float {
+    display: none !important;
 }

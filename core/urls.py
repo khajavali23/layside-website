@@ -1,3 +1,4 @@
+from django import views
 from django.urls import path
 from .views import *
 
@@ -25,6 +26,7 @@ urlpatterns = [
     path('careers/apply/', apply_job, name='apply_job'),
     path('careers/', careers, name='careers'),
     path('careers/<slug:slug>/', career_detail, name='career_detail'),
+    path('my-orders/',my_orders,name='my_orders'),
 
    
     
@@ -176,5 +178,18 @@ urlpatterns = [
     path('payment/create/',create_razorpay_order,name='create_razorpay_order'),
     path('account/customers/',customers,name='customers'),
     path('account/orders/',order_list,name='order_list'),
+    path('confirm-order/',confirm_order,name='confirm_order'),
+    path('order-confirmed/<str:order_number>/',order_confirmed,name='order_confirmed'),
+    path('account/orders/<str:order_number>/',admin_order_detail,name='admin_order_detail'),
+      path(
+        "products/search/",
+     product_search_api,
+        name="product_search_api"
+    ),
+    path(
+    "cart/drawer/",
+    cart_drawer_api,
+    name="cart_drawer_api"
+),
 
 ]

@@ -31,9 +31,13 @@ from datetime import datetime
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 import razorpay
+from django.contrib.auth import login as django_login
+
+from django.db import transaction
 
 from django.conf import settings
-
+from django.core.paginator import Paginator
+from .models import Product, ProductImage
 
 
 
@@ -3019,9 +3023,26 @@ def careers(request):
         'departments': departments
     })
 
+
 def career_detail(request, slug):
-    job = get_object_or_404(Career, slug=slug)
-    return render(request, 'frontend/career_detail.html', {'job': job})
+
+    job = get_object_or_404(
+        Career,
+        slug=slug
+    )
+
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('title')
+
+    return render(
+        request,
+        'frontend/career_detail.html',
+        {
+            'job': job,
+            'departments': departments,
+        }
+    )
 
 
 def apply_job(request):
@@ -3239,8 +3260,6 @@ def delete_sub_department(request, slug):
 
 
 
-
-
 def create_product(request):
 
     if request.method == 'POST':
@@ -3250,7 +3269,20 @@ def create_product(request):
         )
 
         if form.is_valid():
-            form.save()
+
+            product = form.save()
+
+            # Save additional product images
+            additional_images = request.FILES.getlist(
+                'additional_images'
+            )
+
+            for image in additional_images:
+                ProductImage.objects.create(
+                    product=product,
+                    image=image
+                )
+
             return redirect('product_list')
 
     else:
@@ -3260,7 +3292,7 @@ def create_product(request):
         request,
         'backend/create-product.html',
         {'form': form}
-    )
+    ) 
 
 def product_list(request):
 
@@ -3316,6 +3348,8 @@ def delete_product(request, product_id):
     return redirect('product_list')
 
 
+
+
 def product_frontend_list(request):
 
     products = Product.objects.filter(
@@ -3332,6 +3366,28 @@ def product_frontend_list(request):
     if department_ids:
         products = products.filter(
             department_id__in=department_ids
+        )
+
+    # Search filter
+    search = request.GET.get('search', '').strip()
+
+    if search:
+        products = products.filter(
+            name__istartswith=search
+        )
+
+    # Price filter
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    if min_price:
+        products = products.filter(
+            price__gte=min_price
+        )
+
+    if max_price:
+        products = products.filter(
+            price__lte=max_price
         )
 
     # Sorting
@@ -3352,14 +3408,26 @@ def product_frontend_list(request):
     else:
         products = products.order_by('-created_at')
 
+
+    # Pagination
+    paginator = Paginator(products, 6)
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+
     return render(
         request,
         'frontend/products.html',
         {
-            'products': products,
+            'products': page_obj,
             'departments': departments,
+            'selected_departments': department_ids,
+            'page_obj': page_obj,
         }
     )
+
 
 def product_detail(request, slug):
     product = get_object_or_404(
@@ -3389,7 +3457,7 @@ def product_detail(request, slug):
             'related_products': related_products,
             'departments': departments,
         }
-    )
+    ) 
 
 
 def customer_register(request):
@@ -3430,12 +3498,15 @@ def customer_register(request):
     else:
 
         form = CustomerRegisterForm()
-
+    departments = Department.objects.filter(
+            status=True
+        ).order_by('priority')
     return render(
         request,
         'frontend/register.html',
         {
-            'form': form
+            'form': form,
+            'departments': departments
         }
     )
 
@@ -3444,6 +3515,10 @@ def customer_login(request):
 
     if request.user.is_authenticated:
         return redirect('product_frontend_list')
+
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('priority')
 
     if request.method == 'POST':
 
@@ -3468,51 +3543,18 @@ def customer_login(request):
                 request,
                 'frontend/login.html',
                 {
-                    'error': 'Invalid email or password.'
+                    'error': 'Invalid email or password.',
+                    'departments': departments
                 }
             )
 
     return render(
         request,
-        'frontend/login.html'
+        'frontend/login.html',
+        {
+            'departments': departments
+        }
     )
-
-def customer_login(request):
-
-    if request.user.is_authenticated:
-        return redirect('product_frontend_list')
-
-    if request.method == 'POST':
-
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(
-            request,
-            username=email,
-            password=password
-        )
-
-        if user is not None:
-
-            auth_login(request, user)
-
-            return redirect('product_frontend_list')
-
-        else:
-
-            return render(
-                request,
-                'frontend/login.html',
-                {
-                    'error': 'Invalid email or password.'
-                }
-            )
-
-    return render(
-        request,
-        'frontend/login.html'
-    ) 
 
 @login_required
 def customer_profile(request):
@@ -3521,11 +3563,16 @@ def customer_profile(request):
         user=request.user
     )
 
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('priority')
+
     return render(
         request,
         'frontend/customer_profile.html',
         {
             'profile': profile,
+            'departments': departments,
         }
     )
 
@@ -3614,6 +3661,106 @@ def add_to_cart(request, slug):
     ).first()
 
     if cart_item:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+            "success": True,
+            "already_exists": True
+        })
+
+    messages.warning(
+        request,
+        f"{product.name} is already in your cart."
+    )
+
+    return redirect(
+        request.META.get(
+            'HTTP_REFERER',
+            reverse('product_frontend_list')
+        )
+    )
+
+    # -------------------------------------------------
+    # CREATE CART ITEM
+    # ------------------------------------------------- 
+
+@login_required
+def add_to_cart(request, slug):
+
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True
+    )
+
+    if product.stock <= 0:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                "success": False,
+                "message": "This product is currently out of stock."
+            })
+
+        messages.error(
+            request,
+            "This product is currently out of stock."
+        )
+
+        return redirect(
+            request.META.get(
+                'HTTP_REFERER',
+                reverse('product_frontend_list')
+            )
+        )
+
+    try:
+        quantity = int(
+            request.POST.get('quantity', 1)
+        )
+    except (TypeError, ValueError):
+        quantity = 1
+
+    if quantity < 1:
+        quantity = 1
+
+    if quantity > product.stock:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                "success": False,
+                "message": f"Only {product.stock} items are available in stock."
+            })
+
+        messages.warning(
+            request,
+            f"Only {product.stock} items are available in stock."
+        )
+
+        return redirect(
+            request.META.get(
+                'HTTP_REFERER',
+                reverse('product_frontend_list')
+            )
+        )
+
+    profile, created = CustomerProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    cart, created = Cart.objects.get_or_create(
+        customer=profile
+    )
+
+    cart_item = CartItem.objects.filter(
+        cart=cart,
+        product=product
+    ).first()
+
+    if cart_item:
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                "success": False,
+                "already_exists": True,
+                "message": f"{product.name} is already in your cart."
+            })
 
         messages.warning(
             request,
@@ -3627,14 +3774,20 @@ def add_to_cart(request, slug):
             )
         )
 
-    # -------------------------------------------------
-    # CREATE CART ITEM
-    # -------------------------------------------------
     CartItem.objects.create(
         cart=cart,
         product=product,
         quantity=quantity
     )
+
+    # -------------------------------------------------
+    # AJAX REQUEST — STAY ON SAME PAGE
+    # -------------------------------------------------
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            "success": True,
+            "message": f"{product.name} added to your cart."
+        })
 
     messages.success(
         request,
@@ -3664,14 +3817,19 @@ def cart_view(request):
 
     cart_items = cart.items.select_related('product')
 
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('priority')
+
     return render(
         request,
         'frontend/cart.html',
         {
             'cart': cart,
             'cart_items': cart_items,
+            'departments': departments,
         }
-    )
+    ) 
 
 @login_required
 def increase_cart_quantity(request, item_id):
@@ -3749,9 +3907,16 @@ def add_to_wishlist(request, slug):
         product=product
     )
 
-    return redirect(
-        request.META.get('HTTP_REFERER', 'product_frontend_list')
-    )
+    if created:
+        return JsonResponse({
+            "success": True,
+            "message": "Added to Wishlist"
+        })
+
+    return JsonResponse({
+        "success": True,
+        "message": "This product is already in your wishlist."
+    })
 
 @login_required
 def remove_from_wishlist(request, item_id):
@@ -3773,14 +3938,18 @@ def wishlist(request):
         user=request.user
     ).select_related('product')
 
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('priority')
+
     return render(
         request,
         'frontend/wishlist.html',
         {
             'wishlist_items': wishlist_items,
+            'departments': departments,
         }
     )
-
 
 @login_required
 def checkout(request):
@@ -4056,6 +4225,9 @@ def proceed_to_payment(request):
     # =========================================
     # PAYMENT PAGE
     # =========================================
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('title')
 
     return render(
         request,
@@ -4065,11 +4237,15 @@ def proceed_to_payment(request):
             'cart_items': cart_items,
             'total_amount': cart.total_price,
             'delivery_address': delivery_address,
+            'departments': departments,
         }
     )
 
+
+
 @login_required
 def create_razorpay_order(request):
+    
 
     if request.method != "POST":
         return redirect('checkout')
@@ -4212,3 +4388,273 @@ def order_list(request):
             'orders': orders
         }
     )
+
+
+@login_required
+def admin_order_detail(request, order_number):
+
+    try:
+        order = Order.objects.prefetch_related(
+            'items'
+        ).get(
+            order_number=order_number
+        )
+
+    except Order.DoesNotExist:
+        messages.error(request, "Order not found.")
+        return redirect('order_list')
+
+    return render(
+        request,
+        'backend/order_detail.html',
+        {
+            'order': order,
+        }
+    )
+
+
+
+
+
+
+@login_required
+@transaction.atomic
+def confirm_order(request):
+
+    if request.method != "POST":
+        return redirect('checkout')
+
+    # CUSTOMER
+    try:
+        customer = request.user.customer_profile
+    except CustomerProfile.DoesNotExist:
+        messages.error(request, "Customer profile not found.")
+        return redirect('checkout')
+
+    # ADDRESS
+    address_id = request.POST.get('address_id')
+
+    try:
+        delivery_address = Address.objects.get(
+            id=address_id,
+            customer=customer
+        )
+    except Address.DoesNotExist:
+        messages.error(request, "Invalid delivery address.")
+        return redirect('checkout')
+
+    # CART
+    try:
+        cart = Cart.objects.get(
+            customer=customer
+        )
+    except Cart.DoesNotExist:
+        messages.error(request, "Your cart is empty.")
+        return redirect('cart')
+
+    cart_items = cart.items.select_related('product')
+
+    if not cart_items.exists():
+        messages.error(request, "Your cart is empty.")
+        return redirect('cart')
+
+    # TOTAL
+    total_amount = cart.total_price
+
+    # CREATE ORDER
+    order = Order.objects.create(
+        user=request.user,
+
+        order_number=f"ORD-{uuid.uuid4().hex[:10].upper()}",
+
+        full_name=delivery_address.full_name,
+
+        email=request.user.email,
+
+        phone=delivery_address.phone,
+
+        address=delivery_address.full_address,
+
+        city=delivery_address.city,
+
+        state=delivery_address.state,
+
+        pincode=delivery_address.pincode,
+
+        total_amount=total_amount,
+
+        payment_status="Pending",
+    )
+
+    # CREATE ORDER ITEMS
+    for item in cart_items:
+
+        OrderItem.objects.create(
+            order=order,
+
+            product=item.product,
+
+            product_name=item.product.name,
+
+            quantity=item.quantity,
+
+            unit_price=item.product.price,
+
+            total_price=item.product.price * item.quantity,
+        )
+
+    # CLEAR CART
+    cart_items.delete()
+
+    return redirect(
+    'order_confirmed',
+    order_number=order.order_number
+)
+
+
+@login_required
+def my_orders(request):
+
+    orders = Order.objects.filter(
+        user=request.user
+    ).prefetch_related(
+        'items'
+    ).order_by('-created_at')
+
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('priority')
+
+    return render(
+        request,
+        'frontend/my_orders.html',
+        {
+            'orders': orders,
+            'departments': departments,
+        }
+    )
+
+
+
+@login_required
+def order_confirmed(request, order_number):
+
+    try:
+        order = Order.objects.prefetch_related(
+            'items'
+        ).get(
+            order_number=order_number,
+            user=request.user
+        )
+
+    except Order.DoesNotExist:
+        return redirect('product_frontend_list')
+    departments = Department.objects.filter(
+        status=True
+    ).order_by('title')
+
+    return render(
+        request,
+        'frontend/order_confirmed.html',
+        {
+            'order': order,
+            'departments': departments,
+        }
+    )
+
+
+
+def product_search_api(request):
+    """
+    AJAX API for live product search.
+
+    Example:
+        /products/search/?q=hydra
+    """
+
+    query = request.GET.get("q", "").strip()
+
+    # Don't search when nothing has been typed.
+    if not query:
+        return JsonResponse({
+            "products": []
+        })
+
+    products = Product.objects.filter(
+        Q(name__istartswith=query) |
+        Q(brand__istartswith=query),
+        is_active=True
+    ).order_by("name")[:8]
+
+    results = []
+
+    for product in products:
+
+        results.append({
+            "name": product.name,
+            "brand": product.brand or "",
+            "url": f"/product/{product.slug}/",
+            "image": (
+                product.main_image.url
+                if product.main_image
+                else ""
+            ),
+        })
+
+    return JsonResponse({
+        "products": results
+    })
+
+
+@login_required
+def cart_drawer_api(request):
+
+    profile = CustomerProfile.objects.filter(
+        user=request.user
+    ).first()
+
+    if not profile:
+        return JsonResponse({
+            "success": True,
+            "items": [],
+            "total_items": 0,
+            "total_price": 0
+        })
+
+    cart = Cart.objects.filter(
+        customer=profile
+    ).first()
+
+    if not cart:
+        return JsonResponse({
+            "success": True,
+            "items": [],
+            "total_items": 0,
+            "total_price": 0
+        })
+
+    items = []
+
+    for item in cart.items.select_related('product').all():
+
+        product = item.product
+
+        items.append({
+            "id": item.id,
+            "name": product.name,
+            "quantity": item.quantity,
+            "unit_price": float(item.unit_price),
+            "total_price": float(item.total_price),
+            "image": product.main_image.url if product.main_image else "",
+            "url": reverse(
+                'product_detail',
+                kwargs={'slug': product.slug}
+            )
+        })
+
+    return JsonResponse({
+        "success": True,
+        "items": items,
+        "total_items": cart.total_items,
+        "total_price": float(cart.total_price)
+    })

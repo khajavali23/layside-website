@@ -29,7 +29,6 @@
                 <table class="table table-bordered table-hover align-middle">
 
                     <thead>
-
                         <tr>
                             <th>Order</th>
                             <th>Customer</th>
@@ -37,8 +36,8 @@
                             <th>Amount</th>
                             <th>Payment</th>
                             <th>Order Date</th>
+                            <th>Action</th>
                         </tr>
-
                     </thead>
 
 
@@ -51,11 +50,9 @@
                             <!-- ORDER NUMBER -->
 
                             <td>
-
                                 <strong>
                                     #{{ order.order_number }}
                                 </strong>
-
                             </td>
 
 
@@ -85,13 +82,11 @@
                                 {% for item in order.items.all %}
 
                                 <div>
-
                                     {{ item.product_name }}
 
                                     <span class="text-muted">
                                         × {{ item.quantity }}
                                     </span>
-
                                 </div>
 
                                 {% empty %}
@@ -155,6 +150,21 @@
 
                             </td>
 
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <a
+                                    href="{% url 'admin_order_detail' order.order_number %}"
+                                    class="btn btn-sm btn-primary"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </a>
+
+                            </td>
+
                         </tr>
 
 
@@ -163,7 +173,7 @@
                         <tr>
 
                             <td
-                                colspan="6"
+                                colspan="7"
                                 class="text-center py-5"
                             >
 

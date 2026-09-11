@@ -434,53 +434,32 @@
                      PAY NOW
                 ================================== -->
 
-                <form
-                    method="POST"
-                    action="{% url 'create_razorpay_order' %}"
-                >
+              <form method="POST" action="{% url 'confirm_order' %}">
+    {% csrf_token %}
 
-                    {% csrf_token %}
+    <input
+        type="hidden"
+        name="address_id"
+        value="{{ delivery_address.id }}"
+    >
 
-                    <input
-                        type="hidden"
-                        name="address_id"
-                        value="{{ delivery_address.id }}"
-                    >
+    <button type="submit" class="pay-now-btn">
 
+        <span class="pay-btn-icon">
+            <i class="fas fa-lock"></i>
+        </span>
 
-                    <button
-                        type="submit"
-                        class="pay-now-btn"
-                    >
+        <span class="pay-btn-text">
+            <small>CONFIRM ORDER</small>
+            <strong>Place Order ₹{{ total_amount }}</strong>
+        </span>
 
-                        <span class="pay-btn-icon">
+        <span class="pay-btn-arrow">
+            <i class="fas fa-arrow-right"></i>
+        </span>
 
-                            <i class="fas fa-lock"></i>
-
-                        </span>
-
-                        <span class="pay-btn-text">
-
-                            <small>
-                                PAY SECURELY
-                            </small>
-
-                            <strong>
-                                Pay ₹{{ total_amount }}
-                            </strong>
-
-                        </span>
-
-                        <span class="pay-btn-arrow">
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-                </form>
-
+    </button>
+</form>
 
                 <!-- BACK TO CART -->
 

@@ -1,0 +1,702 @@
+
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Profile Page -->
+<!-- My Orders Page -->
+
+<section class="inner-banner"
+    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');"
+    loading="lazy"
+    decoding="async">
+
+<div class="banner-overlay"></div>
+
+<div class="container">
+    <div class="inner-banner-content text-center">
+
+        <span class="banner-tag">
+            Your Orders & Purchases
+        </span>
+
+        <h1>
+            My Orders
+        </h1>
+
+        <p>
+            View and manage your orders, track your purchases,
+            and check your order details in one place.
+        </p>
+
+        <ul class="breadcrumb justify-content-center">
+
+            <li>
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+
+            <li>
+                <i class="fas fa-angle-right"></i>
+            </li>
+
+            <li>
+                My Orders
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+
+</section>
+
+
+<section class="my-orders-area">
+
+    <div class="container">
+
+       
+
+        {% if orders %}
+
+            <!-- ORDERS LIST -->
+
+            <div class="orders-list">
+
+                {% for order in orders %}
+
+                <div class="order-card">
+
+                    <!-- ORDER HEADER -->
+
+                    <div class="order-card-header">
+
+                        <div class="order-number">
+
+                            <span>
+                                ORDER NUMBER
+                            </span>
+
+                            <strong>
+                                {{ order.order_number }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            <span>
+                                ORDER DATE
+                            </span>
+
+                            <strong>
+                                {{ order.created_at|date:"d M Y" }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-status">
+
+                            <span>
+                                PAYMENT STATUS
+                            </span>
+
+                            {% if order.payment_status == "Paid" %}
+
+                                <strong class="status-paid">
+                                    <i class="fas fa-check-circle"></i>
+                                    Paid
+                                </strong>
+
+                            {% elif order.payment_status == "Failed" %}
+
+                                <strong class="status-failed">
+                                    <i class="fas fa-times-circle"></i>
+                                    Failed
+                                </strong>
+
+                            {% else %}
+
+                                <strong class="status-pending">
+                                    <i class="fas fa-clock"></i>
+                                    Pending
+                                </strong>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRODUCTS -->
+
+                    <div class="order-products">
+
+                        {% for item in order.items.all %}
+
+                        <div class="order-product">
+
+                            <div class="product-left">
+
+                                {% if item.product and item.product.main_image %}
+
+                                            <img
+                                                src="{{ item.product.main_image.url }}"
+                                                alt="{{ item.product_name }}"
+                                            >
+
+                                        {% else %}
+
+                                    <div class="product-placeholder">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="product-details">
+
+                                    <h3>
+                                        {{ item.product_name }}
+                                    </h3>
+
+                                    <span>
+                                        Quantity: {{ item.quantity }}
+                                    </span>
+
+                                    <span>
+                                        Price: ₹{{ item.unit_price }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="product-total">
+
+                                ₹{{ item.total_price }}
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ORDER FOOTER -->
+
+                    <div class="order-card-footer">
+
+                        <div class="order-total">
+
+                            <span>
+                                Total Amount
+                            </span>
+
+                            <strong>
+                                ₹{{ order.total_amount }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-actions">
+
+                            <a
+                                href="{% url 'order_confirmed' order.order_number %}"
+                                class="view-order-btn"
+                            >
+                                <i class="fas fa-eye"></i>
+                                View Order
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY ORDERS -->
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    You haven't placed any orders yet.
+                    Start shopping and your orders will appear here.
+                </p>
+
+                <a
+                    href="{% url 'product_frontend_list' %}"
+                    class="shop-now-btn"
+                >
+                    <i class="fas fa-shopping-bag"></i>
+                    Start Shopping
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<style>
+
+/* =========================================
+   MY ORDERS
+========================================= */
+
+.my-orders-area {
+    padding: 70px 0;
+   
+}
+
+
+/* HEADER */
+
+.orders-header {
+    margin-bottom: 35px;
+}
+
+.orders-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #0a7c86;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.orders-header h1 {
+    margin: 0 0 8px;
+
+    color: #1d3035;
+
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.orders-header p {
+    margin: 0;
+
+    color: #7d8a8e;
+
+    font-size: 14px;
+}
+
+
+/* ORDER CARD */
+
+.orders-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.order-card {
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 30px rgba(10, 124, 134, 0.05);
+}
+
+
+/* ORDER HEADER */
+
+.order-card-header {
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr 1fr;
+
+    gap: 20px;
+
+    padding: 20px 25px;
+
+    background: #f5fafa;
+
+    border-bottom: 1px solid #e7eeee;
+}
+
+.order-card-header > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.order-card-header span {
+    color: #8b979a;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.order-card-header strong {
+    color: #25383d;
+
+    font-size: 13px;
+}
+
+
+/* STATUS */
+
+.status-paid {
+    color: #16834c !important;
+}
+
+.status-pending {
+    color: #f4891d !important;
+    font-weight: 600;
+}
+
+.status-failed {
+    color: #d64545 !important;
+}
+
+
+/* PRODUCTS */
+
+.order-products {
+    padding: 5px 25px;
+}
+
+.order-product {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.order-product:last-child {
+    border-bottom: none;
+}
+
+.product-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.product-left img,
+.product-placeholder {
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #e6eeee;
+}
+
+.product-placeholder {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f9f9;
+
+    color: #0a7c86;
+
+    font-size: 22px;
+}
+
+.product-details {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.product-details h3 {
+    margin: 0 0 3px;
+
+    color: #232323;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.product-details span {
+    color: #8a9699;
+
+    font-size: 12px;
+}
+
+.product-total {
+    color: #0a7c86;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* FOOTER */
+
+.order-card-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 20px 25px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e7eeee;
+}
+
+.order-total {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.order-total span {
+    color: #7d898d;
+
+    font-size: 13px;
+}
+
+.order-total strong {
+    color: #0a7c86;
+
+    font-size: 20px;
+
+    font-weight: 500;
+}
+
+
+/* VIEW ORDER */
+
+.view-order-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #009eaa;
+    color: #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.view-order-btn:hover {
+    background: #086b73;
+
+    color: #ffffff;
+}
+
+
+/* EMPTY ORDERS */
+
+.empty-orders {
+    max-width: 600px;
+
+    margin: 50px auto;
+
+    padding: 60px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eeee;
+
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #edf5f5;
+
+    color: #0a7c86;
+
+    font-size: 28px;
+}
+
+.empty-orders h2 {
+    margin: 0 0 10px;
+
+    color: #26383d;
+
+    font-size: 24px;
+
+    font-weight: 800;
+}
+
+.empty-orders p {
+    margin: 0 auto 25px;
+
+    max-width: 450px;
+
+    color: #7d898d;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.shop-now-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 13px 22px;
+
+    background: #0a7c86;
+
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.shop-now-btn:hover {
+    background: #086b73;
+
+    color: #ffffff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 767px) {
+
+    .my-orders-area {
+        padding: 40px 15px;
+    }
+
+    .orders-header h1 {
+        font-size: 26px;
+    }
+
+    .order-card-header {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        padding: 18px;
+    }
+
+    .order-products {
+        padding: 5px 18px;
+    }
+
+    .order-product {
+        align-items: flex-start;
+    }
+
+    .product-left {
+        align-items: flex-start;
+    }
+
+    .product-left img,
+    .product-placeholder {
+        width: 55px;
+        height: 55px;
+    }
+
+    .order-card-footer {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        padding: 18px;
+    }
+
+    .order-total {
+        justify-content: space-between;
+    }
+
+    .view-order-btn {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
