@@ -1,167 +1,91 @@
 {% extends "frontend/base.html" %}
 {% load static %}
-
 {% block content %}
-
-<section class="order-confirmed-area">
-
-    <div class="container">
-
-        <div class="order-confirmed-wrapper">
-
-            <!-- SUCCESS ICON -->
-            <div class="success-icon">
-                <i class="fas fa-check"></i>
-            </div>
-
-            <!-- TITLE -->
-            <span class="success-label">
-                ORDER CONFIRMED
-            </span>
-
-            <h1>
-                Your Order Has Been Successfully Placed!
-            </h1>
-
-            <p class="success-message">
-                Thank you for your order. Your healthcare products have been
-                successfully ordered and will be processed shortly.
-            </p>
-
-
-            <!-- ORDER DETAILS -->
-            <div class="order-info">
-
-                <div class="order-info-item">
-                    <span>ORDER NUMBER</span>
-                    <strong>{{ order.order_number }}</strong>
+    <section class="order-confirmed-area">
+        <div class="container">
+            <div class="order-confirmed-wrapper">
+                <!-- SUCCESS ICON -->
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
                 </div>
-
-                <div class="order-info-item">
-                    <span>ORDER DATE</span>
-                    <strong>{{ order.created_at|date:"d M Y" }}</strong>
+                <!-- TITLE -->
+                <span class="success-label">ORDER CONFIRMED</span>
+                <h1>Your Order Has Been Successfully Placed!</h1>
+                <p class="success-message">
+                    Thank you for your order. Your healthcare products have been
+                    successfully ordered and will be processed shortly.
+                </p>
+                <!-- ORDER DETAILS -->
+                <div class="order-info">
+                    <div class="order-info-item">
+                        <span>ORDER NUMBER</span>
+                        <strong>{{ order.order_number }}</strong>
+                    </div>
+                    <div class="order-info-item">
+                        <span>ORDER DATE</span>
+                        <strong>{{ order.created_at|date:"d M Y" }}</strong>
+                    </div>
+                    <div class="order-info-item">
+                        <span>PAYMENT STATUS</span>
+                        <strong>{{ order.payment_status }}</strong>
+                    </div>
                 </div>
-
-                <div class="order-info-item">
-                    <span>PAYMENT STATUS</span>
-                    <strong>{{ order.payment_status }}</strong>
-                </div>
-
-            </div>
-
-
-            <!-- PRODUCTS -->
-            <div class="ordered-products">
-
-                <div class="section-title">
-                    <h3>Ordered Products</h3>
-                </div>
-
-                {% for item in order.items.all %}
-
-                <div class="product-row">
-
-                    <div class="product-info">
-
-                        {% if item.product %}
-                            {% if item.product.image %}
-                                <img
-                                    src="{{ item.product.image.url }}"
-                                    alt="{{ item.product_name }}"
-                                >
-                            {% endif %}
-                        {% endif %}
-
-                        <div>
-                            <h4>{{ item.product_name }}</h4>
-                            <span>
-                                Quantity: {{ item.quantity }}
-                            </span>
+                <!-- PRODUCTS -->
+                <div class="ordered-products">
+                    <div class="section-title">
+                        <h3>Ordered Products</h3>
+                    </div>
+                    {% for item in order.items.all %}
+                        <div class="product-row">
+                            <div class="product-info">
+                                {% if item.product %}
+                                    {% if item.product.image %}<img src="{{ item.product.image.url }}" alt="{{ item.product_name }}">{% endif %}
+                                {% endif %}
+                                <div>
+                                    <h4>{{ item.product_name }}</h4>
+                                    <span>Quantity: {{ item.quantity }}</span>
+                                </div>
+                            </div>
+                            <div class="product-price">₹{{ item.total_price }}</div>
                         </div>
-
-                    </div>
-
-                    <div class="product-price">
-                        ₹{{ item.total_price }}
-                    </div>
-
+                    {% endfor %}
                 </div>
-
-                {% endfor %}
-
-            </div>
-
-
-            <!-- TOTAL -->
-            <div class="order-total">
-
-                <span>Total Amount</span>
-
-                <strong>
-                    ₹{{ order.total_amount }}
-                </strong>
-
-            </div>
-
-
-            <!-- DELIVERY ADDRESS -->
-            <div class="delivery-details">
-
-                <div class="section-title">
-                    <h3>Delivery Address</h3>
+                <!-- TOTAL -->
+                <div class="order-total">
+                    <span>Total Amount</span>
+                    <strong>₹{{ order.total_amount }}</strong>
                 </div>
-
-                <p>
-                    <strong>{{ order.full_name }}</strong>
-                </p>
-
-                <p>
-                    {{ order.address }}
-                </p>
-
-                <p>
-                    {{ order.city }},
-                    {{ order.state }} -
-                    {{ order.pincode }}
-                </p>
-
-                <p>
-                    Phone: {{ order.phone }}
-                </p>
-
+                <!-- DELIVERY ADDRESS -->
+                <div class="delivery-details">
+                    <div class="section-title">
+                        <h3>Delivery Address</h3>
+                    </div>
+                    <p>
+                        <strong>{{ order.full_name }}</strong>
+                    </p>
+                    <p>{{ order.address }}</p>
+                    <p>
+                        {{ order.city }},
+                        {{ order.state }} -
+                        {{ order.pincode }}
+                    </p>
+                    <p>Phone: {{ order.phone }}</p>
+                </div>
+                <!-- BUTTONS -->
+                <div class="confirmation-buttons">
+                    <a href="{% url 'product_frontend_list' %}" class="continue-btn">
+                        <i class="fas fa-shopping-bag"></i>
+                        Continue Shopping
+                    </a>
+                    <a href="{% url 'home' %}" class="home-btn">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
             </div>
-
-
-            <!-- BUTTONS -->
-            <div class="confirmation-buttons">
-
-                <a
-                    href="{% url 'product_frontend_list' %}"
-                    class="continue-btn"
-                >
-                    <i class="fas fa-shopping-bag"></i>
-                    Continue Shopping
-                </a>
-
-                <a
-                    href="{% url 'home' %}"
-                    class="home-btn"
-                >
-                    <i class="fas fa-home"></i>
-                    Back to Home
-                </a>
-
-            </div>
-
         </div>
-
-    </div>
-
-</section>
-
-
-<style>
-
+    </section>
+    <style>
 .order-confirmed-area {
     padding: 70px 0;
     background: #f7fbfb;
@@ -555,6 +479,5 @@
 
 }
 
-</style>
-
+    </style>
 {% endblock %}

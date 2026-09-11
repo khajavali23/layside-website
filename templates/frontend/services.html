@@ -1,175 +1,94 @@
 {% extends "frontend/base.html" %}
 {% load static %}
-{% block title %}
-Our Medical Services | Lakeside Hospital Bangalore
-{% endblock %}
-
+{% block title %}Our Medical Services | Lakeside Hospital Bangalore{% endblock %}
 {% block meta_description %}
-Explore the comprehensive medical services at Lakeside Hospital Bangalore, including Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness and specialist care.
+    Explore the comprehensive medical services at Lakeside Hospital Bangalore, including Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness and specialist care.
 {% endblock %}
-
 {% block meta_keywords %}
-Lakeside Hospital, medical services Bangalore, hospital services, Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors, Bangalore hospital
+    Lakeside Hospital, medical services Bangalore, hospital services, Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors, Bangalore hospital
 {% endblock %}
-
 {% block content %}
-
-<!-- Departments Page -->
-<section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/service_banner.jpg' %}');" loading="lazy" decoding="async">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Advanced Medical Departments
-            </span>
-
-            <h1>Departments</h1>
-
-            <p>
-                Explore our specialized departments designed to provide
-                comprehensive and personalized medical care.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>Departments</li>
-
-            </ul>
-
+    <!-- Departments Page -->
+    <section class="inner-banner"
+             style="background-image: url('{% static 'frontend/assets/img/banner/service_banner.jpg' %}')"
+             loading="lazy"
+             decoding="async">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Advanced Medical Departments</span>
+                <h1>Departments</h1>
+                <p>
+                    Explore our specialized departments designed to provide
+                    comprehensive and personalized medical care.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Departments</li>
+                </ul>
+            </div>
         </div>
-    </div>
-
-</section>
-
-        <!-- =========================================================
+    </section>
+    <!-- =========================================================
      MAIN PAGE — SPECIALTIES / DEPARTMENTS
 ========================================================= -->
-
-<div class="services-area lakeside-specialties-section">
-
-    <div class="container">
-
-        <!-- CARDS -->
-        <div class="row">
-
-            {% for dep in departments %}
-
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-
-                <div class="lakeside-specialty-card">
-
-                    <!-- IMAGE -->
-                    <div class="specialty-image">
-
-                        {% if dep.image %}
-
-                            <img
-                                src="{{ dep.image.url }}"
-                                alt="{{ dep.title }}"
-                                loading="lazy"
-                            >
-
-                        {% else %}
-
-                            <div class="specialty-image-fallback">
-
-                                {% if dep.icon %}
-
-                                    <img
-                                        src="{{ dep.banner.url }}"
-                                        alt="{{ dep.title }}"
-                                        loading="lazy"
-                                    >
-
+    <div class="services-area lakeside-specialties-section">
+        <div class="container">
+            <!-- CARDS -->
+            <div class="row">
+                {% for dep in departments %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="lakeside-specialty-card">
+                            <!-- IMAGE -->
+                            <div class="specialty-image">
+                                {% if dep.image %}
+                                    <img src="{{ dep.image.url }}" alt="{{ dep.title }}" loading="lazy">
                                 {% else %}
-
-                                    <i class="flaticon-anatomy"></i>
-
+                                    <div class="specialty-image-fallback">
+                                        {% if dep.icon %}
+                                            <img src="{{ dep.banner.url }}" alt="{{ dep.title }}" loading="lazy">
+                                        {% else %}
+                                            <i class="flaticon-anatomy"></i>
+                                        {% endif %}
+                                    </div>
                                 {% endif %}
-
+                                <div class="specialty-image-overlay"></div>
+                                <!-- ICON -->
+                                <div class="specialty-icon">
+                                    {% if dep.icon %}
+                                        <img src="{{ dep.icon.url }}" alt="{{ dep.title }}" loading="lazy">
+                                    {% else %}
+                                        <i class="flaticon-anatomy"></i>
+                                    {% endif %}
+                                </div>
                             </div>
-
-                        {% endif %}
-
-                        <div class="specialty-image-overlay"></div>
-
-                        <!-- ICON -->
-                        <div class="specialty-icon">
-
-                            {% if dep.icon %}
-
-                                <img
-                                    src="{{ dep.icon.url }}"
-                                    alt="{{ dep.title }}"
-                                    loading="lazy"
-                                >
-
-                            {% else %}
-
-                                <i class="flaticon-anatomy"></i>
-
-                            {% endif %}
-
+                            <!-- CONTENT -->
+                            <div class="specialty-content">
+                                <h3>
+                                    <a href="{% url 'department_detail' dep.slug %}">{{ dep.title }}</a>
+                                </h3>
+                                <div class="specialty-content-line"></div>
+                                <p>{{ dep.description|striptags|truncatechars:145 }}</p>
+                                <a href="{% url 'department_detail' dep.slug %}"
+                                   class="specialty-read-more">
+                                    Read More
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-
                     </div>
-
-                    <!-- CONTENT -->
-                    <div class="specialty-content">
-
-                        <h3>
-                            <a href="{% url 'department_detail' dep.slug %}">
-                                {{ dep.title }}
-                            </a>
-                        </h3>
-
-                        <div class="specialty-content-line"></div>
-
-                        <p>
-                            {{ dep.description|striptags|truncatechars:145 }}
-                        </p>
-
-                        <a
-                            href="{% url 'department_detail' dep.slug %}"
-                            class="specialty-read-more"
-                        >
-                            Read More
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
+                {% endfor %}
             </div>
-
-            {% endfor %}
-
         </div>
-
     </div>
-
-</div>
-
-<!-- =========================================================
+    <!-- =========================================================
      END MAIN PAGE SPECIALTIES
 ========================================================= -->
-
-
-
-
 {% endblock content %}

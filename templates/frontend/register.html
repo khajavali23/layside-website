@@ -1,592 +1,250 @@
-
-{% extends 'frontend/base.html' %}
-
+{% extends "frontend/base.html" %}
 {% block content %}
-
-{% load static %}
-
-
-<section class="inner-banner"
-    style="background-image: url('/static/frontend/assets/img/banner/doctor_banner.jpg');">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Join Lakeside Healthcare
-            </span>
-
-            <h1>
-                Create Your Account
-            </h1>
-
-            <p>
-                Create your account to manage your healthcare products,
-                orders, wishlist and personal details with ease.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="/">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Register
-                </li>
-
-            </ul>
-
+    {% load static %}
+    <section class="inner-banner"
+             style="background-image: url('/static/frontend/assets/img/banner/doctor_banner.jpg')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Join Lakeside Healthcare</span>
+                <h1>Create Your Account</h1>
+                <p>
+                    Create your account to manage your healthcare products,
+                    orders, wishlist and personal details with ease.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="/">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Register</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<section class="register-page">
-
-    <div class="register-wrapper">
-
-
-        <!-- =====================================================
+    </section>
+    <section class="register-page">
+        <div class="register-wrapper">
+            <!-- =====================================================
              LEFT SIDE
         ====================================================== -->
-
-        <div class="register-visual">
-
-            <div class="visual-image"></div>
-
-            <div class="visual-overlay"></div>
-
-
-            <div class="visual-top">
-
-                <div class="trust-badge">
-
-                    <span class="trust-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </span>
-
-                    <span>
-                        Trusted Healthcare
-                    </span>
-
+            <div class="register-visual">
+                <div class="visual-image"></div>
+                <div class="visual-overlay"></div>
+                <div class="visual-top">
+                    <div class="trust-badge">
+                        <span class="trust-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </span>
+                        <span>Trusted Healthcare</span>
+                    </div>
                 </div>
-
+                <div class="visual-content">
+                    <span class="visual-kicker">LAKESIDE HEALTHCARE</span>
+                    <h2>
+                        Better care
+                        <br>
+                        starts with
+                        <span>you.</span>
+                    </h2>
+                    <p>
+                        Create your account to discover trusted healthcare
+                        products, manage orders and enjoy a simple,
+                        secure shopping experience.
+                    </p>
+                    <div class="visual-features">
+                        <div class="visual-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <strong>Trusted Products</strong>
+                                <span>Carefully selected for your needs</span>
+                            </div>
+                        </div>
+                        <div class="visual-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div>
+                                <strong>Secure &amp; Private</strong>
+                                <span>Your information stays protected</span>
+                            </div>
+                        </div>
+                        <div class="visual-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div>
+                                <strong>Easy Shopping</strong>
+                                <span>Manage your healthcare in one place</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visual-footer">
+                        <span class="footer-dot"></span>
+                        <span>Your health. Your care. Your journey.</span>
+                    </div>
+                </div>
             </div>
-
-
-            <div class="visual-content">
-
-                <span class="visual-kicker">
-                    LAKESIDE HEALTHCARE
-                </span>
-
-                <h2>
-                    Better care
-                    <br>
-                    starts with
-                    <span>you.</span>
-                </h2>
-
-                <p>
-                    Create your account to discover trusted healthcare
-                    products, manage orders and enjoy a simple,
-                    secure shopping experience.
-                </p>
-
-
-                <div class="visual-features">
-
-
-                    <div class="visual-feature">
-
-                        <div class="feature-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Trusted Products
-                            </strong>
-
-                            <span>
-                                Carefully selected for your needs
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="visual-feature">
-
-                        <div class="feature-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Secure &amp; Private
-                            </strong>
-
-                            <span>
-                                Your information stays protected
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="visual-feature">
-
-                        <div class="feature-icon">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Easy Shopping
-                            </strong>
-
-                            <span>
-                                Manage your healthcare in one place
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="visual-footer">
-
-                    <span class="footer-dot"></span>
-
-                    <span>
-                        Your health. Your care. Your journey.
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =====================================================
+            <!-- =====================================================
              RIGHT SIDE
         ====================================================== -->
-
-        <div class="register-content">
-
-            <div class="register-form">
-
-
-                <!-- HEADER -->
-
-                <div class="form-header">
-
-                    <div class="form-mini-icon">
-
-                        <i class="fas fa-user-plus"></i>
-
-                    </div>
-
-                    <span class="form-label">
-                        CREATE ACCOUNT
-                    </span>
-
-                    <h2>
-                        Start your journey
-                    </h2>
-
-                    <p>
-                        Create your account and get access to your
-                        healthcare products, orders and wishlist.
-                    </p>
-
-                </div>
-
-
-
-                <!-- FORM -->
-
-                <form method="POST" novalidate>
-
-                    {% csrf_token %}
-
-
-                    {% if form.non_field_errors %}
-
-                    <div class="form-error">
-
-                        <div class="error-icon">
-                            <i class="fas fa-exclamation"></i>
+            <div class="register-content">
+                <div class="register-form">
+                    <!-- HEADER -->
+                    <div class="form-header">
+                        <div class="form-mini-icon">
+                            <i class="fas fa-user-plus"></i>
                         </div>
-
-                        <div>
-                            {{ form.non_field_errors }}
-                        </div>
-
+                        <span class="form-label">CREATE ACCOUNT</span>
+                        <h2>Start your journey</h2>
+                        <p>
+                            Create your account and get access to your
+                            healthcare products, orders and wishlist.
+                        </p>
                     </div>
-
-                    {% endif %}
-
-
-
-                    <!-- NAME -->
-
-                    <div class="form-grid">
-
-
+                    <!-- FORM -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="form-error">
+                                <div class="error-icon">
+                                    <i class="fas fa-exclamation"></i>
+                                </div>
+                                <div>{{ form.non_field_errors }}</div>
+                            </div>
+                        {% endif %}
+                        <!-- NAME -->
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                                <div class="field-wrapper">
+                                    <span class="field-icon">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    {{ form.first_name }}
+                                </div>
+                                {% if form.first_name.errors %}<div class="field-error">{{ form.first_name.errors }}</div>{% endif %}
+                            </div>
+                            <div class="field-group">
+                                <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                                <div class="field-wrapper">
+                                    <span class="field-icon">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    {{ form.last_name }}
+                                </div>
+                                {% if form.last_name.errors %}<div class="field-error">{{ form.last_name.errors }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <!-- EMAIL -->
                         <div class="field-group">
-
-                            <label for="{{ form.first_name.id_for_label }}">
-                                First Name
-                            </label>
-
+                            <label for="{{ form.email.id_for_label }}">Email Address</label>
                             <div class="field-wrapper">
-
                                 <span class="field-icon">
-                                    <i class="fas fa-user"></i>
+                                    <i class="fas fa-envelope"></i>
                                 </span>
-
-                                {{ form.first_name }}
-
+                                {{ form.email }}
+                                <span class="field-status-icon">
+                                    <i class="fas fa-at"></i>
+                                </span>
                             </div>
-
-                            {% if form.first_name.errors %}
-
-                            <div class="field-error">
-                                {{ form.first_name.errors }}
-                            </div>
-
-                            {% endif %}
-
+                            {% if form.email.errors %}<div class="field-error">{{ form.email.errors }}</div>{% endif %}
                         </div>
-
-
-
+                        <!-- PASSWORD -->
                         <div class="field-group">
-
-                            <label for="{{ form.last_name.id_for_label }}">
-                                Last Name
-                            </label>
-
+                            <div class="field-label-row">
+                                <label for="{{ form.password.id_for_label }}">Password</label>
+                                <span class="password-hint">8+ characters</span>
+                            </div>
                             <div class="field-wrapper">
-
                                 <span class="field-icon">
-                                    <i class="fas fa-user"></i>
+                                    <i class="fas fa-lock"></i>
                                 </span>
-
-                                {{ form.last_name }}
-
+                                {{ form.password }}
+                                <button type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword( '{{ form.password.id_for_label }}', this )"
+                                        aria-label="Show password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                             </div>
-
-                            {% if form.last_name.errors %}
-
-                            <div class="field-error">
-                                {{ form.last_name.errors }}
+                            <div class="password-strength">
+                                <div class="strength-bars">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <span class="strength-text">Password strength</span>
                             </div>
-
-                            {% endif %}
-
+                            {% if form.password.errors %}<div class="field-error">{{ form.password.errors }}</div>{% endif %}
                         </div>
-
-
-                    </div>
-
-
-
-                    <!-- EMAIL -->
-
-                    <div class="field-group">
-
-                        <label for="{{ form.email.id_for_label }}">
-                            Email Address
-                        </label>
-
-                        <div class="field-wrapper">
-
-                            <span class="field-icon">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-
-                            {{ form.email }}
-
-                            <span class="field-status-icon">
-                                <i class="fas fa-at"></i>
-                            </span>
-
+                        <!-- CONFIRM PASSWORD -->
+                        <div class="field-group">
+                            <label for="{{ form.confirm_password.id_for_label }}">Confirm Password</label>
+                            <div class="field-wrapper">
+                                <span class="field-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </span>
+                                {{ form.confirm_password }}
+                                <button type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword( '{{ form.confirm_password.id_for_label }}', this )"
+                                        aria-label="Show password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            {% if form.confirm_password.errors %}<div class="field-error">{{ form.confirm_password.errors }}</div>{% endif %}
                         </div>
-
-                        {% if form.email.errors %}
-
-                        <div class="field-error">
-                            {{ form.email.errors }}
-                        </div>
-
-                        {% endif %}
-
-                    </div>
-
-
-
-                    <!-- PASSWORD -->
-
-                    <div class="field-group">
-
-                        <div class="field-label-row">
-
-                            <label for="{{ form.password.id_for_label }}">
-                                Password
+                        <!-- TERMS -->
+                        <div class="terms-area">
+                            <label class="terms-label">
+                                <input type="checkbox" required>
+                                <span class="custom-check">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                                <span class="terms-text">
+                                    I agree to the
+                                    <a href="#">Terms &amp; Conditions</a>
+                                    and
+                                    <a href="#">Privacy Policy</a>.
+                                </span>
                             </label>
-
-                            <span class="password-hint">
-                                8+ characters
+                        </div>
+                        <!-- SUBMIT -->
+                        <button type="submit" class="submit-btn">
+                            <span>Create My Account</span>
+                            <span class="submit-arrow">
+                                <i class="fas fa-arrow-right"></i>
                             </span>
-
-                        </div>
-
-
-                        <div class="field-wrapper">
-
-                            <span class="field-icon">
-                                <i class="fas fa-lock"></i>
-                            </span>
-
-                            {{ form.password }}
-
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                onclick="togglePassword(
-                                    '{{ form.password.id_for_label }}',
-                                    this
-                                )"
-                                aria-label="Show password"
-                            >
-
-                                <i class="fas fa-eye"></i>
-
-                            </button>
-
-                        </div>
-
-
-                        <div class="password-strength">
-
-                            <div class="strength-bars">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <span class="strength-text">
-                                Password strength
-                            </span>
-
-                        </div>
-
-
-                        {% if form.password.errors %}
-
-                        <div class="field-error">
-                            {{ form.password.errors }}
-                        </div>
-
-                        {% endif %}
-
+                        </button>
+                    </form>
+                    <!-- LOGIN -->
+                    <div class="login-divider">
+                        <span></span>
+                        <small>Already registered?</small>
+                        <span></span>
                     </div>
-
-
-
-                    <!-- CONFIRM PASSWORD -->
-
-                    <div class="field-group">
-
-                        <label for="{{ form.confirm_password.id_for_label }}">
-                            Confirm Password
-                        </label>
-
-                        <div class="field-wrapper">
-
-                            <span class="field-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </span>
-
-                            {{ form.confirm_password }}
-
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                onclick="togglePassword(
-                                    '{{ form.confirm_password.id_for_label }}',
-                                    this
-                                )"
-                                aria-label="Show password"
-                            >
-
-                                <i class="fas fa-eye"></i>
-
-                            </button>
-
-                        </div>
-
-
-                        {% if form.confirm_password.errors %}
-
-                        <div class="field-error">
-                            {{ form.confirm_password.errors }}
-                        </div>
-
-                        {% endif %}
-
+                    <a href="{% url 'customer_login' %}" class="login-link">
+                        Sign in to your account
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <!-- SECURITY -->
+                    <div class="secure-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Your information is encrypted and securely protected.</span>
                     </div>
-
-
-
-                    <!-- TERMS -->
-
-                    <div class="terms-area">
-
-                        <label class="terms-label">
-
-                            <input
-                                type="checkbox"
-                                required
-                            >
-
-                            <span class="custom-check">
-
-                                <i class="fas fa-check"></i>
-
-                            </span>
-
-                            <span class="terms-text">
-
-                                I agree to the
-
-                                <a href="#">
-                                    Terms &amp; Conditions
-                                </a>
-
-                                and
-
-                                <a href="#">
-                                    Privacy Policy
-                                </a>.
-
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-
-                    <!-- SUBMIT -->
-
-                    <button
-                        type="submit"
-                        class="submit-btn"
-                    >
-
-                        <span>
-                            Create My Account
-                        </span>
-
-                        <span class="submit-arrow">
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-                </form>
-
-
-
-                <!-- LOGIN -->
-
-                <div class="login-divider">
-
-                    <span></span>
-
-                    <small>
-                        Already registered?
-                    </small>
-
-                    <span></span>
-
                 </div>
-
-
-                <a
-                    href="{% url 'customer_login' %}"
-                    class="login-link"
-                >
-
-                    Sign in to your account
-
-                    <i class="fas fa-arrow-right"></i>
-
-                </a>
-
-
-
-                <!-- SECURITY -->
-
-                <div class="secure-note">
-
-                    <i class="fas fa-shield-alt"></i>
-
-                    <span>
-                        Your information is encrypted and securely protected.
-                    </span>
-
-                </div>
-
-
             </div>
-
         </div>
-
-
-    </div>
-
-</section>
-
-
-
-<style>
-
+    </section>
+    <style>
 /* =========================================================
    REGISTER PAGE
 ========================================================= */
@@ -1968,12 +1626,8 @@
 
 }
 
-</style>
-
-
-
-<script>
-
+    </style>
+    <script>
 /* =========================================================
    PASSWORD SHOW / HIDE
 ========================================================= */
@@ -2149,8 +1803,5 @@ document.addEventListener(
     }
 );
 
-</script>
-
-
+    </script>
 {% endblock %}
-```

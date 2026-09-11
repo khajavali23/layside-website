@@ -1,505 +1,227 @@
-{% extends 'frontend/base.html' %}
-
+{% extends "frontend/base.html" %}
 {% block content %}
-{% load static %}
-
-
-<section class="inner-banner payment-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}');">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Secure Payment
-            </span>
-
-            <h1>
-                Complete Payment
-            </h1>
-
-            <p>
-                Make a secure payment to complete your healthcare
-                product order safely and successfully.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    <a href="{% url 'cart' %}">
-                        Cart
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Payment
-                </li>
-
-            </ul>
-
+    {% load static %}
+    <section class="inner-banner payment-banner"
+             style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Secure Payment</span>
+                <h1>Complete Payment</h1>
+                <p>
+                    Make a secure payment to complete your healthcare
+                    product order safely and successfully.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="{% url 'cart' %}">Cart</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Payment</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-<section class="payment-page">
-
-    <div class="container">
-
-        <!-- =========================================
+    </section>
+    <section class="payment-page">
+        <div class="container">
+            <!-- =========================================
              PREMIUM PAYMENT HEADER
         ========================================== -->
-
-        
-
-
-        <!-- =========================================
+            <!-- =========================================
              MAIN PAYMENT LAYOUT
         ========================================== -->
-
-        <div class="payment-layout">
-
-
-            <!-- =====================================
+            <div class="payment-layout">
+                <!-- =====================================
                  LEFT — ORDER SUMMARY
             ====================================== -->
-
-            <div class="payment-card order-card">
-
-
-                <div class="card-header">
-
-                    <div class="header-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-
-                    <div class="header-content">
-
-                        <span>
-                            YOUR ORDER
-                        </span>
-
-                        <h2>
-                            Order Summary
-                        </h2>
-
-                    </div>
-
-                    <div class="verified-badge">
-
-                        <i class="fas fa-check"></i>
-
-                        Secure
-
-                    </div>
-
-                </div>
-
-
-                <!-- PRODUCTS -->
-
-                <div class="payment-items">
-
-                    {% for item in cart_items %}
-
-                    <div class="payment-item">
-
-
-                        <div class="payment-product">
-
-
-                            <div class="product-image-wrapper">
-
-                                {% if item.product.main_image %}
-
-                                <img
-                                    src="{{ item.product.main_image.url }}"
-                                    alt="{{ item.product.name }}"
-                                >
-
-                                {% else %}
-
-                                <div class="payment-no-image">
-
-                                    <i class="fa-regular fa-image"></i>
-
-                                </div>
-
-                                {% endif %}
-
-
-                                <span class="quantity-badge">
-                                    {{ item.quantity }}
-                                </span>
-
-                            </div>
-
-
-                            <div class="payment-product-info">
-
-                                <strong>
-                                    {{ item.product.name }}
-                                </strong>
-
-
-                                {% if item.product.brand %}
-
-                                <span class="product-brand">
-                                    {{ item.product.brand }}
-                                </span>
-
-                                {% endif %}
-
-
-                                <div class="product-meta">
-
-                                    <span>
-                                        <i class="fa-solid fa-box"></i>
-                                        Quantity: {{ item.quantity }}
-                                    </span>
-
-                                    <span>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                        Verified Product
-                                    </span>
-
-                                </div>
-
-                            </div>
-
+                <div class="payment-card order-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-shopping-bag"></i>
                         </div>
-
-
-                        <div class="payment-item-price">
-
-                            <span>
-                                ITEM TOTAL
-                            </span>
-
-                            <strong>
-                                ₹{{ item.total_price }}
-                            </strong>
-
+                        <div class="header-content">
+                            <span>YOUR ORDER</span>
+                            <h2>Order Summary</h2>
                         </div>
-
-
+                        <div class="verified-badge">
+                            <i class="fas fa-check"></i>
+                            Secure
+                        </div>
                     </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- =================================
+                    <!-- PRODUCTS -->
+                    <div class="payment-items">
+                        {% for item in cart_items %}
+                            <div class="payment-item">
+                                <div class="payment-product">
+                                    <div class="product-image-wrapper">
+                                        {% if item.product.main_image %}
+                                            <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}">
+                                        {% else %}
+                                            <div class="payment-no-image">
+                                                <i class="fa-regular fa-image"></i>
+                                            </div>
+                                        {% endif %}
+                                        <span class="quantity-badge">{{ item.quantity }}</span>
+                                    </div>
+                                    <div class="payment-product-info">
+                                        <strong>{{ item.product.name }}</strong>
+                                        {% if item.product.brand %}<span class="product-brand">{{ item.product.brand }}</span>{% endif %}
+                                        <div class="product-meta">
+                                            <span>
+                                                <i class="fa-solid fa-box"></i>
+                                                Quantity: {{ item.quantity }}
+                                            </span>
+                                            <span>
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                Verified Product
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="payment-item-price">
+                                    <span>ITEM TOTAL</span>
+                                    <strong>₹{{ item.total_price }}</strong>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- =================================
                      PRICE BREAKDOWN
                 ================================== -->
-
-                <div class="price-breakdown">
-
-                    <div class="price-row">
-
-                        <span>
-                            Items
-                        </span>
-
-                        <strong>
-                            {{ cart.total_items }}
-                        </strong>
-
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Items</span>
+                            <strong>{{ cart.total_items }}</strong>
+                        </div>
+                        <div class="price-row">
+                            <span>Subtotal</span>
+                            <strong>₹{{ total_amount }}</strong>
+                        </div>
+                        <div class="price-row">
+                            <span>Delivery</span>
+                            <strong class="free">FREE</strong>
+                        </div>
                     </div>
-
-
-                    <div class="price-row">
-
-                        <span>
-                            Subtotal
-                        </span>
-
-                        <strong>
-                            ₹{{ total_amount }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="price-row">
-
-                        <span>
-                            Delivery
-                        </span>
-
-                        <strong class="free">
-                            FREE
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================
+                    <!-- =================================
                      GRAND TOTAL
                 ================================== -->
-
-                <div class="grand-total">
-
-                    <div>
-
-                        <span>
-                            TOTAL AMOUNT
-                        </span>
-
-                        <strong>
-                            ₹{{ total_amount }}
-                        </strong>
-
+                    <div class="grand-total">
+                        <div>
+                            <span>TOTAL AMOUNT</span>
+                            <strong>₹{{ total_amount }}</strong>
+                        </div>
+                        <div class="total-check">
+                            <i class="fas fa-check"></i>
+                        </div>
                     </div>
-
-                    <div class="total-check">
-
-                        <i class="fas fa-check"></i>
-
-                    </div>
-
                 </div>
-
-
-            </div>
-
-
-
-            <!-- =====================================
+                <!-- =====================================
                  RIGHT — PAYMENT
             ====================================== -->
-
-            <div class="payment-card payment-method-card">
-
-
-                <div class="card-header">
-
-                    <div class="header-icon payment-icon">
-
-                        <i class="fas fa-credit-card"></i>
-
+                <div class="payment-card payment-method-card">
+                    <div class="card-header">
+                        <div class="header-icon payment-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="header-content">
+                            <span>PAYMENT METHOD</span>
+                            <h2>Pay Securely</h2>
+                        </div>
                     </div>
-
-                    <div class="header-content">
-
-                        <span>
-                            PAYMENT METHOD
-                        </span>
-
-                        <h2>
-                            Pay Securely
-                        </h2>
-
+                    <!-- PAYMENT METHOD -->
+                    <div class="payment-method selected">
+                        <div class="method-radio">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="method-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="method-content">
+                            <strong>Secure Online Payment</strong>
+                            <span>UPI, Cards, Net Banking & Wallets</span>
+                            <small>Powered securely by Razorpay</small>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas angle-right"></i>
+                        </div>
                     </div>
-
-                </div>
-
-
-                <!-- PAYMENT METHOD -->
-
-                <div class="payment-method selected">
-
-
-                    <div class="method-radio">
-
-                        <i class="fas fa-check"></i>
-
-                    </div>
-
-
-                    <div class="method-icon">
-
-                        <i class="fas fa-shield-alt"></i>
-
-                    </div>
-
-
-                    <div class="method-content">
-
-                        <strong>
-                            Secure Online Payment
-                        </strong>
-
-                        <span>
-                            UPI, Cards, Net Banking & Wallets
-                        </span>
-
-                        <small>
-                            Powered securely by Razorpay
-                        </small>
-
-                    </div>
-
-
-                    <div class="method-arrow">
-
-                        <i class="fas angle-right"></i>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================
+                    <!-- =================================
                      SECURITY NOTICE
                 ================================== -->
-
-                <div class="security-box">
-
-                    <div class="security-icon">
-
-                        <i class="fas fa-lock"></i>
-
+                    <div class="security-box">
+                        <div class="security-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div>
+                            <strong>Your payment is protected</strong>
+                            <p>
+                                Your payment details are securely encrypted.
+                                We never store your card or banking information.
+                            </p>
+                        </div>
                     </div>
-
-                    <div>
-
-                        <strong>
-                            Your payment is protected
-                        </strong>
-
-                        <p>
-                            Your payment details are securely encrypted.
-                            We never store your card or banking information.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================
+                    <!-- =================================
                      PAYMENT FEATURES
                 ================================== -->
-
-                <div class="payment-features">
-
-                    <div>
-
-                        <i class="fa-solid fa-shield-heart"></i>
-
-                        <span>
-                            Secure
-                        </span>
-
+                    <div class="payment-features">
+                        <div>
+                            <i class="fa-solid fa-shield-heart"></i>
+                            <span>Secure</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-bolt"></i>
+                            <span>Fast</span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Trusted</span>
+                        </div>
                     </div>
-
-                    <div>
-
-                        <i class="fas fa-bolt"></i>
-
-                        <span>
-                            Fast
-                        </span>
-
-                    </div>
-
-                    <div>
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        <span>
-                            Trusted
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================
+                    <!-- =================================
                      PAY NOW
                 ================================== -->
-
-              <form method="POST" action="{% url 'confirm_order' %}">
-    {% csrf_token %}
-
-    <input
-        type="hidden"
-        name="address_id"
-        value="{{ delivery_address.id }}"
-    >
-
-    <button type="submit" class="pay-now-btn">
-
-        <span class="pay-btn-icon">
-            <i class="fas fa-lock"></i>
-        </span>
-
-        <span class="pay-btn-text">
-            <small>CONFIRM ORDER</small>
-            <strong>Place Order ₹{{ total_amount }}</strong>
-        </span>
-
-        <span class="pay-btn-arrow">
-            <i class="fas fa-arrow-right"></i>
-        </span>
-
-    </button>
-</form>
-
-                <!-- BACK TO CART -->
-
-                <a
-                    href="{% url 'cart' %}"
-                    class="back-cart"
-                >
-
-                    <i class="fas fa-arrow-left"></i>
-
-                    Back to Cart
-
-                </a>
-
-
-                <!-- TRUST -->
-
-                <div class="trust-footer">
-
-                    <i class="fas fa-shield-alt"></i>
-
-                    <span>
-                        100% Secure & Encrypted Payment
-                    </span>
-
+                    <form method="post" action="{% url 'confirm_order' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="address_id" value="{{ delivery_address.id }}">
+                        <button type="submit" class="pay-now-btn">
+                            <span class="pay-btn-icon">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <span class="pay-btn-text">
+                                <small>CONFIRM ORDER</small>
+                                <strong>Place Order ₹{{ total_amount }}</strong>
+                            </span>
+                            <span class="pay-btn-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </button>
+                    </form>
+                    <!-- BACK TO CART -->
+                    <a href="{% url 'cart' %}" class="back-cart">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Cart
+                    </a>
+                    <!-- TRUST -->
+                    <div class="trust-footer">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Secure & Encrypted Payment</span>
+                    </div>
                 </div>
-
-
             </div>
-
         </div>
-
-    </div>
-
-</section>
-
-
-
-<style>
-
+    </section>
+    <style>
 /* =========================================================
    PAYMENT PAGE — MASTER UI
 ========================================================= */
@@ -1954,14 +1676,9 @@
 
 }
 
-</style>
-
-
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<script>
-
+    </style>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
 var options = {
 
     key: "{{ razorpay_key_id }}",
@@ -1995,6 +1712,5 @@ var options = {
 
 };
 
-</script>
-
+    </script>
 {% endblock %}

@@ -1,828 +1,306 @@
-```html
-{% extends 'frontend/base.html' %}
 
+{% extends "frontend/base.html" %}
 {% block content %}
-{% load static %}
-
-
-<!-- =========================================================
+    {% load static %}
+    <!-- =========================================================
      CHECKOUT BANNER
 ========================================================= -->
-
-<section class="inner-banner checkout-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}');">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Secure Checkout
-            </span>
-
-            <h1>
-                Checkout
-            </h1>
-
-            <p>
-                Complete your order securely and provide your details
-                for a smooth healthcare shopping experience.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Checkout
-                </li>
-
-            </ul>
-
+    <section class="inner-banner checkout-banner"
+             style="background-image: url('{% static 'frontend/assets/img/banner/contact_banner.jpg' %}')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Secure Checkout</span>
+                <h1>Checkout</h1>
+                <p>
+                    Complete your order securely and provide your details
+                    for a smooth healthcare shopping experience.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Checkout</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
+    </section>
+    <!-- =========================================================
      CHECKOUT PAGE
 ========================================================= -->
-
-<section class="premium-checkout">
-
-    <div class="container">
-
-        <div class="checkout-layout">
-
-
-            <!-- =================================================
+    <section class="premium-checkout">
+        <div class="container">
+            <div class="checkout-layout">
+                <!-- =================================================
                  LEFT SIDE
             ================================================== -->
-
-            <div class="checkout-left">
-
-
-                <!-- CUSTOMER INFORMATION -->
-
-                <div class="checkout-card premium-card">
-
-                    <div class="checkout-section-header">
-
-                        <div class="section-icon">
-
-                            <i class="fas fa-user"></i>
-
-                        </div>
-
-                        <div>
-
-                            <span>
-                                PERSONAL DETAILS
-                            </span>
-
-                            <h2>
-                                Customer Information
-                            </h2>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="customer-grid">
-
-
-                        <div class="customer-info-box">
-
-                            <span>
-                                FULL NAME
-                            </span>
-
-                            <strong>
-                                {{ customer.user.get_full_name|default:customer.user.username }}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="customer-info-box">
-
-                            <span>
-                                EMAIL ADDRESS
-                            </span>
-
-                            <strong>
-                                {{ customer.user.email }}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="customer-info-box full">
-
-                            <span>
-                                PHONE NUMBER
-                            </span>
-
-                            <strong>
-                                {{ customer.phone|default:"Not Added" }}
-                            </strong>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- DELIVERY ADDRESS -->
-
-                <div class="checkout-card premium-card">
-
-                    <div class="checkout-section-header">
-
-                        <div class="section-icon">
-
-                            <i class="fas fa-map-marker-alt"></i>
-
-                        </div>
-
-                        <div>
-
-                            <span>
-                                DELIVERY
-                            </span>
-
-                            <h2>
-                                Delivery Address
-                            </h2>
-
-                        </div>
-
-                    </div>
-
-
-                    {% if addresses %}
-
-
-                    <div class="address-heading">
-
-                        <div>
-
-                            <span>
-                                SELECT DELIVERY ADDRESS
-                            </span>
-
-                            <p>
-                                Choose where you want your order delivered.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="saved-addresses">
-
-
-                        {% for address in addresses %}
-
-
-                        <label class="premium-address-card">
-
-
-                            <input
-                                type="radio"
-                                name="address_id"
-                                value="{{ address.id }}"
-                                {% if address.is_default %}checked{% endif %}
-                            >
-
-
-                            <div class="custom-radio">
-
-                                <i class="fas fa-check"></i>
-
+                <div class="checkout-left">
+                    <!-- CUSTOMER INFORMATION -->
+                    <div class="checkout-card premium-card">
+                        <div class="checkout-section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-user"></i>
                             </div>
-
-
-                            <div class="address-details">
-
-
-                                <div class="address-name-row">
-
-                                    <strong>
-                                        {{ address.full_name }}
-                                    </strong>
-
-
-                                    {% if address.is_default %}
-
-                                    <span class="default-badge">
-                                        DEFAULT
-                                    </span>
-
-                                    {% endif %}
-
-                                </div>
-
-
-                                <p>
-                                    {{ address.full_address }}
-                                </p>
-
-
-                                <div class="address-phone">
-
-                                    <i class="fas fa-phone"></i>
-
-                                    {{ address.phone }}
-
-                                </div>
-
-
+                            <div>
+                                <span>PERSONAL DETAILS</span>
+                                <h2>Customer Information</h2>
                             </div>
-
-
-                            <div class="address-arrow">
-
-                                <i class="fas fa-chevron-right"></i>
-
-                            </div>
-
-
-                        </label>
-
-
-                        {% endfor %}
-
-
-                    </div>
-
-
-                    {% else %}
-
-
-                    <div class="empty-address">
-
-                        <div class="empty-address-icon">
-
-                            <i class="fas fa-map-marker-alt"></i>
-
                         </div>
-
-                        <h3>
-                            No Delivery Address
-                        </h3>
-
-                        <p>
-                            Please add a delivery address before
-                            proceeding to payment.
-                        </p>
-
-                    </div>
-
-
-                    {% endif %}
-
-
-
-                    <!-- ADD NEW ADDRESS -->
-
-                    <button
-                        type="button"
-                        class="new-address-button"
-                        onclick="openAddressForm()"
-                    >
-
-                        <span class="plus-icon">
-                            <i class="fas fa-plus"></i>
-                        </span>
-
-                        <span>
-                            Add New Address
-                        </span>
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </button>
-
-
-
-                    <!-- NEW ADDRESS FORM -->
-
-                    <div
-                        id="newAddressForm"
-                        class="new-address-form"
-                        style="display:none;"
-                    >
-
-                        <div class="new-address-title">
-
-                            <span>
-                                NEW ADDRESS
-                            </span>
-
-                            <h3>
-                                Add Delivery Address
-                            </h3>
-
-                        </div>
-
-
-                        <form
-                            method="POST"
-                            action="{% url 'save_address' %}"
-                        >
-
-                            {% csrf_token %}
-
-
-                            <div class="address-form-grid">
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        Full Name
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="full_name"
-                                        placeholder="Enter full name"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        Phone Number
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        placeholder="Enter phone number"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group full-width">
-
-                                    <label>
-                                        Address Line 1
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="address_line_1"
-                                        placeholder="House / Flat / Street"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group full-width">
-
-                                    <label>
-                                        Address Line 2
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="address_line_2"
-                                        placeholder="Apartment, Area, etc. (Optional)"
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        City
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="city"
-                                        placeholder="City"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        State
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="state"
-                                        placeholder="State"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        Pincode
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="pincode"
-                                        placeholder="Pincode"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="premium-form-group">
-
-                                    <label>
-                                        Landmark
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="landmark"
-                                        placeholder="Nearby landmark (Optional)"
-                                    >
-
-                                </div>
-
-
+                        <div class="customer-grid">
+                            <div class="customer-info-box">
+                                <span>FULL NAME</span>
+                                <strong>{{ customer.user.get_full_name|default:customer.user.username }}</strong>
                             </div>
-
-
-                            <button
-                                type="submit"
-                                class="save-address-button"
-                            >
-
+                            <div class="customer-info-box">
+                                <span>EMAIL ADDRESS</span>
+                                <strong>{{ customer.user.email }}</strong>
+                            </div>
+                            <div class="customer-info-box full">
+                                <span>PHONE NUMBER</span>
+                                <strong>{{ customer.phone|default:"Not Added" }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DELIVERY ADDRESS -->
+                    <div class="checkout-card premium-card">
+                        <div class="checkout-section-header">
+                            <div class="section-icon">
                                 <i class="fas fa-map-marker-alt"></i>
-
-                                Save Address
-
-                            </button>
-
-
-                        </form>
-
+                            </div>
+                            <div>
+                                <span>DELIVERY</span>
+                                <h2>Delivery Address</h2>
+                            </div>
+                        </div>
+                        {% if addresses %}
+                            <div class="address-heading">
+                                <div>
+                                    <span>SELECT DELIVERY ADDRESS</span>
+                                    <p>Choose where you want your order delivered.</p>
+                                </div>
+                            </div>
+                            <div class="saved-addresses">
+                                {% for address in addresses %}
+                                    <label class="premium-address-card">
+                                        <input type="radio"
+                                               name="address_id"
+                                               value="{{ address.id }}"
+                                               {% if address.is_default %}checked{% endif %}>
+                                        <div class="custom-radio">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="address-details">
+                                            <div class="address-name-row">
+                                                <strong>{{ address.full_name }}</strong>
+                                                {% if address.is_default %}<span class="default-badge">DEFAULT</span>{% endif %}
+                                            </div>
+                                            <p>{{ address.full_address }}</p>
+                                            <div class="address-phone">
+                                                <i class="fas fa-phone"></i>
+                                                {{ address.phone }}
+                                            </div>
+                                        </div>
+                                        <div class="address-arrow">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-address">
+                                <div class="empty-address-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <h3>No Delivery Address</h3>
+                                <p>
+                                    Please add a delivery address before
+                                    proceeding to payment.
+                                </p>
+                            </div>
+                        {% endif %}
+                        <!-- ADD NEW ADDRESS -->
+                        <button type="button" class="new-address-button" onclick="openAddressForm()">
+                            <span class="plus-icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Add New Address</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <!-- NEW ADDRESS FORM -->
+                        <div id="newAddressForm" class="new-address-form" style="display:none;">
+                            <div class="new-address-title">
+                                <span>NEW ADDRESS</span>
+                                <h3>Add Delivery Address</h3>
+                            </div>
+                            <form method="post" action="{% url 'save_address' %}">
+                                {% csrf_token %}
+                                <div class="address-form-grid">
+                                    <div class="premium-form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" name="full_name" placeholder="Enter full name" required>
+                                    </div>
+                                    <div class="premium-form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" name="phone" placeholder="Enter phone number" required>
+                                    </div>
+                                    <div class="premium-form-group full-width">
+                                        <label>Address Line 1</label>
+                                        <input type="text"
+                                               name="address_line_1"
+                                               placeholder="House / Flat / Street"
+                                               required>
+                                    </div>
+                                    <div class="premium-form-group full-width">
+                                        <label>Address Line 2</label>
+                                        <input type="text"
+                                               name="address_line_2"
+                                               placeholder="Apartment, Area, etc. (Optional)">
+                                    </div>
+                                    <div class="premium-form-group">
+                                        <label>City</label>
+                                        <input type="text" name="city" placeholder="City" required>
+                                    </div>
+                                    <div class="premium-form-group">
+                                        <label>State</label>
+                                        <input type="text" name="state" placeholder="State" required>
+                                    </div>
+                                    <div class="premium-form-group">
+                                        <label>Pincode</label>
+                                        <input type="text" name="pincode" placeholder="Pincode" required>
+                                    </div>
+                                    <div class="premium-form-group">
+                                        <label>Landmark</label>
+                                        <input type="text" name="landmark" placeholder="Nearby landmark (Optional)">
+                                    </div>
+                                </div>
+                                <button type="submit" class="save-address-button">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Save Address
+                                </button>
+                            </form>
+                        </div>
                     </div>
-
-
                 </div>
-
-
-            </div>
-
-
-
-            <!-- =================================================
+                <!-- =================================================
                  RIGHT SIDE - ORDER SUMMARY
             ================================================== -->
-
-            <aside class="checkout-right">
-
-
-                <div class="order-summary premium-summary">
-
-
-                    <!-- SUMMARY HEADER -->
-
-                    <div class="summary-top">
-
-                        <div>
-
-                            <span>
-                                ORDER SUMMARY
-                            </span>
-
-                            <h2>
-                                Your Order
-                            </h2>
-
-                        </div>
-
-
-                        <div class="summary-bag">
-
-                            <i class="fas fa-shopping-bag"></i>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PRODUCTS -->
-
-                    <div class="summary-products">
-
-
-                        {% for item in cart_items %}
-
-
-                        <div class="summary-product">
-
-
-                            <div class="summary-product-image">
-
-                                {% if item.product.main_image %}
-
-                                <img
-                                    src="{{ item.product.main_image.url }}"
-                                    alt="{{ item.product.name }}"
-                                >
-
-                                {% else %}
-
-                                <i class="fas fa-image"></i>
-
-                                {% endif %}
-
+                <aside class="checkout-right">
+                    <div class="order-summary premium-summary">
+                        <!-- SUMMARY HEADER -->
+                        <div class="summary-top">
+                            <div>
+                                <span>ORDER SUMMARY</span>
+                                <h2>Your Order</h2>
                             </div>
-
-
-                            <div class="summary-product-info">
-
-                                <h4>
-                                    {{ item.product.name }}
-                                </h4>
-
+                            <div class="summary-bag">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                        </div>
+                        <!-- PRODUCTS -->
+                        <div class="summary-products">
+                            {% for item in cart_items %}
+                                <div class="summary-product">
+                                    <div class="summary-product-image">
+                                        {% if item.product.main_image %}
+                                            <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}">
+                                        {% else %}
+                                            <i class="fas fa-image"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="summary-product-info">
+                                        <h4>{{ item.product.name }}</h4>
+                                        <span>Quantity: {{ item.quantity }}</span>
+                                    </div>
+                                    <strong>₹{{ item.total_price }}</strong>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- PRICE BREAKDOWN -->
+                        <div class="price-breakdown">
+                            <div>
+                                <span>Items</span>
+                                <strong>{{ cart.total_items }}</strong>
+                            </div>
+                            <div>
+                                <span>Subtotal</span>
+                                <strong>₹{{ cart.total_price }}</strong>
+                            </div>
+                            <div>
+                                <span>Delivery</span>
+                                <strong class="free">Free</strong>
+                            </div>
+                        </div>
+                        <!-- GRAND TOTAL -->
+                        <div class="grand-total-box">
+                            <div>
+                                <span>TOTAL AMOUNT</span>
+                                <p>Including all applicable charges</p>
+                            </div>
+                            <strong>₹{{ cart.total_price }}</strong>
+                        </div>
+                        <!-- PAYMENT -->
+                        <div class="payment-section">
+                            <span class="payment-heading">PAYMENT METHOD</span>
+                            <div class="payment-card active">
+                                <div class="payment-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="payment-content">
+                                    <strong>Pay Online</strong>
+                                    <span>Secure payment gateway</span>
+                                </div>
+                                <i class="fas fa-credit-card payment-icon"></i>
+                            </div>
+                        </div>
+                        <!-- PAYMENT FORM -->
+                        {% if addresses %}
+                            <form method="post" action="{% url 'proceed_to_payment' %}">
+                                {% csrf_token %}
+                                <input type="hidden"
+                                       name="address_id"
+                                       id="selectedAddress"
+                                       value="{% for address in addresses %}{% if address.is_default %}{{ address.id }}{% endif %}{% endfor %}">
+                                <button type="submit" class="proceed-payment-button">
+                                    <span>
+                                        <i class="fas fa-lock"></i>
+                                        Proceed to Payment
+                                    </span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </form>
+                        {% else %}
+                            <button type="button" class="proceed-payment-button disabled" disabled>
                                 <span>
-                                    Quantity: {{ item.quantity }}
+                                    <i class="fas fa-lock"></i>
+                                    Add Address to Continue
                                 </span>
-
+                            </button>
+                        {% endif %}
+                        <!-- SECURITY -->
+                        <div class="payment-security">
+                            <div class="security-icon">
+                                <i class="fas fa-shield-heart"></i>
                             </div>
-
-
-                            <strong>
-                                ₹{{ item.total_price }}
-                            </strong>
-
-
-                        </div>
-
-
-                        {% endfor %}
-
-
-                    </div>
-
-
-
-                    <!-- PRICE BREAKDOWN -->
-
-                    <div class="price-breakdown">
-
-
-                        <div>
-
-                            <span>
-                                Items
-                            </span>
-
-                            <strong>
-                                {{ cart.total_items }}
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <strong>
-                                ₹{{ cart.total_price }}
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <strong class="free">
-                                Free
-                            </strong>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- GRAND TOTAL -->
-
-                    <div class="grand-total-box">
-
-                        <div>
-
-                            <span>
-                                TOTAL AMOUNT
-                            </span>
-
-                            <p>
-                                Including all applicable charges
-                            </p>
-
-                        </div>
-
-
-                        <strong>
-                            ₹{{ cart.total_price }}
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- PAYMENT -->
-
-                    <div class="payment-section">
-
-                        <span class="payment-heading">
-                            PAYMENT METHOD
-                        </span>
-
-
-                        <div class="payment-card active">
-
-                            <div class="payment-check">
-
-                                <i class="fas fa-check"></i>
-
-                            </div>
-
-
-                            <div class="payment-content">
-
-                                <strong>
-                                    Pay Online
-                                </strong>
-
+                            <div>
+                                <strong>Secure Checkout</strong>
                                 <span>
-                                    Secure payment gateway
+                                    Your payment information is encrypted
+                                    and protected.
                                 </span>
-
                             </div>
-
-
-                            <i class="fas fa-credit-card payment-icon"></i>
-
                         </div>
-
                     </div>
-
-
-
-                    <!-- PAYMENT FORM -->
-
-                    {% if addresses %}
-
-                    <form
-                        method="POST"
-                        action="{% url 'proceed_to_payment' %}"
-                    >
-
-                        {% csrf_token %}
-
-
-                        <input
-                            type="hidden"
-                            name="address_id"
-                            id="selectedAddress"
-                            value="{% for address in addresses %}{% if address.is_default %}{{ address.id }}{% endif %}{% endfor %}"
-                        >
-
-
-                        <button
-                            type="submit"
-                            class="proceed-payment-button"
-                        >
-
-                            <span>
-
-                                <i class="fas fa-lock"></i>
-
-                                Proceed to Payment
-
-                            </span>
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-
-                    </form>
-
-                    {% else %}
-
-                    <button
-                        type="button"
-                        class="proceed-payment-button disabled"
-                        disabled
-                    >
-
-                        <span>
-
-                            <i class="fas fa-lock"></i>
-
-                            Add Address to Continue
-
-                        </span>
-
-                    </button>
-
-                    {% endif %}
-
-
-
-                    <!-- SECURITY -->
-
-                    <div class="payment-security">
-
-                        <div class="security-icon">
-
-                            <i class="fas fa-shield-heart"></i>
-
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Secure Checkout
-                            </strong>
-
-                            <span>
-                                Your payment information is encrypted
-                                and protected.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </aside>
-
-
+                </aside>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<style>
-
-/* =========================================================
-   PREMIUM CHECKOUT
-========================================================= */
+    </section>
+    <style>
 
 .premium-checkout {
 
@@ -2285,12 +1763,8 @@
 
 }
 
-</style>
-
-
-
-<script>
-
+    </style>
+    <script>
 function openAddressForm() {
 
     const form = document.getElementById("newAddressForm");
@@ -2342,8 +1816,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-</script>
-
-
+    </script>
 {% endblock %}
-```

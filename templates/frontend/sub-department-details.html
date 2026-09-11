@@ -1,384 +1,190 @@
 {% extends "frontend/base.html" %}
 {% load static %}
-
-
-{% block title %}
-{{ sub_department.title }} | {{ department.title }} | Lakeside Hospital Bangalore
-{% endblock %}
-
-
+{% block title %}{{ sub_department.title }} | {{ department.title }} | Lakeside Hospital Bangalore{% endblock %}
 {% block meta_description %}
-{% if sub_department.meta_description %}
-    {{ sub_department.meta_description }}
-{% else %}
-    Learn about {{ sub_department.title }} at Lakeside Hospital Bangalore. Our experienced specialists provide advanced diagnosis, personalized treatment and comprehensive healthcare.
-{% endif %}
+    {% if sub_department.meta_description %}
+        {{ sub_department.meta_description }}
+    {% else %}
+        Learn about {{ sub_department.title }} at Lakeside Hospital Bangalore. Our experienced specialists provide advanced diagnosis, personalized treatment and comprehensive healthcare.
+    {% endif %}
 {% endblock %}
-
-
 {% block meta_keywords %}
-{% if sub_department.meta_keyword %}
-    {{ sub_department.meta_keyword }}
-{% else %}
-    {{ sub_department.title }}, {{ department.title }}, Lakeside Hospital, Bangalore, healthcare services
-{% endif %}
+    {% if sub_department.meta_keyword %}
+        {{ sub_department.meta_keyword }}
+    {% else %}
+        {{ sub_department.title }}, {{ department.title }}, Lakeside Hospital, Bangalore, healthcare services
+    {% endif %}
 {% endblock %}
-
-
 {% block content %}
-
-
-<!-- =========================================
+    <!-- =========================================
      SUB DEPARTMENT BANNER
 ========================================= -->
-
-<section
-    class="inner-banner"
-    style="
-        background-image: url(
-            '{% if sub_department.breadcamp %}
-                {{ sub_department.breadcamp.url }}
-            {% else %}
-                {% static "frontend/assets/img/banner/7.jpg" %}
-            {% endif %}'
-        );
-    "
->
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                {{ department.title }}
-            </span>
-
-            <h1>
-                {{ sub_department.title }}
-            </h1>
-
-            <p>
-                Providing advanced medical treatments, expert consultation,
-                and compassionate patient care for better health outcomes.
-            </p>
-
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    <a href="{% url 'services' %}">
-                        Departments
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    <a href="{% url 'department_detail' department.slug %}">
-                        {{ department.title }}
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    {{ sub_department.title }}
-                </li>
-
-            </ul>
-
+    <section class="inner-banner"
+             style="background-image: url( '{% if sub_department.breadcamp %} {{ sub_department.breadcamp.url }} {% else %} {% static "frontend/assets/img/banner/7.jpg" %} {% endif %}' )">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">{{ department.title }}</span>
+                <h1>{{ sub_department.title }}</h1>
+                <p>
+                    Providing advanced medical treatments, expert consultation,
+                    and compassionate patient care for better health outcomes.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="{% url 'services' %}">Departments</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="{% url 'department_detail' department.slug %}">{{ department.title }}</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>{{ sub_department.title }}</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================
+    </section>
+    <!-- =========================================
      SUB DEPARTMENT CONTENT
 ========================================= -->
-
-<div class="services-details-area default-padding sub_services_details_main_section">
-
-    <div class="container">
-
-        <div class="row">
-
-            <div class="content pr-md-15 pr-xs-15">
-
-
-                <!-- =====================================
+    <div class="services-details-area default-padding sub_services_details_main_section">
+        <div class="container">
+            <div class="row">
+                <div class="content pr-md-15 pr-xs-15">
+                    <!-- =====================================
                      TOP SERVICE INFORMATION
                 ====================================== -->
-
-                <div class="thumb">
-
-                    <div class="row align-items-center">
-
-
-                        <!-- =================================
+                    <div class="thumb">
+                        <div class="row align-items-center">
+                            <!-- =================================
                              SERVICE IMAGE
                         ================================== -->
-
-                        <div class="col-lg-6 col-md-6">
-
-                          <div class="sub-department-main-image">
-
-    {% if sub_department.banner %}
-        <img
-            src="{{ sub_department.banner.url }}"
-            alt="{{ sub_department.title }}"
-            class="img-fluid rounded"
-            loading="lazy"
-            decoding="async"
-        >
-    {% else %}
-        <img
-            src="{% static 'frontend/assets/img/banner/7.jpg' %}"
-            alt="{{ sub_department.title }}"
-            class="img-fluid rounded"
-            loading="lazy"
-            decoding="async"
-        >
-    {% endif %}
-
-</div>
-
-                        </div>
-
-
-
-                        <!-- =================================
+                            <div class="col-lg-6 col-md-6">
+                                <div class="sub-department-main-image">
+                                    {% if sub_department.banner %}
+                                        <img src="{{ sub_department.banner.url }}"
+                                             alt="{{ sub_department.title }}"
+                                             class="img-fluid rounded"
+                                             loading="lazy"
+                                             decoding="async">
+                                    {% else %}
+                                        <img src="{% static 'frontend/assets/img/banner/7.jpg' %}"
+                                             alt="{{ sub_department.title }}"
+                                             class="img-fluid rounded"
+                                             loading="lazy"
+                                             decoding="async">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- =================================
                              SERVICE INFORMATION
                         ================================== -->
-
-                        <div class="col-lg-6 col-md-6">
-
-                            <div class="department-static-info">
-
-
-                                
-
-
-                                <h2 class="service-heading">
-                                    {{ sub_department.title }}
-                                </h2>
-
-
-                                <p>
-                                    Our {{ sub_department.title }} service
-                                    provides specialized medical care with
-                                    experienced professionals, advanced
-                                    treatment approaches, and a
-                                    patient-focused healthcare experience.
-                                </p>
-
-
-                                <hr>
-
-
-                                <!-- Main Department -->
-
-                                <h4>
-                                    Main Department
-                                </h4>
-
-                                <p>
-                                    {{ department.title }}
-                                </p>
-
-
-                              
-
-
-                                <!-- Quick Contact -->
-
-                                <h4>
-                                    Quick Contact
-                                </h4>
-
-                                <p>
-                                    E-mail: info@lakesidehospital.com
-                                    <br>
-
-                                    Toll-Free: 18003091001
-                                    <br>
-
-                                    Phone: +91 8022277979
-                                </p>
-
-
+                            <div class="col-lg-6 col-md-6">
+                                <div class="department-static-info">
+                                    <h2 class="service-heading">{{ sub_department.title }}</h2>
+                                    <p>
+                                        Our {{ sub_department.title }} service
+                                        provides specialized medical care with
+                                        experienced professionals, advanced
+                                        treatment approaches, and a
+                                        patient-focused healthcare experience.
+                                    </p>
+                                    <hr>
+                                    <!-- Main Department -->
+                                    <h4>Main Department</h4>
+                                    <p>{{ department.title }}</p>
+                                    <!-- Quick Contact -->
+                                    <h4>Quick Contact</h4>
+                                    <p>
+                                        E-mail: info@lakesidehospital.com
+                                        <br>
+                                        Toll-Free: 18003091001
+                                        <br>
+                                        Phone: +91 8022277979
+                                    </p>
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
-
-                </div>
-
-
-
-                <!-- =====================================
+                    <!-- =====================================
                      DESCRIPTION
                 ====================================== -->
-
-                <div class="info mt-4">
-
-                    {% if sub_department.description %}
-
-                        {{ sub_department.description|safe }}
-
-                    {% else %}
-
-                        <p>
-                            Information about
-                            {{ sub_department.title }}
-                            will be available soon.
-                        </p>
-
-                    {% endif %}
-
+                    <div class="info mt-4">
+                        {% if sub_department.description %}
+                            {{ sub_department.description|safe }}
+                        {% else %}
+                            <p>
+                                Information about
+                                {{ sub_department.title }}
+                                will be available soon.
+                            </p>
+                        {% endif %}
+                    </div>
                 </div>
-
-
-            </div>
-
-
-<div class="doctor-area bg-gray service_doctor_main_section">
-
-    <div class="container">
-
-        <div class="doctor-items text-center">
-
-
-            <!-- Heading -->
-
-            <div class="row">
-
-                <div class="site-heading text-center">
-
-                    <h2>
-                        Meet Our <span>Experts</span>
-                    </h2>
-
-                    <p class="service_pergraph">
-                        Our experienced doctors are committed to delivering
-                        high-quality care with advanced medical expertise.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Doctors -->
-
-            <div class="row">
-
-                {% for doctor in doctors %}
-
-                    <div class="col-lg-4 col-md-6 mb-30">
-
-                        <div class="item">
-
-                            <div class="thumb">
-
-                                {% if doctor.photo %}
-
-                                    <img
-                                        src="{{ doctor.photo.url }}"
-                                        alt="{{ doctor.name }}"
-                                        class="services_details_doctor"
-                                        loading="lazy"
-                                        decoding="async"
-                                    >
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <div class="info">
-
-                                <h4>
-                                    {{ doctor.name }}
-                                </h4>
-
-                                <h5>
-                                    {{ doctor.designation }}
-                                </h5>
-
-
-                                <div class="appoinment-btn">
-
-                                    <a
-                                        href="{% url 'doctor_detail' doctor.slug %}"
-                                    >
-                                        Book Appointment
-                                    </a>
-
+                <div class="doctor-area bg-gray service_doctor_main_section">
+                    <div class="container">
+                        <div class="doctor-items text-center">
+                            <!-- Heading -->
+                            <div class="row">
+                                <div class="site-heading text-center">
+                                    <h2>
+                                        Meet Our <span>Experts</span>
+                                    </h2>
+                                    <p class="service_pergraph">
+                                        Our experienced doctors are committed to delivering
+                                        high-quality care with advanced medical expertise.
+                                    </p>
                                 </div>
-
                             </div>
-
+                            <!-- Doctors -->
+                            <div class="row">
+                                {% for doctor in doctors %}
+                                    <div class="col-lg-4 col-md-6 mb-30">
+                                        <div class="item">
+                                            <div class="thumb">
+                                                {% if doctor.photo %}
+                                                    <img src="{{ doctor.photo.url }}"
+                                                         alt="{{ doctor.name }}"
+                                                         class="services_details_doctor"
+                                                         loading="lazy"
+                                                         decoding="async">
+                                                {% endif %}
+                                            </div>
+                                            <div class="info">
+                                                <h4>{{ doctor.name }}</h4>
+                                                <h5>{{ doctor.designation }}</h5>
+                                                <div class="appoinment-btn">
+                                                    <a href="{% url 'doctor_detail' doctor.slug %}">Book Appointment</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <div class="col-12">
+                                        <p class="text-center">No doctors available for this department.</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
-
                     </div>
-
-
-                {% empty %}
-
-                    <div class="col-12">
-
-                        <p class="text-center">
-                            No doctors available for this department.
-                        </p>
-
-                    </div>
-
-                {% endfor %}
-
+                </div>
             </div>
-
-
         </div>
-
     </div>
-
-</div>
-
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================
+    <!-- =========================================
      DOCTORS
 ========================================= -->
-
-
-
 {% endblock content %}

@@ -1,305 +1,119 @@
-{% extends 'frontend/base.html' %}
-
+{% extends "frontend/base.html" %}
 {% block content %}
-
-{% load static %}
-
-
-<section class="inner-banner"
-    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Your Cart
-            </span>
-
-            <h1>
-                Shopping Cart
-            </h1>
-
-            <p>
-                Review your selected healthcare products before proceeding
-                to secure checkout.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Shopping Cart
-                </li>
-
-            </ul>
-
+    {% load static %}
+    <section class="inner-banner"
+             style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Your Cart</span>
+                <h1>Shopping Cart</h1>
+                <p>
+                    Review your selected healthcare products before proceeding
+                    to secure checkout.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Shopping Cart</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<section class="wishlist-page">
-
- 
-
-
-    <!-- =========================
+    </section>
+    <section class="wishlist-page">
+        <!-- =========================
          WISHLIST CONTENT
     ========================== -->
-
-    <div class="wishlist-wrapper">
-
-
-        {% if wishlist_items %}
-
-
-      
-
-
-        <!-- =========================
+        <div class="wishlist-wrapper">
+            {% if wishlist_items %}
+                <!-- =========================
              WISHLIST ITEMS
         ========================== -->
-
-        <div class="wishlist-items">
-
-
-            {% for item in wishlist_items %}
-
-            <div class="wishlist-item">
-
-
-                <!-- PRODUCT IMAGE -->
-
-           
-<div class="wishlist-product-image">
-
-    <a href="{% url 'product_detail' item.product.slug %}">
-
-        {% if item.product.main_image %}
-
-            <img
-                src="{{ item.product.main_image.url }}"
-                alt="{{ item.product.name }}"
-            >
-
-        {% else %}
-
-            <div class="no-product-image">
-
-                <i class="fas fa-image"></i>
-
-            </div>
-
-        {% endif %}
-
-    </a>
-
-</div>
-
-
-
-
-
-                <!-- PRODUCT DETAILS -->
-
-                <div class="wishlist-product-info">
-
-
-                    {% if item.product.department %}
-
-                    <span class="product-department">
-
-                        {{ item.product.department.title }}
-
-                    </span>
-
-                    {% endif %}
-
-
-                    <h3>
-
-                        <a href="{% url 'product_detail' item.product.slug %}">
-
-                            {{ item.product.title }}
-
-                        </a>
-
-                    </h3>
-
-
-                    <p class="product-description">
-
-                        {{ item.product.description|striptags|truncatewords:18 }}
-
-                    </p>
-
-
-                    <div class="wishlist-product-meta">
-
-                        <div>
-
-                            <i class="fa-solid fa-circle-check"></i>
-
-                            <span>Quality Assured</span>
-
+                <div class="wishlist-items">
+                    {% for item in wishlist_items %}
+                        <div class="wishlist-item">
+                            <!-- PRODUCT IMAGE -->
+                            <div class="wishlist-product-image">
+                                <a href="{% url 'product_detail' item.product.slug %}">
+                                    {% if item.product.main_image %}
+                                        <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}">
+                                    {% else %}
+                                        <div class="no-product-image">
+                                            <i class="fas fa-image"></i>
+                                        </div>
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <!-- PRODUCT DETAILS -->
+                            <div class="wishlist-product-info">
+                                {% if item.product.department %}<span class="product-department">{{ item.product.department.title }}</span>{% endif %}
+                                <h3>
+                                    <a href="{% url 'product_detail' item.product.slug %}">{{ item.product.title }}</a>
+                                </h3>
+                                <p class="product-description">{{ item.product.description|striptags|truncatewords:18 }}</p>
+                                <div class="wishlist-product-meta">
+                                    <div>
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span>Quality Assured</span>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-heart-pulse"></i>
+                                        <span>Healthcare Product</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- PRICE -->
+                            <div class="wishlist-price">
+                                <span>PRICE</span>
+                                <strong>₹{{ item.product.price }}</strong>
+                            </div>
+                            <!-- ACTIONS -->
+                            <div class="wishlist-actions">
+                                <a href="{% url 'add_to_cart' item.product.slug %}"
+                                   class="wishlist-cart-btn">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <span>Add to Cart</span>
+                                </a>
+                                <a href="{% url 'remove_from_wishlist' item.id %}"
+                                   class="wishlist-remove"
+                                   title="Remove from wishlist">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                    <span>Remove</span>
+                                </a>
+                            </div>
                         </div>
-
-                        <div>
-
-                            <i class="fa-solid fa-heart-pulse"></i>
-
-                            <span>Healthcare Product</span>
-
-                        </div>
-
-                    </div>
-
-
+                    {% endfor %}
                 </div>
-
-
-
-                <!-- PRICE -->
-
-                <div class="wishlist-price">
-
-                    <span>
-                        PRICE
-                    </span>
-
-                    <strong>
-
-                        ₹{{ item.product.price }}
-
-                    </strong>
-
-                </div>
-
-
-
-                <!-- ACTIONS -->
-
-                <div class="wishlist-actions">
-
-
-                  
-                       <a
-    href="{% url 'add_to_cart' item.product.slug %}"
-    class="wishlist-cart-btn"
->
-    <i class="fas fa-shopping-bag"></i>
-
-    <span>
-        Add to Cart
-    </span>
-</a>
-
-
-
-                    <a
-                        href="{% url 'remove_from_wishlist' item.id %}"
-                        class="wishlist-remove"
-                        title="Remove from wishlist"
-                    >
-
-                        <i class="fa-regular fa-trash-can"></i>
-
-                        <span>
-                            Remove
-                        </span>
-
-                    </a>
-
-
-                </div>
-
-
-            </div>
-
-            {% endfor %}
-
-
-        </div>
-
-
-
-        {% else %}
-
-
-        <!-- =========================
+            {% else %}
+                <!-- =========================
              EMPTY WISHLIST
         ========================== -->
-
-        <div class="wishlist-empty">
-
-
-            <div class="empty-heart">
-
-                <i class="fas fa-heart"></i>
-
-            </div>
-
-
-            <span>
-                YOUR WISHLIST IS EMPTY
-            </span>
-
-
-            <h2>
-                Save products you love
-            </h2>
-
-
-            <p>
-
-                Explore our healthcare products and save your
-                favourites here for easy access later.
-
-            </p>
-
-
-            <a
-                href="{% url 'product_frontend_list' %}"
-                class="explore-products-btn"
-            >
-
-                Explore Products
-
-                <i class="fas fa-arrow-right"></i>
-
-            </a>
-
-
+                <div class="wishlist-empty">
+                    <div class="empty-heart">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <span>YOUR WISHLIST IS EMPTY</span>
+                    <h2>Save products you love</h2>
+                    <p>
+                        Explore our healthcare products and save your
+                        favourites here for easy access later.
+                    </p>
+                    <a href="{% url 'product_frontend_list' %}" class="explore-products-btn">
+                        Explore Products
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
-
-
-        {% endif %}
-
-
-    </div>
-
-</section>
-
-
-
-<style>
-
+    </section>
+    <style>
 /* =====================================
    WISHLIST PAGE
 ===================================== */
@@ -1199,6 +1013,5 @@
 
 }
 
-</style>
-
+    </style>
 {% endblock %}

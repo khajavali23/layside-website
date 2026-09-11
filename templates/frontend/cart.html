@@ -1,436 +1,186 @@
-{% extends 'frontend/base.html' %}
-
+{% extends "frontend/base.html" %}
 {% block content %}
-{% load static %}
-
-
-
-<section class="inner-banner"
-    style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}');">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Your Shopping Cart
-            </span>
-
-            <h1>
-                Shopping Cart
-            </h1>
-
-            <p>
-                Review your selected healthcare products and continue
-                securely to checkout.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    Cart
-                </li>
-
-            </ul>
-
+    {% load static %}
+    <section class="inner-banner"
+             style="background-image: url('{% static "frontend/assets/img/banner/7.jpg" %}')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Your Shopping Cart</span>
+                <h1>Shopping Cart</h1>
+                <p>
+                    Review your selected healthcare products and continue
+                    securely to checkout.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Cart</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-<section class="cart-page">
-
-    <div class="container">
-
-        <!-- =====================================================
+    </section>
+    <section class="cart-page">
+        <div class="container">
+            <!-- =====================================================
              CART HEADER
         ====================================================== -->
-
-      
-
-
-        {% if cart_items %}
-
-        <!-- =====================================================
+            {% if cart_items %}
+                <!-- =====================================================
              CART LAYOUT
         ====================================================== -->
-
-        <div class="cart-layout">
-
-
-            <!-- =================================================
+                <div class="cart-layout">
+                    <!-- =================================================
                  LEFT : PRODUCTS
             ================================================== -->
-
-            <div class="cart-products">
-
-
-                <!-- CART TOP BAR -->
-
-                <div class="cart-products-header">
-
-                    <span>
-                        Product
-                    </span>
-
-                    <span>
-                        Price
-                    </span>
-
-                    <span>
-                        Quantity
-                    </span>
-
-                    <span>
-                        Total
-                    </span>
-
-                    <span></span>
-
-                </div>
-
-
-                <!-- =================================================
+                    <div class="cart-products">
+                        <!-- CART TOP BAR -->
+                        <div class="cart-products-header">
+                            <span>Product</span>
+                            <span>Price</span>
+                            <span>Quantity</span>
+                            <span>Total</span>
+                            <span></span>
+                        </div>
+                        <!-- =================================================
                      CART ITEMS
                 ================================================== -->
-
-                {% for item in cart_items %}
-
-                <div class="cart-item">
-
-
-                    <!-- PRODUCT -->
-
-                    <div class="cart-product">
-
-                        <div class="cart-product-image">
-
-                            {% if item.product.main_image %}
-
-                                <img
-                                    src="{{ item.product.main_image.url }}"
-                                    alt="{{ item.product.name }}"
-                                >
-
-                            {% else %}
-
-                                <i class="fa-regular fa-image"></i>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <div class="cart-product-info">
-
-                            {% if item.product.brand %}
-
-                                <span class="cart-product-brand">
-                                    {{ item.product.brand }}
-                                </span>
-
-                            {% endif %}
-
-                            <h3>
-                                {{ item.product.name }}
-                            </h3>
-
-                            {% if item.product.product_size %}
-
-                                <span class="cart-product-size">
-                                    Size: {{ item.product.product_size }}
-                                </span>
-
-                            {% endif %}
-
-                            <span class="cart-stock">
-                                <i class="fa-solid fa-circle-check"></i>
-                                In Stock
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- UNIT PRICE -->
-
-                    <div class="cart-price">
-
-                        <span class="mobile-label">
-                            Price
-                        </span>
-
-                        ₹{{ item.unit_price }}
-
-                    </div>
-
-
-                    <!-- QUANTITY -->
-
-                    <div class="cart-quantity">
-
-                        <span class="mobile-label">
-                            Quantity
-                        </span>
-
-                        <div class="quantity-control">
-
-                            <a
-                                href="{% url 'decrease_cart_quantity' item.id %}"
-                                aria-label="Decrease quantity"
-                            >
-                                −
+                        {% for item in cart_items %}
+                            <div class="cart-item">
+                                <!-- PRODUCT -->
+                                <div class="cart-product">
+                                    <div class="cart-product-image">
+                                        {% if item.product.main_image %}
+                                            <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}">
+                                        {% else %}
+                                            <i class="fa-regular fa-image"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="cart-product-info">
+                                        {% if item.product.brand %}<span class="cart-product-brand">{{ item.product.brand }}</span>{% endif %}
+                                        <h3>{{ item.product.name }}</h3>
+                                        {% if item.product.product_size %}
+                                            <span class="cart-product-size">Size: {{ item.product.product_size }}</span>
+                                        {% endif %}
+                                        <span class="cart-stock">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            In Stock
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- UNIT PRICE -->
+                                <div class="cart-price">
+                                    <span class="mobile-label">Price</span>
+                                    ₹{{ item.unit_price }}
+                                </div>
+                                <!-- QUANTITY -->
+                                <div class="cart-quantity">
+                                    <span class="mobile-label">Quantity</span>
+                                    <div class="quantity-control">
+                                        <a href="{% url 'decrease_cart_quantity' item.id %}"
+                                           aria-label="Decrease quantity">−</a>
+                                        <span>{{ item.quantity }}</span>
+                                        <a href="{% url 'increase_cart_quantity' item.id %}"
+                                           aria-label="Increase quantity">+</a>
+                                    </div>
+                                </div>
+                                <!-- TOTAL -->
+                                <div class="cart-total">
+                                    <span class="mobile-label">Total</span>
+                                    <strong>₹{{ item.total_price }}</strong>
+                                </div>
+                                <!-- REMOVE -->
+                                <a href="{% url 'remove_from_cart' item.id %}"
+                                   class="cart-remove"
+                                   title="Remove item"
+                                   onclick="return confirm('Remove this product from your cart?');">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </div>
+                        {% endfor %}
+                        <!-- CONTINUE SHOPPING -->
+                        <div class="continue-shopping">
+                            <a href="{% url 'product_frontend_list' %}">
+                                <i class="fas fa-arrow-left"></i>
+                                Continue Shopping
                             </a>
-
-                            <span>
-                                {{ item.quantity }}
-                            </span>
-
-                            <a
-                                href="{% url 'increase_cart_quantity' item.id %}"
-                                aria-label="Increase quantity"
-                            >
-                                +
-                            </a>
-
                         </div>
-
                     </div>
-
-
-                    <!-- TOTAL -->
-
-                    <div class="cart-total">
-
-                        <span class="mobile-label">
-                            Total
-                        </span>
-
-                        <strong>
-                            ₹{{ item.total_price }}
-                        </strong>
-
-                    </div>
-
-
-                    <!-- REMOVE -->
-
-                    <a
-                        href="{% url 'remove_from_cart' item.id %}"
-                        class="cart-remove"
-                        title="Remove item"
-                        onclick="return confirm('Remove this product from your cart?');"
-                    >
-                        <i class="fa-regular fa-trash-can"></i>
-                    </a>
-
-                </div>
-
-                {% endfor %}
-
-
-                <!-- CONTINUE SHOPPING -->
-
-                <div class="continue-shopping">
-
-                    <a href="{% url 'product_frontend_list' %}">
-
-                        <i class="fas fa-arrow-left"></i>
-
-                        Continue Shopping
-
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
+                    <!-- =================================================
                  RIGHT : ORDER SUMMARY
             ================================================== -->
-
-            <aside class="cart-sidebar">
-
-
-                <!-- ORDER SUMMARY -->
-
-                <div class="order-summary">
-
-                    <div class="summary-header">
-
-                        <div>
-
-                            <span>
-                                ORDER SUMMARY
-                            </span>
-
-                            <h3>
-                                Cart Total
-                            </h3>
-
+                    <aside class="cart-sidebar">
+                        <!-- ORDER SUMMARY -->
+                        <div class="order-summary">
+                            <div class="summary-header">
+                                <div>
+                                    <span>ORDER SUMMARY</span>
+                                    <h3>Cart Total</h3>
+                                </div>
+                                <div class="summary-icon">
+                                    <i class="fas fa-receipt"></i>
+                                </div>
+                            </div>
+                            <div class="summary-lines">
+                                <div class="summary-row">
+                                    <span>Items</span>
+                                    <strong>{{ cart.total_items }}</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <strong>₹{{ cart.total_price }}</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Delivery</span>
+                                    <strong class="free-delivery">FREE</strong>
+                                </div>
+                            </div>
+                            <div class="summary-total">
+                                <span>Total Amount</span>
+                                <strong>₹{{ cart.total_price }}</strong>
+                            </div>
+                            <!-- CHECKOUT -->
+                            <a href="{% url 'checkout' %}" class="checkout-button">
+                                Proceed to Checkout
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <div class="secure-checkout">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure &amp; trusted checkout</span>
+                            </div>
                         </div>
-
-                        <div class="summary-icon">
-
-                            <i class="fas fa-receipt"></i>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="summary-lines">
-
-                        <div class="summary-row">
-
-                            <span>
-                                Items
-                            </span>
-
-                            <strong>
-                                {{ cart.total_items }}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-row">
-
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <strong>
-                                ₹{{ cart.total_price }}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-row">
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <strong class="free-delivery">
-                                FREE
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="summary-total">
-
-                        <span>
-                            Total Amount
-                        </span>
-
-                        <strong>
-                            ₹{{ cart.total_price }}
-                        </strong>
-
-                    </div>
-
-
-                    <!-- CHECKOUT -->
-
-                   <a href="{% url 'checkout' %}" class="checkout-button">
-                            Proceed to Checkout
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-
-                    <div class="secure-checkout">
-
-                        <i class="fas fa-shield-alt"></i>
-
-                        <span>
-                            Secure &amp; trusted checkout
-                        </span>
-
-                    </div>
-
+                    </aside>
                 </div>
-
-
-               
-
-               
-
-            </aside>
-
-        </div>
-
-
-        {% else %}
-
-
-        <!-- =====================================================
+            {% else %}
+                <!-- =====================================================
              EMPTY CART
         ====================================================== -->
-
-        <div class="empty-cart">
-
-            <div class="empty-cart-icon">
-
-                <i class="fa-solid fa-bag-shopping"></i>
-
-            </div>
-
-            <span class="empty-label">
-                YOUR CART
-            </span>
-
-            <h2>
-                Your Cart is Empty
-            </h2>
-
-            <p>
-                Looks like you haven't added any healthcare products yet.
-                Explore our products and find what you need.
-            </p>
-
-            <a
-                href="{% url 'product_frontend_list' %}"
-                class="empty-cart-button"
-            >
-
-                Explore Products
-
-                <i class="fas fa-arrow-right"></i>
-
-            </a>
-
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+                    <span class="empty-label">YOUR CART</span>
+                    <h2>Your Cart is Empty</h2>
+                    <p>
+                        Looks like you haven't added any healthcare products yet.
+                        Explore our products and find what you need.
+                    </p>
+                    <a href="{% url 'product_frontend_list' %}" class="empty-cart-button">
+                        Explore Products
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
-
-        {% endif %}
-
-    </div>
-
-</section>
-
-
-<style>
-
+    </section>
+    <style>
 /* =========================================================
    CART PAGE
 ========================================================= */
@@ -1646,6 +1396,5 @@
 
 }
 
-</style>
-
+    </style>
 {% endblock %}

@@ -1,601 +1,381 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
-    <!-- Meta -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>{% block title %}Lakeside Hospital | Advanced Healthcare in Bangalore{% endblock %}</title>
-
-<meta
-    name="description"
-    content="{% block meta_description %}Lakeside Hospital Bangalore offers advanced healthcare with Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda and wellness services.{% endblock %}" />
-
-<meta
-    name="keywords"
-    content="{% block meta_keywords %}Lakeside Hospital, Bangalore hospital, advanced healthcare, Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors{% endblock %}" />
-
-<meta name="author" content="Lakeside Hospital">
-<meta name="robots" content="index, follow">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0A7C86">
-<link rel="canonical" href="{{ request.build_absolute_uri }}">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{% static 'frontend/assets/img/favicon.png' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
-
-    <!-- CSS -->
-    <link href="{% static 'frontend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/font-awesome.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/themify-icons.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/flaticon-set.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/owl.carousel.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/owl.theme.default.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/magnific-popup.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/animate.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/validnavs.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/helper.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/style.css' %}" rel="stylesheet" />
-    <link href="{% static 'frontend/assets/css/responsive.css' %}" rel="stylesheet" />
-    
-</head>
-
+        <!-- Meta -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+            {% block title %}Lakeside Hospital | Advanced Healthcare in Bangalore{% endblock %}
+        </title>
+        <meta name="description"
+              content="{% block meta_description %}Lakeside Hospital Bangalore offers advanced healthcare with Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda and wellness services.{% endblock %}" />
+        <meta name="keywords"
+              content="{% block meta_keywords %}Lakeside Hospital, Bangalore hospital, advanced healthcare, Regenerrative medicine, stem cell therapy, family medicine, dermatology, physiotherapy, Ayurveda, wellness, specialist doctors{% endblock %}" />
+        <meta name="author" content="Lakeside Hospital">
+        <meta name="robots" content="index, follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#0A7C86">
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
+        <!-- Favicon -->
+        <link rel="shortcut icon"
+              href="{% static 'frontend/assets/img/favicon.png' %}" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- CSS -->
+        <link href="{% static 'frontend/assets/css/bootstrap.min.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/font-awesome.min.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/themify-icons.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/flaticon-set.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/owl.carousel.min.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/owl.theme.default.min.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/magnific-popup.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/animate.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/validnavs.css' %}"
+              rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/helper.css' %}" rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/style.css' %}" rel="stylesheet" />
+        <link href="{% static 'frontend/assets/css/responsive.css' %}"
+              rel="stylesheet" />
+    </head>
     <body>
-       
-
-
-       <!-- Preloader -->
-<div id="preloader">
-    <div class="loader-content">
-
-        <div class="loader-ring"></div>
-
-        <img src="{% static 'frontend/assets/img/logo-circle.png' %}"
-             alt="Lakeside Logo"
-             class="loader-logo">
-
-    </div>
-</div>
-
-<!-- HEADER -->
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="loader-content">
+                <div class="loader-ring"></div>
+                <img src="{% static 'frontend/assets/img/logo-circle.png' %}"
+                     alt="Lakeside Logo"
+                     class="loader-logo">
+            </div>
+        </div>
+        <!-- HEADER -->
         <header>
             <nav class="navbar mobile-sidenav nav-border navbar-sticky navbar-default validnavs on menu-center no-full">
                 <div class="container d-flex justify-content-between align-items-center">
                     <!-- Logo -->
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <button type="button"
+                                class="navbar-toggle"
+                                data-toggle="collapse"
+                                data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-
                         <a class="navbar-brand" href="/">
-                            <img src="{% static 'frontend/assets/img/logo.png' %}" class="logo" alt="Logo" />
+                            <img src="{% static 'frontend/assets/img/logo.png' %}"
+                                 class="logo"
+                                 alt="Logo" />
                         </a>
                     </div>
-
                     <!-- Navbar -->
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <div class="collapse-header">
                             <img src="{% static 'frontend/assets/img/logo.png' %}" alt="Logo" />
-
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <button type="button"
+                                    class="navbar-toggle"
+                                    data-toggle="collapse"
+                                    data-target="#navbar-menu">
                                 <i class="fa fa-times fa-bars"></i>
                             </button>
                         </div>
-
-                        <ul class="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
+                        <ul class="nav navbar-nav navbar-center"
+                            data-in="fadeInDown"
+                            data-out="fadeOutUp">
                             <li class="dropdown">
-                                <a href="/" class="{% if request.path == '/' %}active-link{% endif %}"> Home </a>
+                                <a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a>
                             </li>
-
                             <li class="dropdown">
-                                <a href="/about" class="{% if 'about' in request.path %}active-link{% endif %}"> About </a>
+                                <a href="/about"
+                                   class="{% if 'about' in request.path %}active-link{% endif %}">About</a>
                             </li>
-
                             <li class="dropdown">
-                                <a href="/doctors" class="{% if 'doctors' in request.path %}active-link{% endif %}">
-                                    Doctors
-                                </a>
+                                <a href="/doctors"
+                                   class="{% if 'doctors' in request.path %}active-link{% endif %}">Doctors</a>
                             </li>
-
-                           
-<!-- =====================================================
+                            <!-- =====================================================
      DEPARTMENTS MEGA MENU
 ===================================================== -->
-
-<li class="dropdown khaja-department-parent">
-
-    <a
-        href="{% url 'services' %}"
-        class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-    >
-        Departments
-        <span class="caret"></span>
-    </a>
-
-
-    <!-- MEGA MENU -->
-
-    <div class="dropdown-menu khaja-department-mega">
-
-        <div class="khaja-department-mega-inner">
-
-
-            <!-- =================================================
+                            <li class="dropdown khaja-department-parent">
+                                <a href="{% url 'services' %}"
+                                   class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Departments
+                                    <span class="caret"></span>
+                                </a>
+                                <!-- MEGA MENU -->
+                                <div class="dropdown-menu khaja-department-mega">
+                                    <div class="khaja-department-mega-inner">
+                                        <!-- =================================================
                  LEFT SIDE - MAIN DEPARTMENTS
             ================================================== -->
-
-            <div class="khaja-main-department-panel">
-
-                <div class="khaja-main-department-heading">
-
-                    <span>
-                        OUR DEPARTMENTS
-                    </span>
-
-                    <small>
-                        Explore our specialized care
-                    </small>
-
-                </div>
-
-
-                <div class="khaja-main-department-list">
-
-
-                    {% for department in departments %}
-
-                    <div
-                        class="khaja-main-department-item {% if forloop.first %}khaja-hover-active{% endif %}"
-                        data-khaja-department="{{ department.slug }}"
-                    >
-
-                        <div class="khaja-main-department-icon">
-
-                            {% if department.icon %}
-
-                                <img
-                                    src="{{ department.icon.url }}"
-                                    alt="{{ department.title }}"
-                                    loading="lazy"
-                                 class="icon_khaja_main">
-
-                            {% else %}
-
-                                <i class="fas fa-hospital"></i>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <a href="{% url 'department_detail' department.slug %}"
-                                class="khaja-main-department-link">
-
-                                    <div class="khaja-main-department-name">
-                                        {{ department.title }}
-                                    </div>
-
-                                    <div class="khaja-main-department-arrow">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>
-
-                                </a>
-
-                    </div>
-
-                    {% endfor %}
-
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =================================================
+                                        <div class="khaja-main-department-panel">
+                                            <div class="khaja-main-department-heading">
+                                                <span>OUR DEPARTMENTS</span>
+                                                <small>Explore our specialized care</small>
+                                            </div>
+                                            <div class="khaja-main-department-list">
+                                                {% for department in departments %}
+                                                    <div class="khaja-main-department-item {% if forloop.first %}khaja-hover-active{% endif %}"
+                                                         data-khaja-department="{{ department.slug }}">
+                                                        <div class="khaja-main-department-icon">
+                                                            {% if department.icon %}
+                                                                <img src="{{ department.icon.url }}"
+                                                                     alt="{{ department.title }}"
+                                                                     loading="lazy"
+                                                                     class="icon_khaja_main">
+                                                            {% else %}
+                                                                <i class="fas fa-hospital"></i>
+                                                            {% endif %}
+                                                        </div>
+                                                        <a href="{% url 'department_detail' department.slug %}"
+                                                           class="khaja-main-department-link">
+                                                            <div class="khaja-main-department-name">{{ department.title }}</div>
+                                                            <div class="khaja-main-department-arrow">
+                                                                <i class="fas fa-chevron-right"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <!-- =================================================
                  RIGHT SIDE - SUB DEPARTMENTS
             ================================================== -->
-
-            <div class="khaja-sub-department-panel">
-
-
-                {% for department in departments %}
-
-                <div
-                    class="khaja-sub-department-content {% if forloop.first %}khaja-sub-visible{% endif %}"
-                    data-khaja-subdepartment="{{ department.slug }}"
-                >
-
-
-                    <!-- HEADER -->
-
-                    <div class="khaja-sub-department-header">
-
-                        <div>
-
-                            <span class="khaja-sub-department-label">
-                                SPECIALIZED CARE
-                            </span>
-
-                            <h3>
-                                {{ department.title }}
-                            </h3>
-
-                            <p>
-                                Explore specialized services available
-                                under {{ department.title }}.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- SUB DEPARTMENTS -->
-
-                    {% with sub_departments=department.sub_departments.all %}
-
-                    {% if sub_departments %}
-
-                    <div class="khaja-sub-department-grid">
-
-
-                        {% for sub in sub_departments %}
-
-                        {% if sub.status %}
-
-                        <a
-                            href="{% url 'sub_department_detail' department.slug sub.slug %}"
-                            class="khaja-sub-department-card"
-                        >
-
-
-                            <!-- ICON -->
-
-                            <div class="khaja-sub-department-icon">
-
-                                {% if sub.icon %}
-
-                                <img
-                                    src="{{ sub.icon.url }}"
-                                    alt="{{ sub.title }}"
-                                    loading="lazy"
-                                >
-
-                                {% else %}
-
-                                <i class="fas fa-heartbeat"></i>
-
-                                {% endif %}
-
-                            </div>
-
-
-
-                            <!-- CONTENT -->
-
-                            <div class="khaja-sub-department-info">
-
-                                <h4>
-                                    {{ sub.title }}
-                                </h4>
-
-
-                                {% if sub.description %}
-
-                                <p>
-                                    {{ sub.description|striptags|truncatewords:10 }}
-                                </p>
-
-                                {% endif %}
-
-                            </div>
-
-
-
-                            <!-- ARROW -->
-
-                            <div class="khaja-sub-department-card-arrow">
-
-                                <i class="fas fa-arrow-right"></i>
-
-                            </div>
-
-
-                        </a>
-
-                        {% endif %}
-
-                        {% endfor %}
-
-
-                    </div>
-
-
-                    {% else %}
-
-
-                    <!-- NO SUB DEPARTMENT -->
-
-                   <div class="khaja-no-sub-department">
-
-    <div class="khaja-no-sub-logo-wrap">
-        <img
-            src="{% static 'frontend/assets/img/logo-circle.png' %}"
-            alt="Lakeside Hospital"
-            class="khaja-no-sub-logo"
-            loading="lazy"
-        >
-    </div>
-
-    <div class="khaja-no-sub-content">
-
-        <span class="khaja-no-sub-label">
-            <i class="fas fa-stethoscope"></i>
-            Specialized Care
-        </span>
-
-        <h4>
-            More services for
-            <span>{{ department.title }}</span>
-            are coming soon
-        </h4>
-
-        <p>
-            We are continuously expanding our specialized healthcare
-            services to provide you with better care and treatment options.
-            Please check back soon for new services.
-        </p>
-
-        <a href="{% url 'services' %}" class="khaja-no-sub-btn">
-            <span>Explore Departments</span>
-            <i class="fas fa-arrow-right"></i>
-        </a>
-
-    </div>
-
-</div>
-
-                    {% endif %}
-
-                    {% endwith %}
-
-
-
-                    <!-- VIEW ALL -->
-
-                    <div class="khaja-sub-department-footer">
-
-                        <a
-                            href="{% url 'department_detail' department.slug %}"
-                            class="khaja-view-all-services"
-                        >
-
-                            <span>
-                                View All {{ department.title }} Services
-                            </span>
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </a>
-
-                    </div>
-
-
-                </div>
-
-                {% endfor %}
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-</li>
-                            
-
-                           
+                                        <div class="khaja-sub-department-panel">
+                                            {% for department in departments %}
+                                                <div class="khaja-sub-department-content {% if forloop.first %}khaja-sub-visible{% endif %}"
+                                                     data-khaja-subdepartment="{{ department.slug }}">
+                                                    <!-- HEADER -->
+                                                    <div class="khaja-sub-department-header">
+                                                        <div>
+                                                            <span class="khaja-sub-department-label">SPECIALIZED CARE</span>
+                                                            <h3>{{ department.title }}</h3>
+                                                            <p>
+                                                                Explore specialized services available
+                                                                under {{ department.title }}.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- SUB DEPARTMENTS -->
+                                                    {% with sub_departments=department.sub_departments.all %}
+                                                        {% if sub_departments %}
+                                                            <div class="khaja-sub-department-grid">
+                                                                {% for sub in sub_departments %}
+                                                                    {% if sub.status %}
+                                                                        <a href="{% url 'sub_department_detail' department.slug sub.slug %}"
+                                                                           class="khaja-sub-department-card">
+                                                                            <!-- ICON -->
+                                                                            <div class="khaja-sub-department-icon">
+                                                                                {% if sub.icon %}
+                                                                                    <img src="{{ sub.icon.url }}" alt="{{ sub.title }}" loading="lazy">
+                                                                                {% else %}
+                                                                                    <i class="fas fa-heartbeat"></i>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <!-- CONTENT -->
+                                                                            <div class="khaja-sub-department-info">
+                                                                                <h4>{{ sub.title }}</h4>
+                                                                                {% if sub.description %}<p>{{ sub.description|striptags|truncatewords:10 }}</p>{% endif %}
+                                                                            </div>
+                                                                            <!-- ARROW -->
+                                                                            <div class="khaja-sub-department-card-arrow">
+                                                                                <i class="fas fa-arrow-right"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            <!-- NO SUB DEPARTMENT -->
+                                                            <div class="khaja-no-sub-department">
+                                                                <div class="khaja-no-sub-logo-wrap">
+                                                                    <img src="{% static 'frontend/assets/img/logo-circle.png' %}"
+                                                                         alt="Lakeside Hospital"
+                                                                         class="khaja-no-sub-logo"
+                                                                         loading="lazy">
+                                                                </div>
+                                                                <div class="khaja-no-sub-content">
+                                                                    <span class="khaja-no-sub-label">
+                                                                        <i class="fas fa-stethoscope"></i>
+                                                                        Specialized Care
+                                                                    </span>
+                                                                    <h4>
+                                                                        More services for
+                                                                        <span>{{ department.title }}</span>
+                                                                        are coming soon
+                                                                    </h4>
+                                                                    <p>
+                                                                        We are continuously expanding our specialized healthcare
+                                                                        services to provide you with better care and treatment options.
+                                                                        Please check back soon for new services.
+                                                                    </p>
+                                                                    <a href="{% url 'services' %}" class="khaja-no-sub-btn">
+                                                                        <span>Explore Departments</span>
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                    <!-- VIEW ALL -->
+                                                    <div class="khaja-sub-department-footer">
+                                                        <a href="{% url 'department_detail' department.slug %}"
+                                                           class="khaja-view-all-services">
+                                                            <span>View All {{ department.title }} Services</span>
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
                             <!-- Products -->
                             <li>
                                 <a href="{% url 'product_frontend_list' %}"
-                                class="{% if 'products' in request.path %}active-link{% endif %}">
-                                    Products
-                                </a>
+                                   class="{% if 'products' in request.path %}active-link{% endif %}">Products</a>
                             </li>
-                         <!-- Contact -->
+                            <!-- Contact -->
                             <li>
-                                <a href="/contact" class="{% if 'contact' in request.path %}active-link{% endif %}">
-                                    Contact
-                                </a>
+                                <a href="/contact"
+                                   class="{% if 'contact' in request.path %}active-link{% endif %}">Contact</a>
                             </li>
-
                             <!-- More -->
-<li class="dropdown">
-
-    <a
-        href="#"
-        class="dropdown-toggle {% if 'gallery' in request.path or 'blogs' in request.path or 'health-checkups' in request.path or 'insurance' in request.path or 'careers' in request.path or 'profile' in request.path %}active-link{% endif %}"
-        data-toggle="dropdown"
-    >
-        More
-    </a>
-
-    <ul class="dropdown-menu animated fadeOutUp">
-
-        <li><a href="/gallery">Gallery</a></li>
-
-        <li><a href="/blogs">Blogs</a></li>
-
-        <li><a href="/health-checkups">Health Checkup</a></li>
-
-        <li><a href="/insurance-schemes">Insurance & Schemes</a></li>
-
-        <li><a href="/careers">Careers</a></li>
-
-        {% if request.user.is_authenticated %}
-            <li>
-                <a href="{% url 'customer_profile' %}">
-                    Profile
-                </a>
-            </li>
-        {% endif %}
-
-    </ul>
-
-</li>
+                            <li class="dropdown">
+                                <a href="#"
+                                   class="dropdown-toggle {% if 'gallery' in request.path or 'blogs' in request.path or 'health-checkups' in request.path or 'insurance' in request.path or 'careers' in request.path or 'profile' in request.path %}active-link{% endif %}"
+                                   data-toggle="dropdown">More</a>
+                                <ul class="dropdown-menu animated fadeOutUp">
+                                    <li>
+                                        <a href="/gallery">Gallery</a>
+                                    </li>
+                                    <li>
+                                        <a href="/blogs">Blogs</a>
+                                    </li>
+                                    <li>
+                                        <a href="/health-checkups">Health Checkup</a>
+                                    </li>
+                                    <li>
+                                        <a href="/insurance-schemes">Insurance & Schemes</a>
+                                    </li>
+                                    <li>
+                                        <a href="/careers">Careers</a>
+                                    </li>
+                                    {% if request.user.is_authenticated %}
+                                        <li>
+                                            <a href="{% url 'customer_profile' %}">Profile</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                         </ul>
                     </div>
-
                     <!-- Appointment Button -->
-                   <div class="button">
+                    <div class="button">
                         <a href="{% url 'frontend_doctors' %}"
-                        class="btn btn-md btn-theme appointment-btn main_bookappointment-btn ">
-
-                            <img
-                                src="{% static 'frontend/assets/img/departments/mediacl.png' %}"
-                                alt="Appointment"
-                                class="appointment-icon"
-                            >
-
-                            <span class="appointment-text">
-                                BOOK APPOINTMENT
-                            </span>
-
+                           class="btn btn-md btn-theme appointment-btn main_bookappointment-btn">
+                            <img src="{% static 'frontend/assets/img/departments/mediacl.png' %}"
+                                 alt="Appointment"
+                                 class="appointment-icon">
+                            <span class="appointment-text">BOOK APPOINTMENT</span>
                         </a>
-                   </div>
-
-
-            
                     </div>
-
-                
+                </div>
             </nav>
         </header>
-
         <!-- PAGE CONTENT -->
         {% block content %}{% endblock %}
-
         <!-- FOOTER -->
         <footer class="bg-dark text-light">
-
             <div class="f-items default-padding_footer">
-
                 <div class="container">
-
                     <div class="row">
-
-                                        <!-- About -->
-                    <div class="col-lg-3 col-md-6 equal-height item">
-
-                        <div class="f-item">
-
-                            <!-- Logo -->
-                            <div class="footer-logo">
-                                <a href="{% url 'home' %}">
-                                    <img
-                                        src="{% static 'frontend/assets/img/logo.png' %}"
-                                        alt="Lakeside Hospital"
-                                        loading="lazy"
-                                    >
-                                </a>
+                        <!-- About -->
+                        <div class="col-lg-3 col-md-6 equal-height item">
+                            <div class="f-item">
+                                <!-- Logo -->
+                                <div class="footer-logo">
+                                    <a href="{% url 'home' %}">
+                                        <img src="{% static 'frontend/assets/img/logo.png' %}"
+                                             alt="Lakeside Hospital"
+                                             loading="lazy">
+                                    </a>
+                                </div>
+                                <p class="navber_pera">
+                                    Lakeside Hospital is a trusted multi-specialty healthcare
+                                    institution offering advanced treatments, experienced
+                                    specialists, and compassionate patient care.
+                                </p>
                             </div>
-
-       
-
-        <p class="navber_pera">
-            Lakeside Hospital is a trusted multi-specialty healthcare
-            institution offering advanced treatments, experienced
-            specialists, and compassionate patient care.
-        </p>
-
-    </div>
-
-</div>
+                        </div>
                         <!-- Quick Links -->
                         <div class="col-lg-3 col-md-6 equal-height item pl-50 pl-md-10 pl-xs-10">
-
                             <div class="f-item link">
-
                                 <h4>Quick Links</h4>
-
                                 <ul>
-                                    <li><a href="/about">About Us</a></li>
-                                    <li><a href="/doctors">Doctors</a></li>
-                                    <li><a href="/departments">Departments</a></li>
-                                    <li><a href="/contact">Contact Us</a></li>
-                                    <li><a href="/privacy-policy">Privacy Policy</a></li>
-                                    <li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+                                    <li>
+                                        <a href="/about">About Us</a>
+                                    </li>
+                                    <li>
+                                        <a href="/doctors">Doctors</a>
+                                    </li>
+                                    <li>
+                                        <a href="/departments">Departments</a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">Contact Us</a>
+                                    </li>
+                                    <li>
+                                        <a href="/privacy-policy">Privacy Policy</a>
+                                    </li>
+                                    <li>
+                                        <a href="/terms-conditions">Terms &amp; Conditions</a>
+                                    </li>
                                 </ul>
-
                             </div>
-
                         </div>
-
                         <!-- Updates -->
                         <div class="col-lg-3 col-md-6 equal-height item">
-
                             <div class="f-item">
-
                                 <h4>Why Choose Us</h4>
-
                                 <div class="twitter-item">
-
                                     <div class="twitter-content">
-                                        <p>
-                                            Comprehensive healthcare services available with experienced doctors and advanced medical facilities.
-                                        </p>
+                                        <p>Comprehensive healthcare services available with experienced doctors and advanced medical facilities.</p>
                                     </div>
-
-                                   
-
                                 </div>
-
                                 <div class="twitter-item">
-
                                     <div class="social-links">
-
                                         <h5>FOLLOW US</h5>
-
                                         <a href="#">
                                             <i class="fab fa-facebook-f"></i>
                                         </a>
-
                                         <a href="#">
                                             <i class="fab fa-instagram"></i>
                                         </a>
-
                                         <a href="#">
                                             <i class="fab fa-youtube"></i>
                                         </a>
-
                                         <a href="mailto:info@lakesidehospital.com">
                                             <i class="fas fa-envelope"></i>
                                         </a>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                         <!-- Contact -->
                         <div class="col-lg-3 col-md-6 equal-height item">
-
                             <div class="f-item contact">
-
                                 <h4>Contact</h4>
-
                                 <ul>
-
                                     <li>
                                         <i class="fas fa-phone"></i>
                                         <p>
@@ -603,127 +383,84 @@
                                             <span>+91 90000 00000</span>
                                         </p>
                                     </li>
-
                                     <li>
                                         <i class="fas fa-envelope"></i>
-
                                         <p>
                                             EMAIL
-
                                             <span>
-                                                <a href="mailto:info@lakesidehospital.com">
-                                                    info@lakesidehospital.com
-                                                </a>
+                                                <a href="mailto:info@lakesidehospital.com">info@lakesidehospital.com</a>
                                             </span>
                                         </p>
                                     </li>
-
                                     <li>
                                         <i class="fas fa-map"></i>
-
                                         <p>
                                             ADDRESS
-
                                             <span>
-                                               Lakeside Hospital Campus,<br class="mobile-hide" />
+                                                Lakeside Hospital Campus,
+                                                <br class="mobile-hide" />
                                                 Bangalore, Karnataka
                                             </span>
                                         </p>
                                     </li>
-
                                 </ul>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
             <!-- Footer Bottom -->
             <div class="footer-bottom bg-dark text-light">
-
                 <div class="container">
-
                     <div class="row">
-
                         <div class="col-lg-6">
                             <p>
-                                <span class="copyright-icon">&copy;</span>
-                               {% now "Y" %} Lakeside Hospital. All Rights Reserved.
+                                <span class="copyright-icon">©</span>
+                                {% now "Y" %} Lakeside Hospital. All Rights Reserved.
                             </p>
                         </div>
-
                         <div class="col-lg-6 text-end link">
                             <p>
                                 Designed &amp; Developed by
-                                <a href="https://www.thinkb.agency/" target="_blank">
-                                    ThinkB
-                                </a>
+                                <a href="https://www.thinkb.agency/" target="_blank">ThinkB</a>
                             </p>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
-</footer>
-
+        </footer>
         <!-- Floating WhatsApp Button -->
-<a
-    href="https://wa.me/919876543210?text=Hi%20Lakeside%20Hospital%2C%20I%20would%20like%20to%20know%20more%20about%20your%20health%20checkup%20packages."
-    target="_blank"
-    rel="noopener noreferrer"
-    class="whatsapp-float"
-    aria-label="Chat with Lakeside Hospital on WhatsApp"
-    title="Chat with us on WhatsApp"
->
-    <i class="fab fa-whatsapp"></i>
-</a>
-<!-- Find Department Floating Search -->
-
-<div class="department-search-widget">
-
-    <button class="department-search-toggle" id="departmentSearchToggle">
-        <i class="fas fa-search"></i>
-        <span>Find Department</span>
-    </button>
-
-    <div class="department-search-box" id="departmentSearchBox">
-
-        <div class="department-search-input">
-
-            <i class="fas fa-search"></i>
-
-            <input
-                type="text"
-                id="departmentSearchInput"
-                placeholder="Search department..."
-                autocomplete="off"
-            >
-
-            <button type="button" id="departmentSearchClose">
-                <i class="fas fa-times"></i>
+        <a href="https://wa.me/919876543210?text=Hi%20Lakeside%20Hospital%2C%20I%20would%20like%20to%20know%20more%20about%20your%20health%20checkup%20packages."
+           target="_blank"
+           rel="noopener noreferrer"
+           class="whatsapp-float"
+           aria-label="Chat with Lakeside Hospital on WhatsApp"
+           title="Chat with us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <!-- Find Department Floating Search -->
+        <div class="department-search-widget">
+            <button class="department-search-toggle" id="departmentSearchToggle">
+                <i class="fas fa-search"></i>
+                <span>Find Department</span>
             </button>
-
+            <div class="department-search-box" id="departmentSearchBox">
+                <div class="department-search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text"
+                           id="departmentSearchInput"
+                           placeholder="Search department..."
+                           autocomplete="off">
+                    <button type="button" id="departmentSearchClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="departmentSearchResults"></div>
+            </div>
         </div>
-
-        <div id="departmentSearchResults"></div>
-
-    </div>
-
-</div>
-
-
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const toggle = document.getElementById("departmentSearchToggle");
@@ -833,12 +570,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-</script>
+        </script>
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
         {% if messages %}
-        <script>
+            <script>
             document.addEventListener("DOMContentLoaded", function () {
                 {% for message in messages %}
                     Swal.fire({
@@ -849,7 +585,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 {% endfor %}
             });
-        </script>
+            </script>
         {% endif %}
         <script>
             window.addEventListener("load", function() {
@@ -967,8 +703,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-</script>
-
+        </script>
         <!-- JS -->
         <script src="{% static 'frontend/assets/js/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'frontend/assets/js/bootstrap.bundle.min.js' %}"></script>
@@ -986,7 +721,6 @@ document.addEventListener('DOMContentLoaded', function () {
         <script src="{% static 'frontend/assets/js/circle-progress.js' %}"></script>
         <script src="{% static 'frontend/assets/js/validnavs.js' %}"></script>
         <script src="{% static 'frontend/assets/js/main.js' %}"></script>
-        
         <script>
             window.addEventListener("load", function () {
 
@@ -997,9 +731,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 7000);
 
             });
-            </script>
-
+        </script>
         {% block script %}{% endblock %}
-
     </body>
 </html>

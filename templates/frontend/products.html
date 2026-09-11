@@ -1,16 +1,9 @@
-{% extends 'frontend/base.html' %}
-
-
-
+{% extends "frontend/base.html" %}
 {% block content %}
-
-
-<!-- =========================================================
+    <!-- =========================================================
      PRODUCTS HERO
 ========================================================= -->
-
-<style>
-
+    <style>
     .wishlist-btn {
         color: #536567;
         transition: all 0.25s ease;
@@ -325,930 +318,382 @@
    
  
 
-</style>
-
-
-<section
-    class="inner-banner"
-    style="background-image: url('/static/frontend/assets/img/banner/products_banner.jpg');"
->
-
-    <div class="banner-overlay"></div>
-
-
-    <div class="container">
-
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Lakeside Healthcare
-            </span>
-
-
-            <h1>
-                Healthcare Products
-            </h1>
-
-
-            <p>
-                Explore our carefully selected healthcare products
-                designed to support your health, skin, hair and wellness.
-            </p>
-
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-
-                    <a href="/">
-                        <i class="fas fa-home"></i>
-                        Home
-                    </a>
-
-                </li>
-
-
-                <li>
-
-                    <i class="fas fa-angle-right"></i>
-
-                </li>
-
-
-                <li>
-                    Products
-                </li>
-
-            </ul>
-
+    </style>
+    <section class="inner-banner"
+             style="background-image: url('/static/frontend/assets/img/banner/products_banner.jpg')">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Lakeside Healthcare</span>
+                <h1>Healthcare Products</h1>
+                <p>
+                    Explore our carefully selected healthcare products
+                    designed to support your health, skin, hair and wellness.
+                </p>
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="/">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>Products</li>
+                </ul>
+            </div>
         </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
+    </section>
+    <!-- =========================================================
      PRODUCTS MAIN
 ========================================================= -->
-
-<section class="products-section">
-
-    <div class="container">
-
-
-        <!-- =================================================
+    <section class="products-section">
+        <div class="container">
+            <!-- =================================================
              TOP TOOLBAR
         ================================================= -->
-
-        <div class="products-toolbar">
-
-
-            <!-- PRODUCTS COUNT -->
-
-            <div class="products-count">
-
+            <div class="products-toolbar">
+                <!-- PRODUCTS COUNT -->
                 <div class="products-count">
-    <span>
-        {{ products.paginator.count }} Products Available
-    </span>
-</div>
-
-            </div>
-
-
-            <!-- PRODUCT SEARCH -->
-<!-- =========================================================
+                    <div class="products-count">
+                        <span>{{ products.paginator.count }} Products Available</span>
+                    </div>
+                </div>
+                <!-- PRODUCT SEARCH -->
+                <!-- =========================================================
      PRODUCT SEARCH
 ========================================================= -->
-
-<form
-    method="GET"
-    class="product-search"
-    autocomplete="off"
->
-
-    <div class="search-box">
-
-        <i class="fas fa-magnifying-glass"></i>
-
-
-        <input
-            type="text"
-            name="search"
-            id="productSearchInput"
-            placeholder="Search products..."
-            value="{{ request.GET.search|default:'' }}"
-            autocomplete="off"
-        >
-
-
-        {% if request.GET.search %}
-
-            <a
-                href="{% url 'product_frontend_list' %}"
-                class="clear-search"
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </a>
-
-        {% endif %}
-
-
-        <!-- =================================================
+                <form method="get" class="product-search" autocomplete="off">
+                    <div class="search-box">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="text"
+                               name="search"
+                               id="productSearchInput"
+                               placeholder="Search products..."
+                               value="{{ request.GET.search|default:'' }}"
+                               autocomplete="off">
+                        {% if request.GET.search %}
+                            <a href="{% url 'product_frontend_list' %}" class="clear-search">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        {% endif %}
+                        <!-- =================================================
              LIVE SEARCH RESULTS
         ================================================= -->
-
-        <div
-            id="productSearchResults"
-            class="product-search-results"
-        ></div>
-
-    </div>
-
-
-    <button
-        type="submit"
-        class="search-btn"
-    >
-        Search
-    </button>
-
-</form>
-
-
-            <!-- SORT -->
-
-            <div class="sort-box">
-
-                <label for="sort">
-                    Sort by
-                </label>
-
-
-                <select
-                    id="sort"
-                    class="form-select"
-                >
-
-                   <option value="" {% if not request.GET.sort %}selected{% endif %}>
-    Recommended
-</option>
-
-<option value="newest" {% if request.GET.sort == "newest" %}selected{% endif %}>
-    Newest
-</option>
-
-<option value="price-low" {% if request.GET.sort == "price-low" %}selected{% endif %}>
-    Price: Low to High
-</option>
-
-<option value="price-high" {% if request.GET.sort == "price-high" %}selected{% endif %}>
-    Price: High to Low
-</option>
-
-<option value="name" {% if request.GET.sort == "name" %}selected{% endif %}>
-    Name A-Z
-</option>
-
-                </select>
-
+                        <div id="productSearchResults" class="product-search-results"></div>
+                    </div>
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+                <!-- SORT -->
+                <div class="sort-box">
+                    <label for="sort">Sort by</label>
+                    <select id="sort" class="form-select">
+                        <option value="" {% if not request.GET.sort %}selected{% endif %}>Recommended</option>
+                        <option value="newest"
+                                {% if request.GET.sort == "newest" %}selected{% endif %}>Newest</option>
+                        <option value="price-low"
+                                {% if request.GET.sort == "price-low" %}selected{% endif %}>Price: Low to High</option>
+                        <option value="price-high"
+                                {% if request.GET.sort == "price-high" %}selected{% endif %}>
+                            Price: High to Low
+                        </option>
+                        <option value="name" {% if request.GET.sort == "name" %}selected{% endif %}>Name A-Z</option>
+                    </select>
+                </div>
             </div>
-
-        </div>
-
-
-
-        <!-- =================================================
+            <!-- =================================================
              PRODUCTS LAYOUT
         ================================================= -->
-
-        <div class="products-layout">
-
-
-            <!-- =================================================
+            <div class="products-layout">
+                <!-- =================================================
                  FILTER SIDEBAR
             ================================================= -->
-
-            <aside class="products-sidebar">
-
-
-                <!-- FILTER HEADER -->
-
-                <div class="filter-header">
-
-                    <div>
-
-                        <span class="filter-small">
-                            FILTER
-                        </span>
-
-
-                        <h3>
-                            Find Your Product
-                        </h3>
-
+                <aside class="products-sidebar">
+                    <!-- FILTER HEADER -->
+                    <div class="filter-header">
+                        <div>
+                            <span class="filter-small">FILTER</span>
+                            <h3>Find Your Product</h3>
+                        </div>
+                        <i class="fas fa-sliders-h"></i>
                     </div>
-
-
-                    <i class="fas fa-sliders-h"></i>
-
-                </div>
-
-
-
-                <!-- =================================================
+                    <!-- =================================================
                      DEPARTMENT FILTER
                 ================================================= -->
-
-                <form
-                    method="GET"
-                    action="{% url 'product_frontend_list' %}"
-                >
-
-                    <div class="filter-group">
-
-
-                        <h4>
-
-                            Departments
-
-                            <i class="fas fa-chevron-down filter-toggle"></i>
-
-                        </h4>
-
-
-                        <div class="filter-options">
-
-
-                            {% for department in departments %}
-
-                                <label class="filter-option">
-
-
-                                    <input
-                                        type="checkbox"
-                                        name="department"
-                                        value="{{ department.id }}"
-                                        onchange="this.form.submit()"
-
-                                        {% if department.id|stringformat:"s" in selected_departments %}
-                                            checked
-                                        {% endif %}
-                                    >
-
-
-                                    <span class="custom-checkbox"></span>
-
-
-                                    <span class="filter-name">
-                                        {{ department.title }}
-                                    </span>
-
-
-                                </label>
-
-
-                            {% empty %}
-
-
-                                <p class="filter-empty">
-                                    No departments available.
-                                </p>
-
-
-                            {% endfor %}
-
-
+                    <form method="get" action="{% url 'product_frontend_list' %}">
+                        <div class="filter-group">
+                            <h4>
+                                Departments
+                                <i class="fas fa-chevron-down filter-toggle"></i>
+                            </h4>
+                            <div class="filter-options">
+                                {% for department in departments %}
+                                    <label class="filter-option">
+                                        <input type="checkbox"
+                                               name="department"
+                                               value="{{ department.id }}"
+                                               onchange="this.form.submit()"
+                                               {% if department.id|stringformat:"s" in selected_departments %}checked{% endif %}>
+                                        <span class="custom-checkbox"></span>
+                                        <span class="filter-name">{{ department.title }}</span>
+                                    </label>
+                                {% empty %}
+                                    <p class="filter-empty">No departments available.</p>
+                                {% endfor %}
+                            </div>
                         </div>
-
-                    </div>
-
-
-                </form>
-
-
-
-                <!-- =================================================
+                    </form>
+                    <!-- =================================================
                      PRICE FILTER
                 ================================================= -->
-
-                <form
-                    method="GET"
-                    action="{% url 'product_frontend_list' %}"
-                >
-
-                    <div class="filter-group">
-
-
-                        <h4>
-
-                            Price Range
-
-                            <i class="fas fa-chevron-down"></i>
-
-                        </h4>
-
-
-                        <div class="price-inputs">
-
-
-                            <div class="price-input">
-
-                                <span>
-                                    ₹
-                                </span>
-
-
-                                <input
-                                    type="number"
-                                    name="min_price"
-                                    placeholder="Min"
-                                    value="{{ request.GET.min_price }}"
-                                    min="0"
-                                >
-
+                    <form method="get" action="{% url 'product_frontend_list' %}">
+                        <div class="filter-group">
+                            <h4>
+                                Price Range
+                                <i class="fas fa-chevron-down"></i>
+                            </h4>
+                            <div class="price-inputs">
+                                <div class="price-input">
+                                    <span>₹</span>
+                                    <input type="number"
+                                           name="min_price"
+                                           placeholder="Min"
+                                           value="{{ request.GET.min_price }}"
+                                           min="0">
+                                </div>
+                                <span class="price-divider">—</span>
+                                <div class="price-input">
+                                    <span>₹</span>
+                                    <input type="number"
+                                           name="max_price"
+                                           placeholder="Max"
+                                           value="{{ request.GET.max_price }}"
+                                           min="0">
+                                </div>
                             </div>
-
-
-                            <span class="price-divider">
-                                —
-                            </span>
-
-
-                            <div class="price-input">
-
-                                <span>
-                                    ₹
-                                </span>
-
-
-                                <input
-                                    type="number"
-                                    name="max_price"
-                                    placeholder="Max"
-                                    value="{{ request.GET.max_price }}"
-                                    min="0"
-                                >
-
-                            </div>
-
                         </div>
-
-                    </div>
-
-
-                    <!-- APPLY FILTERS -->
-
-                    <button
-                        type="submit"
-                        class="filter-apply-btn"
-                    >
-                        Apply Filters
-                    </button>
-
-
-                    <!-- CLEAR FILTERS -->
-
-                    <a
-                        href="{% url 'product_frontend_list' %}"
-                        class="clear-filter"
-                    >
-                        Clear All Filters
-                    </a>
-
-                </form>
-
-
-            </aside>
-
-
-
-            <!-- =================================================
+                        <!-- APPLY FILTERS -->
+                        <button type="submit" class="filter-apply-btn">Apply Filters</button>
+                        <!-- CLEAR FILTERS -->
+                        <a href="{% url 'product_frontend_list' %}" class="clear-filter">Clear All Filters</a>
+                    </form>
+                </aside>
+                <!-- =================================================
                  PRODUCTS CONTENT
             ================================================= -->
-
-            <div class="products-content">
-
-
-                <!-- PRODUCTS TOP -->
-
-                <div class="products-top">
-
-                    <div>
-
-
-                        {% if request.GET.search %}
-
-                            <p>
-
-                                Search results for
-
-                                <strong>
-                                    "{{ request.GET.search }}"
-                                </strong>
-
-                            </p>
-
-
-                        {% else %}
-
-
-                        {% endif %}
-
-
+                <div class="products-content">
+                    <!-- PRODUCTS TOP -->
+                    <div class="products-top">
+                        <div>
+                            {% if request.GET.search %}
+                                <p>
+                                    Search results for
+                                    <strong>"{{ request.GET.search }}"</strong>
+                                </p>
+                            {% else %}
+                            {% endif %}
+                        </div>
                     </div>
-
-                </div>
-
-
-
-                <!-- =================================================
+                    <!-- =================================================
                      PRODUCTS GRID
                 ================================================= -->
-
-                <div class="products-grid">
-
-
-                    {% for product in products %}
-
-
-                        <!-- =================================================
+                    <div class="products-grid">
+                        {% for product in products %}
+                            <!-- =================================================
                              PRODUCT CARD
                         ================================================= -->
-
-                        <article class="product-card">
-
-
-                            <!-- =================================================
+                            <article class="product-card">
+                                <!-- =================================================
                                  PRODUCT IMAGE
                             ================================================= -->
-
-                            <div class="product-image">
-
-
-                                <!-- DISCOUNT BADGE -->
-
-                                {% if product.discount_price %}
-
-                                    <span class="discount-badge">
-                                        SALE
-                                    </span>
-
-                                {% endif %}
-
-
-
-                                <!-- STOCK STATUS -->
-
-                                {% if product.stock > 0 %}
-
-                                    <span class="availability-badge available">
-
-                                        <span></span>
-
-                                        In Stock
-
-                                    </span>
-
-
-                                {% else %}
-
-                                    <span class="availability-badge sold-out">
-                                        Out of Stock
-                                    </span>
-
-                                {% endif %}
-
-
-
-                                <!-- =================================================
+                                <div class="product-image">
+                                    <!-- DISCOUNT BADGE -->
+                                    {% if product.discount_price %}<span class="discount-badge">SALE</span>{% endif %}
+                                    <!-- STOCK STATUS -->
+                                    {% if product.stock > 0 %}
+                                        <span class="availability-badge available">
+                                            <span></span>
+                                            In Stock
+                                        </span>
+                                    {% else %}
+                                        <span class="availability-badge sold-out">Out of Stock</span>
+                                    {% endif %}
+                                    <!-- =================================================
                                      WISHLIST
                                 ================================================= -->
-
-                               <button
-    type="button"
-    class="wishlist-btn"
-    data-product-slug="{{ product.slug }}"
-    aria-label="Add {{ product.name }} to wishlist"
->
-    <i class="far fa-heart"></i>
-</button>
-
-
-
-                                <!-- =================================================
+                                    <button type="button"
+                                            class="wishlist-btn"
+                                            data-product-slug="{{ product.slug }}"
+                                            aria-label="Add {{ product.name }} to wishlist">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                    <!-- =================================================
                                      PRODUCT IMAGE
                                 ================================================= -->
-
-                                <a
-                                    href="{% url 'product_detail' product.slug %}"
-                                    class="product-image-link"
-                                >
-
-
-                                    {% if product.main_image %}
-
-                                        <img
-                                            src="{{ product.main_image.url }}"
-                                            alt="{{ product.name }}"
-                                            loading="lazy"
-                                        >
-
-
-                                    {% else %}
-
-                                        <div class="product-placeholder">
-
-                                            <i class="fa-solid fa-box-open"></i>
-
-
-                                            <span>
-                                                No Image
-                                            </span>
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                </a>
-
-
-
-                                <!-- =================================================
+                                    <a href="{% url 'product_detail' product.slug %}"
+                                       class="product-image-link">
+                                        {% if product.main_image %}
+                                            <img src="{{ product.main_image.url }}"
+                                                 alt="{{ product.name }}"
+                                                 loading="lazy">
+                                        {% else %}
+                                            <div class="product-placeholder">
+                                                <i class="fa-solid fa-box-open"></i>
+                                                <span>No Image</span>
+                                            </div>
+                                        {% endif %}
+                                    </a>
+                                    <!-- =================================================
                                      QUICK VIEW
                                 ================================================= -->
-
-                                <a
-                                    href="{% url 'product_detail' product.slug %}"
-                                    class="quick-view-btn"
-                                >
-
-                                    <i class="fas fa-eye"></i>
-
-                                    Quick View
-
-                                </a>
-
-
-                            </div>
-
-
-
-                            <!-- =================================================
+                                    <a href="{% url 'product_detail' product.slug %}" class="quick-view-btn">
+                                        <i class="fas fa-eye"></i>
+                                        Quick View
+                                    </a>
+                                </div>
+                                <!-- =================================================
                                  PRODUCT CONTENT
                             ================================================= -->
-
-                            <div class="product-card-content">
-
-
-                                <!-- BRAND -->
-
-                                {% if product.brand %}
-
-                                    <span class="product-brand">
-                                        {{ product.brand }}
-                                    </span>
-
-                                {% endif %}
-
-
-
-                                <!-- PRODUCT NAME -->
-
-                                <h3 class="product-title">
-
-                                    <a
-                                        href="{% url 'product_detail' product.slug %}"
-                                    >
-                                        {{ product.name }}
-                                    </a>
-
-                                </h3>
-
-
-
-                                <!-- SHORT DESCRIPTION -->
-
-                                {% if product.short_description %}
-
-                                    <p class="product-description">
-
-                                        {{ product.short_description|truncatechars:90 }}
-
-                                    </p>
-
-                                {% endif %}
-
-
-
-                                <!-- PRODUCT SIZE -->
-
-                                {% if product.product_size %}
-
-                                    <div class="product-size">
-
-                                        <i class="fas fa-box"></i>
-
-                                        {{ product.product_size }}
-
-                                    </div>
-
-                                {% endif %}
-
-
-
-                                <!-- =================================================
+                                <div class="product-card-content">
+                                    <!-- BRAND -->
+                                    {% if product.brand %}<span class="product-brand">{{ product.brand }}</span>{% endif %}
+                                    <!-- PRODUCT NAME -->
+                                    <h3 class="product-title">
+                                        <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                                    </h3>
+                                    <!-- SHORT DESCRIPTION -->
+                                    {% if product.short_description %}
+                                        <p class="product-description">{{ product.short_description|truncatechars:90 }}</p>
+                                    {% endif %}
+                                    <!-- PRODUCT SIZE -->
+                                    {% if product.product_size %}
+                                        <div class="product-size">
+                                            <i class="fas fa-box"></i>
+                                            {{ product.product_size }}
+                                        </div>
+                                    {% endif %}
+                                    <!-- =================================================
                                      PRICE
                                 ================================================= -->
-
-                                <div class="product-price">
-
-
-                                    {% if product.discount_price %}
-
-                                        <span class="sale-price">
-                                            ₹{{ product.discount_price }}
-                                        </span>
-
-
-                                        <span class="regular-price">
-                                            ₹{{ product.price }}
-                                        </span>
-
-
-                                    {% else %}
-
-                                        <span class="sale-price">
-                                            ₹{{ product.price }}
-                                        </span>
-
-                                    {% endif %}
-
-
-                                </div>
-
-
-
-                                <!-- =================================================
+                                    <div class="product-price">
+                                        {% if product.discount_price %}
+                                            <span class="sale-price">₹{{ product.discount_price }}</span>
+                                            <span class="regular-price">₹{{ product.price }}</span>
+                                        {% else %}
+                                            <span class="sale-price">₹{{ product.price }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <!-- =================================================
                                      ACTIONS
                                 ================================================= -->
-
-                                <div class="product-actions">
-
-
-                                    <!-- VIEW PRODUCT -->
-
-                                    <a
-                                        href="{% url 'product_detail' product.slug %}"
-                                        class="product-view-btn"
-                                    >
-
-                                        <i class="fas fa-eye"></i>
-
-                                        View
-
-                                    </a>
-
-
-
-                                    <!-- ADD TO CART -->
-
-                                    {% if product.stock > 0 %}  
-                                        <form
-                                            method="POST"
-                                            action="{% url 'add_to_cart' product.slug %}"
-                                            class="add-cart-form"
-                                        >
-
-                                            {% csrf_token %}
-
-                                            <button
-                                                type="submit"
-                                                class="add-cart-btn"
-                                            >
-
-                                                <i class="fas fa-shopping-cart"></i>
-
-                                                <span>
-                                                    Add to Cart
-                                                </span>
-
+                                    <div class="product-actions">
+                                        <!-- VIEW PRODUCT -->
+                                        <a href="{% url 'product_detail' product.slug %}"
+                                           class="product-view-btn">
+                                            <i class="fas fa-eye"></i>
+                                            View
+                                        </a>
+                                        <!-- ADD TO CART -->
+                                        {% if product.stock > 0 %}
+                                            <form method="post"
+                                                  action="{% url 'add_to_cart' product.slug %}"
+                                                  class="add-cart-form">
+                                                {% csrf_token %}
+                                                <button type="submit" class="add-cart-btn">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <span>Add to Cart</span>
+                                                </button>
+                                            </form>
+                                        {% else %}
+                                            <!-- OUT OF STOCK -->
+                                            <button type="button" class="add-cart-btn disabled" disabled>
+                                                <i class="fa-solid fa-ban"></i>
+                                                Out of Stock
                                             </button>
-
-                                        </form>
-                                                                            
-
-
-
-
-                                    {% else %}
-
-
-                                        <!-- OUT OF STOCK -->
-
-                                        <button
-                                            type="button"
-                                            class="add-cart-btn disabled"
-                                            disabled
-                                        >
-
-                                            <i class="fa-solid fa-ban"></i>
-
-                                            Out of Stock
-
-                                        </button>
-
-
-                                    {% endif %}
-
-
+                                        {% endif %}
+                                    </div>
                                 </div>
-
-
-                            </div>
-
-
-                        </article>
-
-
-                    {% empty %}
-
-
-                        <!-- =================================================
+                            </article>
+                        {% empty %}
+                            <!-- =================================================
                              EMPTY STATE
                         ================================================= -->
-
-                        <div class="products-empty">
-
-
-                            <h3>
-                                No Products Found
-                            </h3>
-
-
-                            <p>
-                                We couldn't find any products matching your search.
-                                Try another search or clear the filters.
-                            </p>
-
-
-                            <a
-                                href="{% url 'product_frontend_list' %}"
-                                class="empty-btn"
-                            >
-                                View All Products
-                            </a>
-
-
-                        </div>
-
-
-                    {% endfor %}
-
-
-                </div>
-
-            {% if page_obj.paginator.num_pages > 1 %}
-
-                    <div class="products-pagination">
-
-                        {% if page_obj.has_previous %}
-
-                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-
-                        {% endif %}
-
-
-                        {% for num in page_obj.paginator.page_range %}
-
-                            {% if page_obj.number == num %}
-
-                                <span class="pagination-number active">
-                                    {{ num }}
-                                </span>
-
-                            {% else %}
-
-                                <a
-                                    href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ num }}"
-                                    class="pagination-number"
-                                >
-                                    {{ num }}
-                                </a>
-
-                            {% endif %}
-
+                            <div class="products-empty">
+                                <h3>No Products Found</h3>
+                                <p>
+                                    We couldn't find any products matching your search.
+                                    Try another search or clear the filters.
+                                </p>
+                                <a href="{% url 'product_frontend_list' %}" class="empty-btn">View All Products</a>
+                            </div>
                         {% endfor %}
-
-
-                        {% if page_obj.has_next %}
-
-                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-
-                        {% endif %}
-
                     </div>
-
-            {% endif %}
-                 
-
-
-
+                    {% if page_obj.paginator.num_pages > 1 %}
+                        <div class="products-pagination">
+                            {% if page_obj.has_previous %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <span class="pagination-number active">{{ num }}</span>
+                                {% else %}
+                                    <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ num }}"
+                                       class="pagination-number">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-
-
         </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
+    </section>
+    <!-- =====================================================
      CART DRAWER
 ===================================================== -->
-
-<div id="cartOverlay" class="cart-overlay"></div>
-
-<aside id="cartDrawer" class="cart-drawer">
-
-    <div class="cart-drawer-header">
-
-        <div>
-            <span class="cart-drawer-label">YOUR CART</span>
-
-            <h3>
-                Shopping Cart
-                <span id="cartItemCount">(0)</span>
-            </h3>
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <aside id="cartDrawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <div>
+                <span class="cart-drawer-label">YOUR CART</span>
+                <h3>
+                    Shopping Cart
+                    <span id="cartItemCount">(0)</span>
+                </h3>
+            </div>
+            <button type="button"
+                    id="closeCartDrawer"
+                    class="cart-drawer-close"
+                    aria-label="Close cart">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-
-        <button
-            type="button"
-            id="closeCartDrawer"
-            class="cart-drawer-close"
-            aria-label="Close cart"
-        >
-            <i class="fas fa-times"></i>
-        </button>
-
-    </div>
-
-
-    <div id="cartDrawerBody" class="cart-drawer-body">
-    </div>
-
-
-    <div class="cart-drawer-footer">
-
-        <div class="cart-subtotal-row">
-
-            <span>Subtotal</span>
-
-            <strong>
-                ₹<span id="cartSubtotal">0.00</span>
-            </strong>
-
+        <div id="cartDrawerBody" class="cart-drawer-body"></div>
+        <div class="cart-drawer-footer">
+            <div class="cart-subtotal-row">
+                <span>Subtotal</span>
+                <strong>
+                    ₹<span id="cartSubtotal">0.00</span>
+                </strong>
+            </div>
+            <a href="{% url 'cart' %}" class="cart-view-button">View Cart</a>
+            <a href="{% url 'checkout' %}" class="cart-checkout-button">
+                Proceed to Checkout
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-
-
-        <a
-            href="{% url 'cart' %}"
-            class="cart-view-button"
-        >
-            View Cart
-        </a>
-
-
-        <a
-            href="{% url 'checkout' %}"
-            class="cart-checkout-button"
-        >
-            Proceed to Checkout
-            <i class="fas fa-arrow-right"></i>
-        </a>
-
-    </div>
-
-</aside>
-
-
-<!-- =========================================================
+    </aside>
+    <!-- =========================================================
      SORT JAVASCRIPT
 ========================================================= -->
-
-<script>
-
+    <script>
 document.getElementById("sort").addEventListener("change", function () {
 
     const sortValue = this.value;
@@ -1269,16 +714,12 @@ document.getElementById("sort").addEventListener("change", function () {
 
 });
 
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-<!-- =========================================================
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- =========================================================
      WISHLIST JAVASCRIPT
 ========================================================= -->
-
-<script>
+    <script>
 document.querySelectorAll(".wishlist-btn").forEach(function (button) {
 
     button.addEventListener("click", function (e) {
@@ -1350,16 +791,11 @@ function getCookie(name) {
 
     return cookieValue;
 }
-</script>
-
-
-
-<!-- =========================================================
+    </script>
+    <!-- =========================================================
      FILTER TOGGLE JAVASCRIPT
 ========================================================= -->
-
-<script>
-
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
 
 
@@ -1384,10 +820,8 @@ function getCookie(name) {
 
     });
 
-</script>
-
-<script>
-
+    </script>
+    <script>
 /* =========================================================
    LIVE PRODUCT SEARCH / AUTOCOMPLETE
 ========================================================= */
@@ -1788,9 +1222,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-</script>
-
-<script>
+    </script>
+    <script>
 /* =====================================================
    PRODUCTS PAGE CART DRAWER
 ===================================================== */
@@ -1910,18 +1343,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `
                         <div class="cart-drawer-item">
 
-                            <a
-                                href="${item.url}"
-                                class="cart-drawer-item-image"
-                            >
+                            <a href="${item.url}" class="cart-drawer-item-image">
 
                                 ${
                                     item.image
                                     ? `
-                                        <img
-                                            src="${item.image}"
-                                            alt="${escapeHtml(item.name)}"
-                                        >
+                                        <img src="${item.image}" alt="${escapeHtml(item.name)}">
                                     `
                                     : `
                                         <i class="fas fa-image"></i>
@@ -1933,10 +1360,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <div class="cart-drawer-item-info">
 
-                                <a
-                                    href="${item.url}"
-                                    class="cart-drawer-item-name"
-                                >
+                                <a href="${item.url}" class="cart-drawer-item-name">
                                     ${escapeHtml(item.name)}
                                 </a>
 
@@ -2144,7 +1568,5 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 });
-</script>
-
-
+    </script>
 {% endblock %}

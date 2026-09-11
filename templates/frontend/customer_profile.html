@@ -1,447 +1,204 @@
-
-{% extends 'frontend/base.html' %}
-
+{% extends "frontend/base.html" %}
 {% block content %}
-{% load static %}
-
-
-<!-- Profile Page -->
-<section class="inner-banner"
-    style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}');" loading="lazy" decoding="async">
-
-    <div class="banner-overlay"></div>
-
-    <div class="container">
-        <div class="inner-banner-content text-center">
-
-            <span class="banner-tag">
-                Your Personal Healthcare Account
-            </span>
-
-            <h1>
-                My Profile
-            </h1>
-
-            <p>
-                Manage your personal information, account details,
-                orders, wishlist, and healthcare preferences in one place.
-            </p>
-
-            <ul class="breadcrumb justify-content-center">
-
-                <li>
-                    <a href="{% url 'home' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-
-                <li>
-                    <i class="fas fa-angle-right"></i>
-                </li>
-
-                <li>
-                    My Profile
-                </li>
-
-            </ul>
-
-        </div>
-    </div>
-
-</section>
-
-<section class="profile-page"> 
-
-    <div class="profile-container">
-
-       
-        <div class="profile-card">
-
-            <!-- PROFILE TOP -->
-
-            <div class="profile-top">
-
-                <div class="profile-avatar-wrapper">
-
-                    <div class="profile-avatar">
-
-                        {% if profile.profile_image %}
-
-                            <img
-                                src="{{ profile.profile_image.url }}"
-                                alt="Profile Image"
-                            >
-
-                        {% else %}
-
-                            <i class="fas fa-user"></i>
-
-                        {% endif %}
-
-                    </div>
-
-                    <span class="profile-status"></span>
-
-                </div>
-
-
-                <span class="profile-label">
-                    PATIENT PROFILE
-                </span>
-
-                <h2>
-                    {{ profile.user.get_full_name|default:profile.user.username }}
-                </h2>
-
+    {% load static %}
+    <!-- Profile Page -->
+    <section class="inner-banner"
+             style="background-image: url('{% static 'frontend/assets/img/banner/doctor_banner.jpg' %}')"
+             loading="lazy"
+             decoding="async">
+        <div class="banner-overlay"></div>
+        <div class="container">
+            <div class="inner-banner-content text-center">
+                <span class="banner-tag">Your Personal Healthcare Account</span>
+                <h1>My Profile</h1>
                 <p>
-                    Manage your personal information and account details.
+                    Manage your personal information, account details,
+                    orders, wishlist, and healthcare preferences in one place.
                 </p>
-
+                <ul class="breadcrumb justify-content-center">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-angle-right"></i>
+                    </li>
+                    <li>My Profile</li>
+                </ul>
             </div>
-
-
-            <!-- PROFILE DETAILS -->
-
-            <div class="profile-details">
-
-                <!-- FULL NAME -->
-
-                <div class="profile-field">
-
-                    <div class="field-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-
-                    <div class="field-content">
-
-                        <span>FULL NAME</span>
-
-                        <strong>
-                            {{ profile.user.get_full_name|default:"Not Added" }}
-                        </strong>
-
-                    </div>
-
-                    <i class="fas fa-check-circle field-check"></i>
-
-                </div>
-
-
-                <!-- EMAIL -->
-
-                <div class="profile-field">
-
-                    <div class="field-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-
-                    <div class="field-content">
-
-                        <span>EMAIL ADDRESS</span>
-
-                        <strong>
-                            {{ profile.user.email }}
-                        </strong>
-
-                    </div>
-
-                    <i class="fas fa-check-circle field-check"></i>
-
-                </div>
-
-
-              
-
-                <!-- REGISTERED -->
-
-                <div class="profile-field">
-
-                    <div class="field-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-
-                    <div class="field-content">
-
-                        <span>MEMBER SINCE</span>
-
-                        <strong>
-                            {{ profile.created_at|date:"d M Y" }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- SHOPPING BUTTON -->
-
-            <div class="profile-actions">
-
-                <a
-                    href="{% url 'product_frontend_list' %}"
-                    class="profile-btn"
-                >
-
-                    <span>
-                        Continue Shopping
-                    </span>
-
-                    <i class="fas fa-arrow-right"></i>
-
-                </a>
-
-            </div>
-
         </div>
-
-
-        <!-- =========================================
+    </section>
+    <section class="profile-page">
+        <div class="profile-container">
+            <div class="profile-card">
+                <!-- PROFILE TOP -->
+                <div class="profile-top">
+                    <div class="profile-avatar-wrapper">
+                        <div class="profile-avatar">
+                            {% if profile.profile_image %}
+                                <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+                            {% else %}
+                                <i class="fas fa-user"></i>
+                            {% endif %}
+                        </div>
+                        <span class="profile-status"></span>
+                    </div>
+                    <span class="profile-label">PATIENT PROFILE</span>
+                    <h2>{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+                    <p>Manage your personal information and account details.</p>
+                </div>
+                <!-- PROFILE DETAILS -->
+                <div class="profile-details">
+                    <!-- FULL NAME -->
+                    <div class="profile-field">
+                        <div class="field-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="field-content">
+                            <span>FULL NAME</span>
+                            <strong>{{ profile.user.get_full_name|default:"Not Added" }}</strong>
+                        </div>
+                        <i class="fas fa-check-circle field-check"></i>
+                    </div>
+                    <!-- EMAIL -->
+                    <div class="profile-field">
+                        <div class="field-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="field-content">
+                            <span>EMAIL ADDRESS</span>
+                            <strong>{{ profile.user.email }}</strong>
+                        </div>
+                        <i class="fas fa-check-circle field-check"></i>
+                    </div>
+                    <!-- REGISTERED -->
+                    <div class="profile-field">
+                        <div class="field-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="field-content">
+                            <span>MEMBER SINCE</span>
+                            <strong>{{ profile.created_at|date:"d M Y" }}</strong>
+                        </div>
+                    </div>
+                </div>
+                <!-- SHOPPING BUTTON -->
+                <div class="profile-actions">
+                    <a href="{% url 'product_frontend_list' %}" class="profile-btn">
+                        <span>Continue Shopping</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- =========================================
              RIGHT : ACCOUNT MENU
         ========================================== -->
-
-        <div class="account-menu">
-
-            <!-- HEADER -->
-
-            <div class="account-menu-header">
-
-              
-                <div>
-
-                    <span>
-                        MY ACCOUNT
-                    </span>
-
-                    <h3>
-                        Account Menu
-                    </h3>
-
+            <div class="account-menu">
+                <!-- HEADER -->
+                <div class="account-menu-header">
+                    <div>
+                        <span>MY ACCOUNT</span>
+                        <h3>Account Menu</h3>
+                    </div>
                 </div>
-
-            </div>
-
-
-            <!-- MENU -->
-
-            <div class="account-menu-list">
-
-
-                <!-- PROFILE -->
-
-                <a
-                    href="{% url 'customer_profile' %}"
-                    class="account-menu-item active"
-                >
-
-                    <div class="menu-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-
-                    <div class="menu-text">
-
-                        <strong>
-                            My Profile
-                        </strong>
-
-                        <span class="menu-text-sub_span">
-                            Personal information
-                        </span>
-
-                    </div>
-
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                </a>
-
-
-                <!-- ORDERS -->
-
-               <!-- MY ORDERS -->
-
-        <a
-       href="{% url 'my_orders' %}"
-     class="account-menu-item"
-    >
-
-    <div class="menu-icon">
-        <i class="fas fa-box"></i>
-    </div>
-
-    <div class="menu-text">
-
-        <strong>
-            My Orders
-        </strong>
-
-        <span>
-            View your orders
-        </span>
-
-    </div>
-
-    <div class="menu-arrow-box">
-        <i class="fas fa-chevron-right"></i>
-    </div>
-
- </a>
-
-                <!-- CART -->
-
-                <a
-                    href="{% url 'cart' %}"
-                    class="account-menu-item"
-                >
-
-                    <div class="menu-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-
-                    <div class="menu-text">
-
-                        <strong>
-                            My Cart
-                        </strong>
-
-                        <span>
-                            View cart items
-                        </span>
-
-                    </div>
-
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                </a>
-
-
-                <!-- WISHLIST -->
-
-                <a
-                    href="{% url 'wishlist' %}"
-                    class="account-menu-item"
-                >
-
-                    <div class="menu-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-
-                    <div class="menu-text">
-
-                        <strong>
-                            My Wishlist
-                        </strong>
-
-                        <span>
-                            Saved products
-                        </span>
-
-                    </div>
-
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                </a>
-
-
-                <!-- EDIT PROFILE -->
-
-                <a
-                    href="#"
-                    class="account-menu-item"
-                >
-
-                    <div class="menu-icon">
-                        <i class="fas fa-pen"></i>
-                    </div>
-
-                    <div class="menu-text">
-
-                        <strong>
-                            Edit Profile
-                        </strong>
-
-                        <span>
-                            Update your details
-                        </span>
-
-                    </div>
-
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                </a>
-
-
-                <!-- LOGOUT -->
-
-                <a
-                    href="{% url 'customer_logout' %}"
-                    class="account-menu-item logout-item"
-                >
-
-                    <div class="menu-icon">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </div>
-
-                    <div class="menu-text">
-
-                        <strong>
-                            Logout
-                        </strong>
-
-                        <span>
-                            Sign out of your account
-                        </span>
-
-                    </div>
-
-                    <div class="menu-arrow-box">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-
-                </a>
-
-            </div>
-
-
-            <!-- SECURITY FOOTER -->
-
-            <div class="account-security">
-
-                <div class="security-icon">
-                    <i class="fas fa-shield-alt"></i>
+                <!-- MENU -->
+                <div class="account-menu-list">
+                    <!-- PROFILE -->
+                    <a href="{% url 'customer_profile' %}" class="account-menu-item active">
+                        <div class="menu-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>My Profile</strong>
+                            <span class="menu-text-sub_span">Personal information</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <!-- ORDERS -->
+                    <!-- MY ORDERS -->
+                    <a href="{% url 'my_orders' %}" class="account-menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>My Orders</strong>
+                            <span>View your orders</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <!-- CART -->
+                    <a href="{% url 'cart' %}" class="account-menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>My Cart</strong>
+                            <span>View cart items</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <!-- WISHLIST -->
+                    <a href="{% url 'wishlist' %}" class="account-menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>My Wishlist</strong>
+                            <span>Saved products</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <!-- EDIT PROFILE -->
+                    <a href="#" class="account-menu-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>Edit Profile</strong>
+                            <span>Update your details</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <!-- LOGOUT -->
+                    <a href="{% url 'customer_logout' %}"
+                       class="account-menu-item logout-item">
+                        <div class="menu-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <div class="menu-text">
+                            <strong>Logout</strong>
+                            <span>Sign out of your account</span>
+                        </div>
+                        <div class="menu-arrow-box">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
                 </div>
-
-                <div>
-
-                    <strong>
-                        Your account is secure
-                    </strong>
-
-                    <span>
-                        Your personal information is protected.
-                    </span>
-
+                <!-- SECURITY FOOTER -->
+                <div class="account-security">
+                    <div class="security-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <strong>Your account is secure</strong>
+                        <span>Your personal information is protected.</span>
+                    </div>
                 </div>
-
             </div>
-
         </div>
-
-    </div>
-
-</section>
-
-
-<style>
-
+    </section>
+    <style>
 /* =====================================================
    PROFILE PAGE
 ===================================================== */
@@ -1469,7 +1226,5 @@
 
 }
 
-</style>
-
+    </style>
 {% endblock %}
-```
