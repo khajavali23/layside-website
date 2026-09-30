@@ -12938,44 +12938,22 @@ color: #0a7c86;
    FOOTER / VIEW ALL
    ============================================================ */
 
-.khaja-sub-department-footer {
-
-    margin-top: 20px;
-
-    padding-top: 17px;
-
-    border-top: 1px solid #edf0f1;
-
-}
 
 
 .khaja-view-all-services {
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 15px;
-
     padding: 12px 15px;
-
     border-radius: 9px;
-
-    background: #f2f8f8;
-
-    color: #087f83 !important;
-
+    background: #019eaa !important;
+    color: #ffffff !important;
     font-size: 13px;
-
     font-weight: 600;
-
     text-decoration: none !important;
-
-    transition:
-        background 0.25s ease,
-        color 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease;
 
 }
 
@@ -13438,9 +13416,9 @@ color: #0a7c86;
 
     padding: 12px 20px;
 
-    color: #ffffff;
+    color: #ffffff !important;
 
-    background: #0a7c86;
+    background: #076a72 !important;
 
     border-radius: 8px;
 
@@ -16292,4 +16270,63 @@ color: #0a7c86;
 body.cart-drawer-open .department-search-widget,
 body.cart-drawer-open .whatsapp-float {
     display: none !important;
+}
+.khaja-sub-department-panel {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.khaja-sub-department-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.khaja-sub-department-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.khaja-sub-department-panel::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}.khaja-services-scroll {
+    max-height: 850px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 12px;
+}
+
+.khaja-services-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.khaja-services-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.khaja-services-scroll::-webkit-scrollbar-thumb {
+    background: #c8c8c8;
+    border-radius: 10px;
+}
+
+.khaja-services-scroll::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+.khaja-no-sub-btn,
+.khaja-sub-department-footer {
+    display: inline-flex;
+    align-items: center;
+}
+
+.khaja-no-sub-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.khaja-two-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
 }

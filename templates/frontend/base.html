@@ -156,7 +156,7 @@
                                                     <!-- HEADER -->
                                                     <div class="khaja-sub-department-header">
                                                         <div>
-                                                            <span class="khaja-sub-department-label">SPECIALIZED CARE</span>
+                                                           
                                                             <h3>{{ department.title }}</h3>
                                                             <p>
                                                                 Explore specialized services available
@@ -196,17 +196,9 @@
                                                         {% else %}
                                                             <!-- NO SUB DEPARTMENT -->
                                                             <div class="khaja-no-sub-department">
-                                                                <div class="khaja-no-sub-logo-wrap">
-                                                                    <img src="{% static 'frontend/assets/img/logo-circle.png' %}"
-                                                                         alt="Lakeside Hospital"
-                                                                         class="khaja-no-sub-logo"
-                                                                         loading="lazy">
-                                                                </div>
+                                                               
                                                                 <div class="khaja-no-sub-content">
-                                                                    <span class="khaja-no-sub-label">
-                                                                        <i class="fas fa-stethoscope"></i>
-                                                                        Specialized Care
-                                                                    </span>
+                                                                   
                                                                     <h4>
                                                                         More services for
                                                                         <span>{{ department.title }}</span>
@@ -217,22 +209,26 @@
                                                                         services to provide you with better care and treatment options.
                                                                         Please check back soon for new services.
                                                                     </p>
-                                                                    <a href="{% url 'services' %}" class="khaja-no-sub-btn">
-                                                                        <span>Explore Departments</span>
-                                                                        <i class="fas fa-arrow-right"></i>
-                                                                    </a>
+                                                                    <div class="khaja-two-buttons">
+                                                                        <a href="{% url 'services' %}" class="khaja-no-sub-btn">
+                                                                            <span>Explore Departments</span>
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </a>
+
+                                                                        <div class="khaja-sub-department-footer">
+                                                                            <a href="{% url 'department_detail' department.slug %}"
+                                                                            class="khaja-view-all-services">
+                                                                                <span>View All {{ department.title }} Services</span>
+                                                                                <i class="fas fa-arrow-right"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         {% endif %}
                                                     {% endwith %}
                                                     <!-- VIEW ALL -->
-                                                    <div class="khaja-sub-department-footer">
-                                                        <a href="{% url 'department_detail' department.slug %}"
-                                                           class="khaja-view-all-services">
-                                                            <span>View All {{ department.title }} Services</span>
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </a>
-                                                    </div>
+                                                  
                                                 </div>
                                             {% endfor %}
                                         </div>
