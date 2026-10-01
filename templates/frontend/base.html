@@ -102,10 +102,11 @@
                             <!-- =====================================================
      DEPARTMENTS MEGA MENU
 ===================================================== -->
-                            <li class="dropdown khaja-department-parent">
+                            <li class="dropdown khaja-department-parent"
+    id="khajaDepartmentParent">
                                 <a href="{% url 'services' %}"
                                    class="dropdown-toggle {% if 'departments' in request.path %}active-link{% endif %}"
-                                   data-bs-toggle="dropdown"
+                                  data-toggle="dropdown"
                                    aria-expanded="false">
                                     Departments
                                     <span class="caret"></span>
@@ -169,29 +170,51 @@
                                                         {% if sub_departments %}
                                                             <div class="khaja-sub-department-grid">
                                                                 {% for sub in sub_departments %}
-                                                                    {% if sub.status %}
-                                                                        <a href="{% url 'sub_department_detail' department.slug sub.slug %}"
-                                                                           class="khaja-sub-department-card">
-                                                                            <!-- ICON -->
-                                                                            <div class="khaja-sub-department-icon">
-                                                                                {% if sub.icon %}
-                                                                                    <img src="{{ sub.icon.url }}" alt="{{ sub.title }}" loading="lazy">
-                                                                                {% else %}
-                                                                                    <i class="fas fa-heartbeat"></i>
-                                                                                {% endif %}
-                                                                            </div>
-                                                                            <!-- CONTENT -->
-                                                                            <div class="khaja-sub-department-info">
-                                                                                <h4>{{ sub.title }}</h4>
-                                                                                {% if sub.description %}<p>{{ sub.description|striptags|truncatewords:10 }}</p>{% endif %}
-                                                                            </div>
-                                                                            <!-- ARROW -->
-                                                                            <div class="khaja-sub-department-card-arrow">
-                                                                                <i class="fas fa-arrow-right"></i>
-                                                                            </div>
-                                                                        </a>
-                                                                    {% endif %}
-                                                                {% endfor %}
+
+    {% if sub.status %}
+
+        <a href="{% url 'sub_department_detail' department.slug sub.slug %}"
+           class="khaja-sub-department-card khaja-sub-link">
+
+            <div class="khaja-sub-department-icon">
+
+                {% if sub.icon %}
+
+                    <img src="{{ sub.icon.url }}"
+                         alt="{{ sub.title }}"
+                         loading="lazy">
+
+                {% else %}
+
+                    <i class="fas fa-heartbeat"></i>
+
+                {% endif %}
+
+            </div>
+
+            <div class="khaja-sub-department-info">
+
+                <h4>{{ sub.title }}</h4>
+
+                {% if sub.description %}
+                    <p>
+                        {{ sub.description|striptags|truncatewords:10 }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+            <div class="khaja-sub-department-card-arrow">
+
+                <i class="fas fa-arrow-right"></i>
+
+            </div>
+
+        </a>
+
+    {% endif %}
+
+{% endfor %}
                                                             </div>
                                                         {% else %}
                                                             <!-- NO SUB DEPARTMENT -->
@@ -728,6 +751,100 @@ document.addEventListener('DOMContentLoaded', function () {
 
             });
         </script>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".khaja-sub-link").forEach(function (link) {
+
+        link.addEventListener("click", function (event) {
+
+            // Stop ValidNavs / Bootstrap from receiving this click
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+
+            // Go directly to the sub-department URL
+            window.location.href = this.href;
+
+        }, true);
+
+    });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.addEventListener("click", function (event) {
+
+        const subLink = event.target.closest(
+            ".khaja-sub-department-card"
+        );
+
+        if (!subLink) {
+            return;
+        }
+
+        const url = subLink.getAttribute("href");
+
+        if (!url) {
+            return;
+        }
+
+        /*
+         * Stop ValidNavs / Bootstrap / navbar
+         * from handling this click.
+         */
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        /*
+         * Direct navigation.
+         */
+        window.location.assign(url);
+
+    }, true);
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const departmentParent =
+        document.getElementById("khajaDepartmentParent");
+
+    if (!departmentParent) {
+        return;
+    }
+
+    const departmentToggle =
+        departmentParent.querySelector("a.dropdown-toggle");
+
+    const navbar =
+        document.getElementById("navbar-menu");
+
+    function isMobile() {
+        return window.innerWidth <= 1023;
+    }
+
+    departmentToggle.addEventListener("click", function (event) {
+
+        if (!isMobile()) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        departmentParent.classList.toggle(
+            "khaja-mobile-department-open"
+        );
+
+    }, true);
+
+});
+</script>
         {% block script %}{% endblock %}
+        
     </body>
 </html>
