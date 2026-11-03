@@ -362,8 +362,8 @@
                 </div>
                 <!-- PRODUCT SEARCH -->
                 <!-- =========================================================
-     PRODUCT SEARCH
-========================================================= -->
+                    PRODUCT SEARCH
+                ========================================================= -->
                 <form method="get" class="product-search" autocomplete="off">
                     <div class="search-box">
                         <i class="fas fa-magnifying-glass"></i>
@@ -1223,350 +1223,385 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     </script>
-    <script>
-/* =====================================================
-   PRODUCTS PAGE CART DRAWER
-===================================================== */
 
+
+
+
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const cartDrawer =
-        document.getElementById("cartDrawer");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const closeCartDrawer = document.getElementById("closeCartDrawer");
 
-    const cartOverlay =
-        document.getElementById("cartOverlay");
-
-    const closeCartDrawer =
-        document.getElementById("closeCartDrawer");
-
-    const cartDrawerBody =
-        document.getElementById("cartDrawerBody");
-
-    const cartSubtotal =
-        document.getElementById("cartSubtotal");
-
-    const cartItemCount =
-        document.getElementById("cartItemCount");
+    const cartDrawerBody = document.getElementById("cartDrawerBody");
+    const cartSubtotal = document.getElementById("cartSubtotal");
+    const cartItemCount = document.getElementById("cartItemCount");
 
 
-    /* =================================================
-       OPEN DRAWER
-    ================================================= */
+    /* SWEETALERT NOTIFICATION */
+
+    function showCartAlert(type, message) {
+
+        const config = {
+            success: {
+                icon: "success",
+                title: "Added to Cart!"
+            },
+            warning: {
+                icon: "info",
+                title: "Already in Cart!"
+            },
+            error: {
+                icon: "error",
+                title: "Oops!"
+            }
+        };
+
+        Swal.fire({
+            icon: config[type].icon,
+            title: config[type].title,
+            text: message,
+            confirmButtonText: "Got it",
+            confirmButtonColor: "#3f7dc0",
+            timer: 2500,
+            timerProgressBar: true,
+            showConfirmButton: true
+        });
+    }
+
+
+    /* SAFE JSON RESPONSE */
+
+    async function getJsonResponse(response) {
+
+        const contentType = response.headers.get("content-type") || "";
+
+        if (!contentType.includes("application/json")) {
+            throw new Error(
+                "Server returned HTML instead of JSON. Check authentication and Django response."
+            );
+        }
+
+        return await response.json();
+    }
+
+
+    /* OPEN CART DRAWER */
 
     function openCartDrawer() {
 
-    cartDrawer.classList.add("active");
-    cartOverlay.classList.add("active");
+        if (!cartDrawer || !cartOverlay) {
+            console.error("Cart drawer HTML elements not found.");
+            return;
+        }
 
-    document.body.classList.add("cart-drawer-open");
+        cartDrawer.classList.add("active");
+        cartOverlay.classList.add("active");
+        document.body.classList.add("cart-drawer-open");
 
-    loadCartDrawer();
-}
-
-    /* =================================================
-       CLOSE DRAWER
-    ================================================= */
-
-   function closeDrawer() {
-
-    cartDrawer.classList.remove("active");
-    cartOverlay.classList.remove("active");
-
-    document.body.classList.remove("cart-drawer-open");
-}
+        loadCartDrawer();
+    }
 
 
-    /* =================================================
-       LOAD CART
-    ================================================= */
+    /* CLOSE CART DRAWER */
 
-    function loadCartDrawer() {
+    function closeDrawer() {
 
-        fetch("{% url 'cart_drawer_api' %}", {
-            method: "GET",
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        })
+        if (cartDrawer) {
+            cartDrawer.classList.remove("active");
+        }
 
-        .then(function (response) {
-            return response.json();
-        })
+        if (cartOverlay) {
+            cartOverlay.classList.remove("active");
+        }
 
-        .then(function (data) {
+        document.body.classList.remove("cart-drawer-open");
+    }
 
-            if (!data.success) {
+
+    /* LOAD CART DRAWER */
+
+    async function loadCartDrawer() {
+
+        if (!cartDrawerBody) {
+            console.error("cartDrawerBody element not found.");
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                "{% url 'cart_drawer_api' %}",
+                {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    },
+                    credentials: "same-origin"
+                }
+            );
+
+            if (response.redirected) {
+                window.location.href = response.url;
                 return;
             }
 
+            if (response.status === 401) {
+                window.location.href = "{% url 'login' %}";
+                return;
+            }
 
-            cartItemCount.textContent =
-                `(${data.total_items})`;
+            const data = await getJsonResponse(response);
 
-            cartSubtotal.textContent =
-                Number(data.total_price).toFixed(2);
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message || "Unable to load cart."
+                );
+            }
 
+            /* UPDATE CART COUNT */
 
-            /* -----------------------------------------
-               EMPTY CART
-            ----------------------------------------- */
+            if (cartItemCount) {
+                cartItemCount.textContent = `(${data.total_items})`;
+            }
+
+            /* UPDATE SUBTOTAL */
+
+            if (cartSubtotal) {
+                cartSubtotal.textContent =
+                    Number(data.total_price).toFixed(2);
+            }
+
+            /* EMPTY CART */
 
             if (!data.items.length) {
 
                 cartDrawerBody.innerHTML = `
                     <div class="cart-empty">
-
                         <div class="cart-empty-icon">
                             <i class="fas fa-shopping-bag"></i>
                         </div>
-
                         <h4>Your cart is empty</h4>
-
-                        <p>
-                            Add products to your cart to see them here.
-                        </p>
-
+                        <p>Add products to your cart to see them here.</p>
                     </div>
                 `;
 
                 return;
             }
 
+            /* CART PRODUCTS */
 
-            /* -----------------------------------------
-               CART PRODUCTS
-            ----------------------------------------- */
+            cartDrawerBody.innerHTML = data.items.map(function (item) {
 
-            cartDrawerBody.innerHTML =
-                data.items.map(function (item) {
+                return `
+                    <div class="cart-drawer-item">
 
-                    return `
-                        <div class="cart-drawer-item">
+                        <a href="${escapeHtml(item.url)}"
+                           class="cart-drawer-item-image">
 
-                            <a href="${item.url}" class="cart-drawer-item-image">
+                            ${
+                                item.image
+                                ? `
+                                    <img
+                                        src="${escapeHtml(item.image)}"
+                                        alt="${escapeHtml(item.name)}"
+                                    >
+                                `
+                                : `
+                                    <i class="fas fa-image"></i>
+                                `
+                            }
 
-                                ${
-                                    item.image
-                                    ? `
-                                        <img src="${item.image}" alt="${escapeHtml(item.name)}">
-                                    `
-                                    : `
-                                        <i class="fas fa-image"></i>
-                                    `
-                                }
+                        </a>
 
+                        <div class="cart-drawer-item-info">
+
+                            <a href="${escapeHtml(item.url)}"
+                               class="cart-drawer-item-name">
+                                ${escapeHtml(item.name)}
                             </a>
 
+                            <div class="cart-drawer-item-price">
+                                ₹${Number(item.total_price).toFixed(2)}
+                            </div>
 
-                            <div class="cart-drawer-item-info">
-
-                                <a href="${item.url}" class="cart-drawer-item-name">
-                                    ${escapeHtml(item.name)}
-                                </a>
-
-                                <div class="cart-drawer-item-price">
-                                    ₹${Number(item.total_price).toFixed(2)}
-                                </div>
-
-                                <div class="cart-drawer-item-quantity">
-                                    Quantity: ${item.quantity}
-                                </div>
-
+                            <div class="cart-drawer-item-quantity">
+                                Quantity: ${Number(item.quantity)}
                             </div>
 
                         </div>
-                    `;
 
-                }).join("");
+                    </div>
+                `;
 
-        })
+            }).join("");
 
-        .catch(function (error) {
+        } catch (error) {
 
-            console.error(
-                "Cart Drawer Error:",
-                error
-            );
+            console.error("Cart Drawer Error:", error);
 
-        });
+            cartDrawerBody.innerHTML = `
+                <div class="cart-empty">
+                    <h4>Unable to load your cart</h4>
+                    <p>Please try again.</p>
+                </div>
+            `;
+        }
     }
 
 
-    /* =================================================
-       ESCAPE HTML
-    ================================================= */
+    /* ESCAPE HTML */
 
     function escapeHtml(text) {
 
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            text || "";
+        const div = document.createElement("div");
+        div.textContent = text || "";
 
         return div.innerHTML;
     }
 
 
-    /* =================================================
-       ADD TO CART FOR ALL PRODUCT CARDS
-    ================================================= */
+    /* ADD TO CART */
 
-    document.querySelectorAll(".add-cart-form")
-        .forEach(function (form) {
+    document.querySelectorAll(".add-cart-form").forEach(function (form) {
 
-            form.addEventListener(
-                "submit",
-                function (e) {
+        form.addEventListener("submit", async function (e) {
+            
 
-                    e.preventDefault();
-                    e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
 
+            const button = form.querySelector(".add-cart-btn");
 
-                    const button =
-                        form.querySelector(".add-cart-btn");
+            if (!button) {
+                console.error("Add to Cart button not found.");
+                return;
+            }
 
+            const originalHTML = button.innerHTML;
 
-                    const originalHTML =
-                        button.innerHTML;
+            button.disabled = true;
 
+            button.innerHTML = `
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Adding...</span>
+            `;
 
-                    button.disabled = true;
+            try {
 
-                    button.innerHTML = `
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Adding...</span>
-                    `;
+                const response = await fetch(form.action, {
 
+                    method: "POST",
 
-                    const formData =
-                        new FormData(form);
+                    body: new FormData(form),
 
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    },
 
-                    fetch(
-                        form.action,
-                        {
-                            method: "POST",
+                    credentials: "same-origin"
 
-                            body: formData,
+                });
 
-                            headers: {
-                                "X-Requested-With":
-                                    "XMLHttpRequest"
-                            }
-                        }
-                    )
-
-                    .then(function (response) {
-                        return response.json();
-                    })
-
-                    .then(function (data) {
+                const data = await getJsonResponse(response);
 
 
-                        /* -------------------------
-                           ALREADY IN CART
-                        ------------------------- */
+                /* LOGIN REQUIRED */
 
-                        if (data.already_exists) {
-
-                            openCartDrawer();
-
-                            return;
-                        }
-
-
-                        /* -------------------------
-                           ERROR
-                        ------------------------- */
-
-                        if (!data.success) {
-
-                            console.error(
-                                data.message
-                            );
-
-                            return;
-                        }
-
-
-                        /* -------------------------
-                           SUCCESS
-                        ------------------------- */
-
-                        openCartDrawer();
-
-                    })
-
-                    .catch(function (error) {
-
-                        console.error(
-                            "Add To Cart Error:",
-                            error
-                        );
-
-                    })
-
-                    .finally(function () {
-
-                        button.disabled = false;
-
-                        button.innerHTML =
-                            originalHTML;
-
-                    });
-
+                if (response.status === 401 && data.login_required) {
+                    window.location.href = data.login_url;
+                    return;
                 }
-            );
-
-        });
 
 
-    /* =================================================
-       CLOSE BUTTON
-    ================================================= */
+                /* ALREADY IN CART */
 
-    if (closeCartDrawer) {
+                if (data.already_exists) {
 
-        closeCartDrawer.addEventListener(
-            "click",
-            closeDrawer
-        );
+                    showCartAlert(
+                        "warning",
+                        data.message || "This product is already in your cart."
+                    );
 
-    }
+                    openCartDrawer();
 
-
-    /* =================================================
-       OVERLAY
-    ================================================= */
-
-    if (cartOverlay) {
-
-        cartOverlay.addEventListener(
-            "click",
-            closeDrawer
-        );
-
-    }
+                    return;
+                }
 
 
-    /* =================================================
-       ESC KEY
-    ================================================= */
+                /* OTHER ERRORS */
 
-    document.addEventListener(
-        "keydown",
-        function (e) {
+                if (!response.ok || !data.success) {
 
-            if (e.key === "Escape") {
+                    showCartAlert(
+                        "error",
+                        data.message || "Unable to add product to cart."
+                    );
 
-                closeDrawer();
+                    return;
+                }
+
+
+                /* SUCCESS */
+
+                showCartAlert(
+                    "success",
+                    data.message || "Product added to your cart successfully."
+                );
+
+                openCartDrawer();
+
+
+            } catch (error) {
+
+                console.error("Add To Cart Error:", error);
+
+                showCartAlert(
+                    "error",
+                    "Something went wrong while adding this product. Please try again."
+                );
+
+            } finally {
+
+                button.disabled = false;
+                button.innerHTML = originalHTML;
 
             }
 
+        });
+
+    });
+
+
+    /* CLOSE BUTTON */
+
+    if (closeCartDrawer) {
+        closeCartDrawer.addEventListener("click", closeDrawer);
+    }
+
+
+    /* OVERLAY CLICK */
+
+    if (cartOverlay) {
+        cartOverlay.addEventListener("click", closeDrawer);
+    }
+
+
+    /* ESC KEY */
+
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape") {
+            closeDrawer();
         }
-    );
+
+    });
 
 });
-    </script>
+</script>
+
+
 {% endblock %}

@@ -75,19 +75,31 @@
                                 <strong>₹{{ item.product.price }}</strong>
                             </div>
                             <!-- ACTIONS -->
-                            <div class="wishlist-actions">
-                                <a href="{% url 'add_to_cart' item.product.slug %}"
-                                   class="wishlist-cart-btn">
-                                    <i class="fas fa-shopping-bag"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="{% url 'remove_from_wishlist' item.id %}"
-                                   class="wishlist-remove"
-                                   title="Remove from wishlist">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                    <span>Remove</span>
-                                </a>
-                            </div>
+                           <div class="wishlist-actions">
+
+                        <form method="POST"
+                            action="{% url 'add_to_cart' item.product.slug %}"
+                            class="add-cart-form">
+
+                            {% csrf_token %}
+
+                            <button type="submit" class="wishlist-cart-btn add-cart-btn">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Add to Cart</span>
+                            </button>
+
+                        </form>
+
+                                    <a href="{% url 'remove_from_wishlist' item.id %}"
+                                    class="wishlist-remove"
+                                    title="Remove from wishlist">
+
+                                        <i class="fa-regular fa-trash-can"></i>
+                                        <span>Remove</span>
+
+                                    </a>
+
+                                </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -113,6 +125,110 @@
             {% endif %}
         </div>
     </section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".add-cart-form").forEach(function(form) {
+
+        if (form.dataset.cartHandlerAttached === "true") return;
+        form.dataset.cartHandlerAttached = "true";
+
+        form.addEventListener("submit", async function(e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const button = form.querySelector(".add-cart-btn");
+
+            if (!button) return;
+
+            const originalHTML = button.innerHTML;
+
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+
+            try {
+
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    },
+                    credentials: "same-origin"
+                });
+
+                const data = await response.json();
+
+                if (response.status === 401 && data.login_required) {
+                    window.location.href = "{% url 'cart' %}";
+                    return;
+                }
+
+                if (data.already_exists) {
+
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "Already in Cart!",
+                        text: data.message,
+                        showConfirmButton: true,
+                        confirmButtonText: "Got it",
+                        backdrop: false
+                    });
+
+                    return;
+                }
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to add product.");
+                }
+
+                await Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "Added to Cart!",
+                    text: data.message,
+                    showConfirmButton: true,
+                    confirmButtonText: "Go to Cart",
+                    backdrop: false
+                });
+
+                window.location.href = "{% url 'cart' %}";
+
+            } catch (error) {
+
+                console.error("Wishlist Cart Error:", error);
+
+                Swal.fire(
+                    "Oops!",
+                    error.message || "Unable to process your request.",
+                    "error"
+                );
+
+            } finally {
+
+                button.disabled = false;
+                button.innerHTML = originalHTML;
+
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+
+
+
+    
     <style>
 /* =====================================
    WISHLIST PAGE
@@ -1014,4 +1130,6 @@
 }
 
     </style>
+
+    
 {% endblock %}

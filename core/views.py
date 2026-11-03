@@ -34,10 +34,12 @@ import razorpay
 from django.contrib.auth import login as django_login
 
 from django.db import transaction
+from django.shortcuts import resolve_url
 
 from django.conf import settings
 from django.core.paginator import Paginator
 from .models import Product, ProductImage
+from django.utils.http import urlencode
 
 
 
@@ -3582,42 +3584,58 @@ def customer_logout(request):
 
 
 
-@login_required
+
+
 def add_to_cart(request, slug):
 
-    # -------------------------------------------------
-    # PRODUCT
-    # -------------------------------------------------
+    # 1. Only allow POST requests
+    if request.method != 'POST':
+        return JsonResponse({
+            "success": False,
+            "message": "Invalid request method."
+        }, status=405)
+
+    # 2. Check authentication
+    if not request.user.is_authenticated:
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            login_url = resolve_url(settings.LOGIN_URL)
+
+            return JsonResponse({
+                "success": False,
+                "login_required": True,
+                "login_url": (
+                    f"{login_url}?{urlencode({'next': request.get_full_path()})}"
+                ),
+                "message": "Please login to add products to your cart."
+            }, status=401)
+
+        return redirect(
+            f"{resolve_url(settings.LOGIN_URL)}?"
+            f"{urlencode({'next': request.get_full_path()})}"
+        )
+
+    # 3. Get active product
     product = get_object_or_404(
         Product,
         slug=slug,
         is_active=True
     )
 
-    # -------------------------------------------------
-    # STOCK
-    # -------------------------------------------------
+    is_ajax = (
+        request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    )
+
+    # 4. Check stock
     if product.stock <= 0:
+        return JsonResponse({
+            "success": False,
+            "message": "This product is currently out of stock."
+        }, status=400)
 
-        messages.error(
-            request,
-            "This product is currently out of stock."
-        )
-
-        return redirect(
-            request.META.get(
-                'HTTP_REFERER',
-                reverse('product_frontend_list')
-            )
-        )
-
-    # -------------------------------------------------
-    # QUANTITY
-    # -------------------------------------------------
+    # 5. Get quantity
     try:
-        quantity = int(
-            request.POST.get('quantity', 1)
-        )
+        quantity = int(request.POST.get('quantity', 1))
     except (TypeError, ValueError):
         quantity = 1
 
@@ -3625,184 +3643,64 @@ def add_to_cart(request, slug):
         quantity = 1
 
     if quantity > product.stock:
+        return JsonResponse({
+            "success": False,
+            "message": f"Only {product.stock} items are available in stock."
+        }, status=400)
 
-        messages.warning(
-            request,
-            f"Only {product.stock} items are available in stock."
-        )
-
-        return redirect(
-            request.META.get(
-                'HTTP_REFERER',
-                reverse('product_frontend_list')
-            )
-        )
-
-    # -------------------------------------------------
-    # CUSTOMER PROFILE
-    # -------------------------------------------------
+    # 6. Get or create customer profile
     profile, created = CustomerProfile.objects.get_or_create(
         user=request.user
     )
 
-    # -------------------------------------------------
-    # CART
-    # -------------------------------------------------
+    # 7. Get or create cart
     cart, created = Cart.objects.get_or_create(
         customer=profile
     )
 
-    # -------------------------------------------------
-    # CHECK EXISTING CART ITEM
-    # -------------------------------------------------
-    cart_item = CartItem.objects.filter(
-        cart=cart,
-        product=product
-    ).first()
+    # 8. Add product and remove from Wishlist atomically
+    with transaction.atomic():
 
-    if cart_item:
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({
-            "success": True,
-            "already_exists": True
-        })
+        cart_item = CartItem.objects.filter(
+            cart=cart,
+            product=product
+        ).first()
 
-    messages.warning(
-        request,
-        f"{product.name} is already in your cart."
-    )
+        if cart_item:
+            # Product already exists in Cart.
+            # Still remove it from Wishlist.
+            already_exists = True
+            message = f"{product.name} is already in your cart."
 
-    return redirect(
-        request.META.get(
-            'HTTP_REFERER',
-            reverse('product_frontend_list')
-        )
-    )
-
-    # -------------------------------------------------
-    # CREATE CART ITEM
-    # ------------------------------------------------- 
-
-@login_required
-def add_to_cart(request, slug):
-
-    product = get_object_or_404(
-        Product,
-        slug=slug,
-        is_active=True
-    )
-
-    if product.stock <= 0:
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({
-                "success": False,
-                "message": "This product is currently out of stock."
-            })
-
-        messages.error(
-            request,
-            "This product is currently out of stock."
-        )
-
-        return redirect(
-            request.META.get(
-                'HTTP_REFERER',
-                reverse('product_frontend_list')
+        else:
+            CartItem.objects.create(
+                cart=cart,
+                product=product,
+                quantity=quantity
             )
-        )
 
-    try:
-        quantity = int(
-            request.POST.get('quantity', 1)
-        )
-    except (TypeError, ValueError):
-        quantity = 1
+            already_exists = False
+            message = f"{product.name} added to your cart."
 
-    if quantity < 1:
-        quantity = 1
+        # Remove only this user's matching Wishlist entry
+        Wishlist.objects.filter(
+            user=request.user,
+            product=product
+        ).delete()
 
-    if quantity > product.stock:
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({
-                "success": False,
-                "message": f"Only {product.stock} items are available in stock."
-            })
-
-        messages.warning(
-            request,
-            f"Only {product.stock} items are available in stock."
-        )
-
-        return redirect(
-            request.META.get(
-                'HTTP_REFERER',
-                reverse('product_frontend_list')
-            )
-        )
-
-    profile, created = CustomerProfile.objects.get_or_create(
-        user=request.user
-    )
-
-    cart, created = Cart.objects.get_or_create(
-        customer=profile
-    )
-
-    cart_item = CartItem.objects.filter(
-        cart=cart,
-        product=product
-    ).first()
-
-    if cart_item:
-
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({
-                "success": False,
-                "already_exists": True,
-                "message": f"{product.name} is already in your cart."
-            })
-
-        messages.warning(
-            request,
-            f"{product.name} is already in your cart."
-        )
-
-        return redirect(
-            request.META.get(
-                'HTTP_REFERER',
-                reverse('product_frontend_list')
-            )
-        )
-
-    CartItem.objects.create(
-        cart=cart,
-        product=product,
-        quantity=quantity
-    )
-
-    # -------------------------------------------------
-    # AJAX REQUEST — STAY ON SAME PAGE
-    # -------------------------------------------------
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    # 9. AJAX response
+    if is_ajax:
         return JsonResponse({
             "success": True,
-            "message": f"{product.name} added to your cart."
+            "already_exists": already_exists,
+            "message": message,
+            "redirect_url": reverse('cart')
         })
 
-    messages.success(
-        request,
-        f"{product.name} added to your cart."
-    )
+    messages.success(request, message)
 
-    # -------------------------------------------------
-    # STAY ON SAME PAGE
-    # -------------------------------------------------
-    return redirect(
-        request.META.get(
-            'HTTP_REFERER',
-            reverse('product_frontend_list')
-        )
-    )
+    return redirect('cart')
+
 
 @login_required
 def cart_view(request):
