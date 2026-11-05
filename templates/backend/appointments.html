@@ -1,232 +1,289 @@
-{% extends 'backend/base.html' %} {% block title %}
+
+{% extends 'backend/base.html' %}
+
+{% block title %}
 <title>Appointments</title>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
+
 <div class="container-fluid mt-4">
-  <h4 class="mb-3">Appointments</h4>
 
-  <!-- Tabs -->
+    <h4 class="mb-3">Appointments</h4>
 
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a
-        class="nav-link {% if active_tab == 'upcoming' %}active{% endif %}"
-        href="?tab=upcoming"
-        >Upcoming</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link {% if active_tab == 'completed' %}active{% endif %}"
-        href="?tab=completed"
-        >Completed</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link {% if active_tab == 'cancelled' %}active{% endif %}"
-        href="?tab=cancelled"
-        >Cancelled</a
-      >
-    </li>
-  </ul>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'upcoming' %}active{% endif %}"
+               href="?tab=upcoming">
+                Upcoming
+            </a>
+        </li>
 
-  <div class="tab-content mt-3">
-    <!-- ================= UPCOMING ================= -->
-    {% if active_tab == 'upcoming' %}
-    <form class="mb-3">
-      <input type="hidden" name="tab" value="upcoming" />
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          name="search_upcoming"
-          value="{{ search_upcoming }}"
-          placeholder="Search patient / doctor"
-        />
-        <button class="btn btn-primary">Search</button>
-      </div>
-    </form>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'completed' %}active{% endif %}"
+               href="?tab=completed">
+                Completed
+            </a>
+        </li>
 
-    <table class="table table-bordered table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Patient</th>
-          <th>Doctor</th>
-          <th>Department</th>
-          <th>Status</th>
-          <th width="220">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in upcoming_appointments %}
-        <tr>
-          <td>
-            {{ item.appointment.date }} <br />
-            <small>
-              {{ item.related_object.start_time|time:'h:i A' }} - {{
-              item.related_object.end_time|time:'h:i A' }}
-            </small>
-          </td>
-          <td>
-            {{ item.appointment.patient.name }} <br />
-            <small>{{ item.appointment.patient.phone_number }}</small>
-          </td>
-          <td>{{ item.appointment.selected_doctor }}</td>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'cancelled' %}active{% endif %}"
+               href="?tab=cancelled">
+                Cancelled
+            </a>
+        </li>
+    </ul>
 
-          <td>{{ item.appointment.department.title }}</td>
+    <div class="tab-content mt-3">
 
-          <td>
-            <span class="badge bg-success">
-              {% if item.appointment.status == 'COMPLETED' %} Confirmed {% else
-              %} Not Confirmed {% endif %}
-            </span>
-          </td>
+        <!-- UPCOMING -->
+        {% if active_tab == 'upcoming' %}
 
-          <td class="d-flex gap-2">
-            <a
-              href="{% url 'view_appointment' item.appointment.id %}"
-              class="btn btn-sm btn-outline-primary"
-              >View</a
-            >
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="6" class="text-center">No upcoming appointments</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% endif %}
+        <form class="mb-3">
+            <input type="hidden" name="tab" value="upcoming">
 
-    <!-- ================= COMPLETED ================= -->
-    {% if active_tab == 'completed' %}
-    <form class="mb-3">
-      <input type="hidden" name="tab" value="completed" />
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          name="search_completed"
-          value="{{ search_completed }}"
-          placeholder="Search"
-        />
-        <button class="btn btn-primary">Search</button>
-      </div>
-    </form>
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       name="search_upcoming"
+                       value="{{ search_upcoming }}"
+                       placeholder="Search patient / doctor">
 
-    <table class="table table-bordered table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Patient</th>
-          <th>Doctor</th>
-          <th>Department</th>
-          <th width="260">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in past_appointments %}
-        <tr>
-          <td>
-            {{ item.appointment.date }} <br />
-            <small>
-              {{ item.related_object.start_time|time:'h:i A' }} - {{
-              item.related_object.end_time|time:'h:i A' }}
-            </small>
-          </td>
-          <td>{{ item.appointment.patient.name }}</td>
-          <td>{{ item.appointment.selected_doctor }}</td>
+                <button class="btn btn-primary" type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
 
-          <td>{{ item.appointment.department.title }}</td>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date & Timing</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
 
-          <td>
-            <span class="badge bg-success">
-              {% if item.appointment.status == 'COMPLETED' %} Confirmed {% else
-              %} Not Confirmed {% endif %}
-            </span>
-          </td>
-          <td class="d-flex gap-2">
-            <a
-              href="{% url 'view_appointment' item.appointment.id %}"
-              class="btn btn-sm btn-outline-primary"
-              >View</a
-            >
-            <a
-              href="{% url 'cancel_appointment' item.appointment.id %}"
-              class="btn btn-sm btn-danger"
-              onclick="return confirm('Cancel this appointment?');"
-              >Cancel</a
-            >
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5" class="text-center">No completed appointments</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% endif %}
+                <tbody>
+                    {% for item in upcoming_appointments %}
+                    <tr>
+                        <td>
+                            {{ item.appointment.date|date:"d-m-Y" }}
+                            <br>
+                            <small>
+                                {{ item.related_object.start_time|time:"h:i A" }}
+                                -
+                                {{ item.related_object.end_time|time:"h:i A" }}
+                            </small>
+                        </td>
 
-    <!-- ================= CANCELLED ================= -->
-    {% if active_tab == 'cancelled' %}
-    <form class="mb-3">
-      <input type="hidden" name="tab" value="cancelled" />
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          name="search_cancelled"
-          value="{{ search_cancelled }}"
-          placeholder="Search"
-        />
-        <button class="btn btn-primary">Search</button>
-      </div>
-    </form>
+                        <td>
+                            {{ item.appointment.patient.name }}
+                            <br>
+                            <small>
+                                {{ item.appointment.patient.phone_number }}
+                            </small>
+                        </td>
 
-    <table class="table table-bordered table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Patient</th>
-          <th>Doctor</th>
-          <th>Status</th>
-          <th width="120">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in cancelled_appointments %}
-        <tr>
-          <td>
-            {{ item.appointment.date }} <br />
-            <small>
-              {{ item.related_object.start_time|time:'h:i A' }} - {{
-              item.related_object.end_time|time:'h:i A' }}
-            </small>
-          </td>
-          <td>{{ item.appointment.patient.name }}</td>
-          <td>{{ item.appointment.selected_doctor }}</td>
-          <td>
-            <span class="badge bg-danger">Cancelled</span>
-          </td>
-          <td>
-            <a
-              href="{% url 'view_appointment' item.appointment.id %}"
-              class="btn btn-sm btn-outline-primary"
-              >View</a
-            >
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5" class="text-center">No cancelled appointments</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% endif %}
-  </div>
+                        <td>{{ item.appointment.selected_doctor }}</td>
+
+                        <td>{{ item.appointment.department.title }}</td>
+
+                        <td>
+                            {% if item.appointment.status == 'COMPLETED' %}
+                                <span class="badge bg-success">Confirmed</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Not Confirmed</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{% url 'view_appointment' item.appointment.id %}"
+                               class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No upcoming appointments
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% endif %}
+
+
+        <!-- COMPLETED -->
+        {% if active_tab == 'completed' %}
+
+        <form class="mb-3">
+            <input type="hidden" name="tab" value="completed">
+
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       name="search_completed"
+                       value="{{ search_completed }}"
+                       placeholder="Search patient / doctor">
+
+                <button class="btn btn-primary" type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date & Timing</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in past_appointments %}
+                    <tr>
+                        <td>
+                            {{ item.appointment.date|date:"d-m-Y" }}
+                            <br>
+                            <small>
+                                {{ item.related_object.start_time|time:"h:i A" }}
+                                -
+                                {{ item.related_object.end_time|time:"h:i A" }}
+                            </small>
+                        </td>
+
+                        <td>
+                            {{ item.appointment.patient.name }}
+                        </td>
+
+                        <td>{{ item.appointment.selected_doctor }}</td>
+
+                        <td>{{ item.appointment.department.title }}</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <a href="{% url 'view_appointment' item.appointment.id %}"
+                               class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No completed appointments
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% endif %}
+
+
+        <!-- CANCELLED -->
+        {% if active_tab == 'cancelled' %}
+
+        <form class="mb-3">
+            <input type="hidden" name="tab" value="cancelled">
+
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       name="search_cancelled"
+                       value="{{ search_cancelled }}"
+                       placeholder="Search patient / doctor">
+
+                <button class="btn btn-primary" type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date & Timing</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in cancelled_appointments %}
+                    <tr>
+                        <td>
+                            {{ item.appointment.date|date:"d-m-Y" }}
+                            <br>
+                            <small>
+                                {{ item.related_object.start_time|time:"h:i A" }}
+                                -
+                                {{ item.related_object.end_time|time:"h:i A" }}
+                            </small>
+                        </td>
+
+                        <td>{{ item.appointment.patient.name }}</td>
+
+                        <td>{{ item.appointment.selected_doctor }}</td>
+
+                        <td>{{ item.appointment.department.title }}</td>
+
+                        <td>
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+                        </td>
+
+                        <td>
+                            <a href="{% url 'view_appointment' item.appointment.id %}"
+                               class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No cancelled appointments
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% endif %}
+
+    </div>
 </div>
+
 {% endblock %}

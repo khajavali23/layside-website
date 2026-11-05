@@ -451,7 +451,7 @@ function handleCheckboxClick(event) {
         Swal.fire("Error", "CSRF token is missing. Please refresh the page and try again.", "error");
         return;
     }
-
+    
     console.log("CSRF Token is valid: ", csrfToken);  // Ensure token is valid before request
 
     if (checkbox.checked) {

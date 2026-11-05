@@ -27,8 +27,9 @@ from django.contrib import messages
 from datetime import datetime
 from django.utils.timezone import now
 from .forms import BlogCommentForm
-from datetime import datetime
+
 from datetime import date
+
 from django.shortcuts import render, redirect, get_object_or_404
 import razorpay
 from django.contrib.auth import login as django_login
@@ -40,6 +41,8 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from .models import Product, ProductImage
 from django.utils.http import urlencode
+from rest_framework import status
+
 
 
 
@@ -524,54 +527,130 @@ def create_monthly_timing(request, pk):
 
 
 
+
+
+
+
 @role_required(['super-admin', 'admin', 'doctor'])
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_timing_api(request, doctor_slug):
+
     doctor = get_object_or_404(Doctor, slug=doctor_slug)
+
     selected_slots = request.data.get('selected_slots', [])
     slot_count = request.data.get('slot', 1)
 
-    if not selected_slots:
-        return Response({"error": "No slots selected"}, status=status.HTTP_400_BAD_REQUEST)
-
-    for slot in selected_slots:
-        day, times = slot.split(' ', 1)
-        start_time, end_time = times.split('-')
-
-        # Convert strings to time objects
-        start_time_obj = datetime.datetime.strptime(start_time.strip(), '%H:%M').time()
-        end_time_obj = datetime.datetime.strptime(end_time.strip(), '%H:%M').time()
-
-        # Check for overlapping times
-        overlapping_timings = AvailableTime.objects.filter(
-            doctor=doctor,
-            day=day,
-            status='active',
-            start_time__lt=end_time_obj,
-            end_time__gt=start_time_obj
+    # Validate selected slots
+    if not isinstance(selected_slots, list) or not selected_slots:
+        return Response(
+            {"error": "Please select at least one timing."},
+            status=status.HTTP_400_BAD_REQUEST
         )
 
-        if overlapping_timings.exists():
-            return Response(
-                {"error": f"The doctor already has another timing in this time range for {day}."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+    # Validate slot count
+    try:
+        slot_count = int(slot_count)
 
-        # Create the available time object
-        AvailableTime.objects.create(
-            doctor=doctor,
-            day=day,
-            start_time=start_time_obj,
-            end_time=end_time_obj,
-            slot=slot_count,
-            status='active',
-            remaining_slots=slot_count
+        if slot_count < 1:
+            raise ValueError
+
+    except (TypeError, ValueError):
+        return Response(
+            {"error": "Invalid slot count."},
+            status=status.HTTP_400_BAD_REQUEST
         )
 
-    return Response({"success": "Timings added successfully"}, status=status.HTTP_201_CREATED)
+    try:
+        with transaction.atomic():
+
+            for selected_slot in selected_slots:
+
+                # Expected format: Monday 09:00-09:30
+                if not isinstance(selected_slot, str) or ' ' not in selected_slot:
+                    return Response(
+                        {"error": f"Invalid timing format: {selected_slot}"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                day, times = selected_slot.split(' ', 1)
+
+                if '-' not in times:
+                    return Response(
+                        {"error": f"Invalid time range: {times}"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                start_time, end_time = times.split('-', 1)
+
+                try:
+                    start_time_obj = datetime.strptime(
+                        start_time.strip(), '%H:%M'
+                    ).time()
+
+                    end_time_obj = datetime.strptime(
+                        end_time.strip(), '%H:%M'
+                    ).time()
+
+                except ValueError:
+                    return Response(
+                        {"error": f"Invalid time format: {times}"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                if start_time_obj >= end_time_obj:
+                    return Response(
+                        {"error": "End time must be later than start time."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Check overlapping timings
+                overlapping_timings = AvailableTime.objects.filter(
+                    doctor=doctor,
+                    day=day,
+                    status='active',
+                    start_time__lt=end_time_obj,
+                    end_time__gt=start_time_obj
+                )
+
+                if overlapping_timings.exists():
+                    return Response(
+                        {
+                            "error": (
+                                f"The doctor already has another timing "
+                                f"in this time range for {day}."
+                            )
+                        },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Save timing
+                AvailableTime.objects.create(
+                    doctor=doctor,
+                    day=day,
+                    start_time=start_time_obj,
+                    end_time=end_time_obj,
+                    slot=slot_count,
+                    status='active',
+                    remaining_slots=slot_count
+                )
+
+        return Response(
+            {"success": "Timings added successfully"},
+            status=status.HTTP_201_CREATED
+        )
+
+    except Exception as e:
+        import logging
+        logging.exception("Error while creating doctor timings")
+
+        return Response(
+            {"error": "Unable to create timings. Please check the server logs."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 
+    
 @role_required(['super-admin', 'admin', 'doctor'])      
 @login_required(login_url='login')
 def create_timing(request, slug):
@@ -666,49 +745,47 @@ def leave_appointments(request):
 @login_required(login_url='login')
 def delete_timing(request, pk):
 
-
     try:
         timing = AvailableTime.objects.get(id=pk)
 
-        # Check if there are any appointments for this timing
         appointments = Appointment.objects.filter(
             content_type=ContentType.objects.get_for_model(AvailableTime),
             object_id=timing.id
         )
 
-        # Separate past and upcoming appointments
-        upcoming_appointments = appointments.filter(date__gte=timezone.now(), status='COMPLETED')
-        past_appointments = appointments.filter(date__lt=timezone.now())
+        upcoming_appointments = appointments.filter(
+            date__gte=timezone.now(),
+            status='COMPLETED'
+        )
 
         if upcoming_appointments.exists():
-        
-            # Mark timing as inactive
+
             timing.status = 'inactive'
             timing.save()
 
-            msg.warning(request, f'Timing has {upcoming_appointments.count()} upcoming appointment(s). The timing is now inactive, and new appointments cannot be created. Please attend to the already booked appointments.')
-
-            # Collect upcoming appointment IDs to pass to the next view
-            upcoming_appointment_ids = list(upcoming_appointments.values_list('id', flat=True))
-
-            # Construct the query string
-            query_string = urllib.parse.urlencode({'upcoming_appointment_ids': upcoming_appointment_ids}, doseq=True)
-            url = f"{reverse('leave_appointments')}?{query_string}"
-
-            # Redirect to leave_appointments URL with query parameters
-            return redirect(url)
+            msg.warning(
+                request,
+                f'Timing has {upcoming_appointments.count()} upcoming '
+                f'appointment(s). The timing is now inactive, and '
+                f'new appointments cannot be created. Please attend '
+                f'to the already booked appointments.'
+            )
 
         else:
-            # Delete timing if there are no upcoming appointments
             timing.status = 'inactive'
             timing.save()
+
             msg.success(request, 'Timing deleted successfully.')
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return HttpResponseRedirect(
+            request.META.get('HTTP_REFERER', '/')
+        )
 
     except AvailableTime.DoesNotExist:
         msg.error(request, 'Timing not found.')
         return redirect('doctor')
+
+
 
 @role_required(['super-admin', 'admin', 'doctor'])
 @login_required(login_url='login')
@@ -1652,7 +1729,14 @@ def get_doctors_by_department(request, department_id):
 @api_view(["GET"])
 def get_doctor_timings(request, doctor_id, date):
 
-    date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+    # Convert URL date string into Python date object
+    try:
+        date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+    except ValueError:
+        return Response(
+            {"error": "Invalid date format. Expected YYYY-MM-DD."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     monthly_ct = ContentType.objects.get_for_model(MonthlyTiming)
     weekly_ct = ContentType.objects.get_for_model(AvailableTime)
@@ -1702,8 +1786,6 @@ def get_doctor_timings(request, doctor_id, date):
 
     serializer = AvailableTimeSerializer(result, many=True)
     return Response(serializer.data)
-
-
 
 
 
