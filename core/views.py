@@ -21,6 +21,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.urls import reverse_lazy
 from django.utils.timezone import make_aware, get_current_timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import redirect_to_login
 from django.utils.dateformat import DateFormat
 from django.http import HttpResponseForbidden
 from django.contrib import messages
@@ -28,7 +29,7 @@ from datetime import datetime
 from django.utils.timezone import now
 from .forms import BlogCommentForm
 
-from datetime import date
+from datetime import date, timedelta
 
 from django.shortcuts import render, redirect, get_object_or_404
 import razorpay
@@ -93,6 +94,8 @@ class RoleRequiredMixin:
 def role_required(allowed_roles=[]):
     def decorator(view_func):
         def wrapper(request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                return redirect_to_login(request.get_full_path(), 'login')
             try:
                 user_role = request.user.summary.role
             except Summary.DoesNotExist:
@@ -132,23 +135,11 @@ def admin_login(request):
                 profile = Summary.objects.get(user=user)
             except ObjectDoesNotExist:
                 msg.error(request,'Profile does not exist. You cannot access here.')
-                return redirect('homepage')
+                return redirect('home')
 
-        
-            if profile:
-                if profile.role == 'hr':
-                    return redirect('hr_dashboard')
-                if profile.role == 'frontdesk':
-                    return redirect('dashboard')
-                    
-                if profile.role == 'admin':
-                    return redirect('dashboard')
-                    
-                if profile.role == 'media':
-                    return redirect('media_dashboard') #media______
-                else:
-                    return redirect('homepage')
-            return redirect('dashboard')
+            if profile.role in ('super-admin', 'admin', 'doctor', 'receptionist'):
+                return redirect('dashboard')
+            return redirect('home')
             
         else:
             print("Error")
@@ -473,7 +464,7 @@ def delete_doctor(request, slug):
         return redirect('doctors')
     except Doctor.DoesNotExist:
         msg.error(request, 'doctor not found.')
-        return redirect('doctor')
+        return redirect('doctors')
 
 
 @role_required(['super-admin', 'admin', 'doctor'])
@@ -783,7 +774,7 @@ def delete_timing(request, pk):
 
     except AvailableTime.DoesNotExist:
         msg.error(request, 'Timing not found.')
-        return redirect('doctor')
+        return redirect('doctors')
 
 
 
@@ -824,7 +815,7 @@ def delete_timing_monthly(request, pk):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except MonthlyTiming.DoesNotExist:
         msg.error(request, 'Timing not found.')
-        return redirect('doctor')
+        return redirect('doctors')
 
 
 
@@ -843,8 +834,8 @@ def create_leave(request, slug):
         reason = request.POST.get('reason')
         
         # Convert the dates to actual date objects
-        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
-        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
 
         # Ensure the start date is today or in the future
         if start_date < timezone.now().date():
@@ -863,7 +854,7 @@ def create_leave(request, slug):
                 msg.error(request, f"The doctor already has a leave on {current_date}. Please choose a different date.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             Leave.objects.create(doctor=doctor, date=current_date, reason=reason)
-            current_date += datetime.timedelta(days=1)
+            current_date += timedelta(days=1)
 
         msg.success(request, "Leave created successfully.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -1105,7 +1096,7 @@ def view_blog_comment(request, blogSlug, commentSlug):
     blog = get_object_or_404(Blog, slug=blogSlug)
     comment = get_object_or_404(BlogComment, slug=commentSlug)
     comments_count = BlogComment.objects.all().count()
-    now = datetime.datetime.now().strftime('%I:%M %p')
+    now = datetime.now().strftime('%I:%M %p')
     context = {
         'blog': blog,
         'comment': comment,
@@ -2263,7 +2254,7 @@ class CreateAppointmentAPIView(APIView):
             
             # Ensure `appointment.date` is a valid `datetime.date` object
             if isinstance(appointment.date, str):
-                appointment_date = datetime.datetime.strptime(appointment.date, '%Y-%m-%d').date()
+                appointment_date = datetime.strptime(appointment.date, '%Y-%m-%d').date()
             else:
                 appointment_date = appointment.date
 
@@ -2311,7 +2302,7 @@ def check_available_timings_api(request, doctor_id, date):
     try:
         # Parse the date
         try:
-            date_obj = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+            date_obj = datetime.strptime(date, '%Y-%m-%d').date()
         except ValueError:
             return Response({'error': 'Invalid date format. Use YYYY-MM-DD.'}, status=400)
 
@@ -2645,7 +2636,7 @@ def appointment_detail_api(request, id):
 
     # 🔹 Ensure date is date object
     if isinstance(appointment.date, str):
-        appointment_date = datetime.datetime.strptime(
+        appointment_date = datetime.strptime(
             appointment.date, "%Y-%m-%d"
         ).date()
     else:
@@ -2653,12 +2644,12 @@ def appointment_detail_api(request, id):
 
     # 🔹 Build datetime
     if related_object and hasattr(related_object, "start_time"):
-        appointment_datetime = datetime.datetime.combine(
+        appointment_datetime = datetime.combine(
             appointment_date, related_object.start_time
         )
     else:
-        appointment_datetime = datetime.datetime.combine(
-            appointment_date, datetime.time.min
+        appointment_datetime = datetime.combine(
+            appointment_date, datetime.min.time()
         )
 
     appointment_datetime = make_aware(
